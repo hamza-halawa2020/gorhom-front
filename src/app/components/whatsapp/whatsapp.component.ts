@@ -1,12 +1,11 @@
 import { CommonModule } from '@angular/common';
 import { Component, Input  } from '@angular/core';
-import { RouterLink } from '@angular/router';
 
 @Component({
+  standalone: true,
   selector: 'app-whatsapp',
   imports: [
-    CommonModule,
-    RouterLink
+    CommonModule
   ],
   templateUrl: './whatsapp.component.html',
   styleUrl: './whatsapp.component.css'

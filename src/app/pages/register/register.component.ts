@@ -7,6 +7,7 @@ import { FooterComponent } from '../../components/footer/footer.component';
   selector: 'app-register-page',
   templateUrl: './register.component.html',
   styleUrls: ['./register.component.css'],
+  standalone: true,
   imports: [CommonModule, NavbarComponent, FooterComponent],
 })
 export class RegisterComponent {}

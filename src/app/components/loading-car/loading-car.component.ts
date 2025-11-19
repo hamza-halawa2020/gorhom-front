@@ -6,7 +6,7 @@ import { TranslatePipe } from '../../pipes/translate.pipe';
 @Component({
   selector: 'app-loading-car',
   standalone: true,
-  imports: [CommonModule, TranslatePipe],
+  imports: [CommonModule],
   templateUrl: './loading-car.component.html',
   styleUrl: './loading-car.component.css',
 })

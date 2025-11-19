@@ -5,6 +5,7 @@ import { FooterComponent } from "../../components/footer/footer.component";
 
 @Component({
   selector: "app-contact-page",
+  standalone: true,
   templateUrl: "./contact.component.html",
   styleUrls: ["./contact.component.css"],
   imports: [CommonModule, NavbarComponent, FooterComponent],

@@ -2,7 +2,6 @@
 import {CommonModule} from "@angular/common";
 import {Component, AfterViewInit, OnInit, OnDestroy} from "@angular/core";
 import {ActivatedRoute, Router, RouterModule, NavigationEnd} from "@angular/router";
-import {SoundService} from "../../services/sound.service";
 import {TranslationService} from "../../services/translation.service";
 import {ScrollTrackingService} from "../../services/scroll-tracking.service";
 import {TranslatePipe} from "../../pipes/translate.pipe";
@@ -28,7 +27,6 @@ export class NavbarComponent implements OnInit, AfterViewInit, OnDestroy {
   constructor(
 
     private router: Router,
-    private soundService: SoundService,
     private scrollTrackingService: ScrollTrackingService,
     public translationService: TranslationService,
     private route: ActivatedRoute

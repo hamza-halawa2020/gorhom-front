@@ -5,8 +5,6 @@ import { Select2Module } from 'ng-select2-component';
 import { SlickCarouselModule } from 'ngx-slick-carousel';
 import { FooterComponent } from '../../components/footer/footer.component';
 import { HeroSectionComponent } from '../../components/hero-section/hero-section.component';
-import { VisionSectionComponent } from '../../components/vision-section/vision-section.component';
-import { ProblemSectionComponent } from '../../components/problem-section/problem-section.component';
 import { CrowAircraftSectionComponent } from '../../components/crow-aircraft-section/crow-aircraft-section.component';
 import { HummingPropulsionSimulatorComponent } from '../../components/humming-propulsion-simulator/humming-propulsion-simulator.component';
 import { TranslationService } from '../../services/translation.service';
@@ -18,6 +16,7 @@ declare var $: any;
 
 @Component({
   selector: 'app-index',
+  standalone: true,
   imports: [
     CommonModule,
     NavbarComponent,
@@ -25,8 +24,6 @@ declare var $: any;
     SlickCarouselModule,
     FooterComponent,
     HeroSectionComponent,
-    VisionSectionComponent,
-    ProblemSectionComponent,
     CrowAircraftSectionComponent,
     LoadingCarComponent,
     HummingPropulsionSimulatorComponent,
