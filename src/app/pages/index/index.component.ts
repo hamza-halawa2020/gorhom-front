@@ -4,8 +4,6 @@ import { NavbarComponent } from '../../components/navbar/navbar.component';
 import { Select2Module } from 'ng-select2-component';
 import { SlickCarouselModule } from 'ngx-slick-carousel';
 import { FooterComponent } from '../../components/footer/footer.component';
-import { HeroSectionComponent } from '../../components/hero-section/hero-section.component';
-import { CrowAircraftSectionComponent } from '../../components/crow-aircraft-section/crow-aircraft-section.component';
 import { HummingPropulsionSimulatorComponent } from '../../components/humming-propulsion-simulator/humming-propulsion-simulator.component';
 import { TranslationService } from '../../services/translation.service';
 import { ModelLoadingService } from '../../services/model-loading.service';
@@ -23,8 +21,7 @@ declare var $: any;
     Select2Module,
     SlickCarouselModule,
     FooterComponent,
-    HeroSectionComponent,
-    CrowAircraftSectionComponent,
+
     LoadingCarComponent,
     HummingPropulsionSimulatorComponent,
   ],

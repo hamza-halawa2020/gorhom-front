@@ -1,12 +1,10 @@
 import { Routes } from '@angular/router';
 import { IndexComponent } from './pages/index/index.component';
-import { PresentationComponent } from './pages/presentation/presentation.component';
 import { LanguageGuard } from './guards/language.guard';
 import { AutoLanguageRedirectGuard } from './guards/auto-language-redirect.guard';
 import { RootRedirectComponent } from './components/root-redirect/root-redirect.component';
 import { BlogComponent } from './pages/blog/blog.component';
 import { BlogPostComponent } from './pages/blog/blog-post.component';
-import { ContactComponent } from './pages/contact/contact.component';
 import { RegisterComponent } from './pages/register/register.component';
 import { LoginComponent } from './pages/login/login.component';
 
@@ -20,11 +18,7 @@ export const routes: Routes = [
     component: IndexComponent,
     canActivate: [LanguageGuard],
   },
-  {
-    path: ':lang/presentation',
-    component: PresentationComponent,
-    canActivate: [LanguageGuard],
-  },
+
 
   {
     path: ':lang/register',
@@ -34,11 +28,6 @@ export const routes: Routes = [
   {
     path: ':lang/login',
     component: LoginComponent,
-    canActivate: [LanguageGuard],
-  },
-  {
-    path: ':lang/contact',
-    component: ContactComponent,
     canActivate: [LanguageGuard],
   },
 
