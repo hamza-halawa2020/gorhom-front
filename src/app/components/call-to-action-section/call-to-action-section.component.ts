@@ -16,7 +16,6 @@ import { TranslatePipe } from '../../pipes/translate.pipe';
 import { LanguageService } from '../../services/language.service';
 import { Subscription } from 'rxjs';
 import { AnalyticsService } from '../../services/analytics.service';
-import { logInfo } from '../../helpers/dev-logger';
 import { ContactService } from '../../services/contact';
 @Component({
   selector: 'app-call-to-action-section',
@@ -29,7 +28,6 @@ export class CallToActionSectionComponent implements AfterViewInit, OnDestroy {
   @ViewChild('contactForm') contactFormRef!: ElementRef<HTMLFormElement>;
   @ViewChild('readyToInvestBtn')
   readyToInvestBtnRef!: ElementRef<HTMLButtonElement>;
-  contact = environment.contactFormEmail;
 
   private presentationUrl: string = '';
   private languageSubscription?: Subscription;
@@ -161,7 +159,12 @@ export class CallToActionSectionComponent implements AfterViewInit, OnDestroy {
         )?.value.trim(),
       };
 
-      if (!formData.name ||!formData.email ||!formData.message ||!formData.interest) {
+      if (
+        !formData.name ||
+        !formData.email ||
+        !formData.message ||
+        !formData.interest
+      ) {
         this.toastr.error(
           this.translationService.translate('validation_missing_fields'),
           this.translationService.translate('error')
@@ -170,8 +173,15 @@ export class CallToActionSectionComponent implements AfterViewInit, OnDestroy {
       }
 
       if (formData.interest === 'investment opportunities') {
-        if (!formData.investment_amount ||!formData.address ||!formData.passport) {
-          this.toastr.error(this.translationService.translate('validation_investment_fields_required'),
+        if (
+          !formData.investment_amount ||
+          !formData.address ||
+          !formData.passport
+        ) {
+          this.toastr.error(
+            this.translationService.translate(
+              'validation_investment_fields_required'
+            ),
             this.translationService.translate('error')
           );
           return;

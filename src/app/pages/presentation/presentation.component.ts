@@ -10,9 +10,7 @@ import {Select2Module} from "ng-select2-component";
 import {SlickCarouselModule} from "ngx-slick-carousel";
 import {CommonModule} from "@angular/common";
 import {Router} from "@angular/router";
-import html2pdf from "html2pdf.js";
 import jsPDF from "jspdf";
-import {environment} from "../../../environments/environment";
 import domtoimage from "dom-to-image-more";
 import {TranslatePipe} from "../../pipes/translate.pipe";
 import {LanguageService} from "../../services/language.service";
@@ -27,7 +25,6 @@ import {InvestorDeckTrackingService} from "../../services/investor-deck-tracking
 })
 export class PresentationComponent implements OnInit, OnDestroy {
   @ViewChild("presentationContent") presentationContent!: ElementRef;
-  contactEmail = environment.contactEmail;
   currentSlide: number = 0;
   slides: number[] = Array(14).fill(0);
   progressWidth: number = 0;

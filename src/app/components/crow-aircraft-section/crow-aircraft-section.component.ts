@@ -1,7 +1,6 @@
 import {CommonModule} from "@angular/common";
 import {Component} from "@angular/core";
 import {DomSanitizer, SafeHtml} from "@angular/platform-browser";
-import {SoundService} from "../../services/sound.service";
 import {TranslatePipe} from "../../pipes/translate.pipe";
 import {TranslationKeys} from "../../interfaces/translation-keys.interface";
 @Component({
@@ -21,7 +20,6 @@ export class CrowAircraftSectionComponent {
 
   constructor(
     private sanitizer: DomSanitizer,
-    private soundService: SoundService
   ) {
     this.applications = [
       {

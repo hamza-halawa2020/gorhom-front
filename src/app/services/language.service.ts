@@ -3,7 +3,6 @@ import {BehaviorSubject, Observable} from "rxjs";
 import {SupportedLocale} from "../interfaces/translation.interface";
 import {AnalyticsService} from "./analytics.service";
 import {LoadingTrackingService} from "./loading-tracking.service";
-import {logInfo, logWarn, logError} from "../helpers/dev-logger";
 
 @Injectable({
   providedIn: "root",

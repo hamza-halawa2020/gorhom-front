@@ -13,10 +13,8 @@ import {
   Point,
   CloudPosition,
 } from "../../services/humming-animation.service";
-import {SoundService} from "../../services/sound.service";
 import {TranslatePipe} from "../../pipes/translate.pipe";
 import {AnalyticsService} from "../../services/analytics.service";
-import {logInfo} from "../../helpers/dev-logger";
 
 @Component({
   selector: "app-humming-propulsion-simulator",
@@ -51,7 +49,6 @@ export class HummingPropulsionSimulatorComponent
 
   constructor(
     private animationService: HummingAnimationService,
-    private soundService: SoundService,
     private analyticsService: AnalyticsService
   ) {}
 

@@ -1,13 +1,12 @@
-import {Injectable, Inject, PLATFORM_ID} from "@angular/core";
-import {isPlatformBrowser} from "@angular/common";
-import {environment} from "../../environments/environment";
+import { Injectable, Inject, PLATFORM_ID } from '@angular/core';
+import { isPlatformBrowser } from '@angular/common';
 import {
   init,
   track,
   PlausibleConfig,
   PlausibleEventOptions,
   PlausibleRequestPayload,
-} from "@plausible-analytics/tracker";
+} from '@plausible-analytics/tracker';
 import {
   AnalyticsServiceInterface,
   AnalyticsServiceConfig,
@@ -17,15 +16,14 @@ import {
   NavigationEvent,
   LoadingEvent,
   PlausibleApiResponse,
-} from "../interfaces/analytics.interface";
-import {logInfo, logWarn, logError} from "../helpers/dev-logger";
+} from '../interfaces/analytics.interface';
 
 /**
  * Analytics Service for Plausible Analytics integration
  * Provides type-safe analytics tracking with performance optimization
  */
 @Injectable({
-  providedIn: "root",
+  providedIn: 'root',
 })
 export class AnalyticsService implements AnalyticsServiceInterface {
   private config: AnalyticsServiceConfig;
@@ -36,23 +34,18 @@ export class AnalyticsService implements AnalyticsServiceInterface {
   private tracker: typeof track | null = null;
 
   constructor(@Inject(PLATFORM_ID) private platformId: Object) {
-    const isDevelopment = environment.environment === "dev";
-
-    this.config = {
-      enabled: true, // Always enabled
-      plausibleDomain: environment.plausibleDomain,
-      apiEndpoint: isDevelopment? "https://plausible.io/api/event": "/api/event", // Direct in dev, proxy in staging/prod
-      scriptEndpoint: isDevelopment? "https://plausible.io/js/script.js": "/js/script.js", // Direct in dev, proxy in staging/prod
-      batchSize: 10,
-      batchTimeout: 5000,
-      maxRetries: 3,
-      retryDelay: 1000,
-      useOfflineStorage: true,
-      trackPerformance: true,
-      trackErrors: true,
-      isDevelopment,
-      environment: environment.environment,
-    };
+    // this.config = {
+    //   enabled: true, // Always enabled
+    //   apiEndpoint: '/api/event', // Direct in dev, proxy in staging/prod
+    //   scriptEndpoint: '/js/script.js', // Direct in dev, proxy in staging/prod
+    //   batchSize: 10,
+    //   batchTimeout: 5000,
+    //   maxRetries: 3,
+    //   retryDelay: 1000,
+    //   useOfflineStorage: true,
+    //   trackPerformance: true,
+    //   trackErrors: true,
+    // };
   }
 
   /**
@@ -101,7 +94,7 @@ export class AnalyticsService implements AnalyticsServiceInterface {
 
       this.isInitialized = true;
     } catch (error) {
-      console.error("Failed to initialize analytics service:", error);
+      console.error('Failed to initialize analytics service:', error);
     }
   }
 
@@ -116,15 +109,15 @@ export class AnalyticsService implements AnalyticsServiceInterface {
     try {
       const event: NavigationEvent = {
         ...this.createBaseEvent(),
-        type: "navigation",
-        action: "page_view",
-        method: "direct",
+        type: 'navigation',
+        action: 'page_view',
+        method: 'direct',
         loadTime: this.getPageLoadTime(),
       };
 
       // Track with Plausible if available
       if (this.tracker) {
-        this.tracker("pageview", {url});
+        this.tracker('pageview', { url });
       }
 
       // Add to event queue
@@ -133,11 +126,11 @@ export class AnalyticsService implements AnalyticsServiceInterface {
       // Update session
       this.updateSession();
     } catch (error) {
-      console.error("Failed to track page view:", error);
+      console.error('Failed to track page view:', error);
       this.trackError(
-        "analytics",
+        'analytics',
         `Failed to track page view: ${error}`,
-        "medium"
+        'medium'
       );
     }
   }
@@ -148,14 +141,14 @@ export class AnalyticsService implements AnalyticsServiceInterface {
   async trackEvent(
     event: Omit<
       AnalyticsEvent,
-      | "id"
-      | "timestamp"
-      | "language"
-      | "sessionId"
-      | "url"
-      | "userAgent"
-      | "screenResolution"
-      | "viewport"
+      | 'id'
+      | 'timestamp'
+      | 'language'
+      | 'sessionId'
+      | 'url'
+      | 'userAgent'
+      | 'screenResolution'
+      | 'viewport'
     >
   ): Promise<void> {
     if (!this.isInitialized || !isPlatformBrowser(this.platformId)) {
@@ -169,7 +162,7 @@ export class AnalyticsService implements AnalyticsServiceInterface {
       } as AnalyticsEvent;
 
       // Track with Plausible if it's a custom event and Plausible is available
-      if (this.tracker && event.type !== "navigation") {
+      if (this.tracker && event.type !== 'navigation') {
         const eventOptions: PlausibleEventOptions = {
           props: this.getEventProperties(event),
         };
@@ -186,8 +179,8 @@ export class AnalyticsService implements AnalyticsServiceInterface {
       // Add to event queue
       this.addEventToQueue(fullEvent);
     } catch (error) {
-      console.error("Failed to track event:", error);
-      this.trackError("analytics", `Failed to track event: ${error}`, "medium");
+      console.error('Failed to track event:', error);
+      this.trackError('analytics', `Failed to track event: ${error}`, 'medium');
     }
   }
 
@@ -197,10 +190,10 @@ export class AnalyticsService implements AnalyticsServiceInterface {
   async trackLanguageSwitch(
     targetLanguage: string,
     fromLanguage: string,
-    source: "navbar" | "selector" | "url" | "auto"
+    source: 'navbar' | 'selector' | 'url' | 'auto'
   ): Promise<void> {
     const event = {
-      type: "language_switch" as const,
+      type: 'language_switch' as const,
       targetLanguage,
       fromLanguage,
       switchSource: source,
@@ -213,11 +206,11 @@ export class AnalyticsService implements AnalyticsServiceInterface {
    * Track language detection
    */
   async trackLanguageDetection(
-    detectionMethod: "auto" | "manual" | "default",
+    detectionMethod: 'auto' | 'manual' | 'default',
     detectedLanguage: string
   ): Promise<void> {
     const event = {
-      type: "language_detection" as const,
+      type: 'language_detection' as const,
       detectionMethod,
       detectedLanguage,
     };
@@ -228,11 +221,11 @@ export class AnalyticsService implements AnalyticsServiceInterface {
    * Track simulator interaction
    */
   async trackSimulatorInteraction(
-    action: "speed_changed" | "direction_changed" | "play_pause",
-    element: "speed_slider" | "direction_slider" | "play_button"
+    action: 'speed_changed' | 'direction_changed' | 'play_pause',
+    element: 'speed_slider' | 'direction_slider' | 'play_button'
   ): Promise<void> {
     const event = {
-      type: "simulator_interaction" as const,
+      type: 'simulator_interaction' as const,
       action,
       element,
     };
@@ -248,10 +241,10 @@ export class AnalyticsService implements AnalyticsServiceInterface {
     section: string
   ): Promise<void> {
     const event = {
-      type: "button_click" as const,
+      type: 'button_click' as const,
       buttonId,
       buttonText,
-      position: {x: 0, y: 0}, // Will be updated by click handler
+      position: { x: 0, y: 0 }, // Will be updated by click handler
       section,
     };
     // Button click tracked
@@ -263,11 +256,11 @@ export class AnalyticsService implements AnalyticsServiceInterface {
    */
   async trackFormInteraction(
     formId: string,
-    action: "submit" | "focus" | "blur" | "change",
+    action: 'submit' | 'focus' | 'blur' | 'change',
     fieldName?: string
   ): Promise<void> {
     const event = {
-      type: "form_interaction" as const,
+      type: 'form_interaction' as const,
       formId,
       action,
       fieldName,
@@ -281,10 +274,10 @@ export class AnalyticsService implements AnalyticsServiceInterface {
    */
   async trackScrollDepth(depth: number, timeOnPage: number): Promise<void> {
     const event = {
-      type: "scroll" as const,
+      type: 'scroll' as const,
       scrollDepth: depth,
       timeOnPage,
-      direction: "down" as const,
+      direction: 'down' as const,
     };
     // Scroll depth tracked
     await this.trackEvent(event);
@@ -295,7 +288,7 @@ export class AnalyticsService implements AnalyticsServiceInterface {
    */
   async trackSectionActivation(sectionName: string): Promise<void> {
     const event = {
-      type: "section_activation" as const,
+      type: 'section_activation' as const,
       sectionName,
     };
     await this.trackEvent(event);
@@ -309,7 +302,7 @@ export class AnalyticsService implements AnalyticsServiceInterface {
     timeSpent: number
   ): Promise<void> {
     const event = {
-      type: "section_time" as const,
+      type: 'section_time' as const,
       sectionName,
       timeSpent,
     };
@@ -320,7 +313,7 @@ export class AnalyticsService implements AnalyticsServiceInterface {
    * Track investor deck interaction
    */
   async trackInvestorDeck(
-    action: "view" | "download" | "share" | "page_change" | "complete",
+    action: 'view' | 'download' | 'share' | 'page_change' | 'complete',
     deckId: string,
     pageNumber?: number,
     totalPages?: number,
@@ -328,7 +321,7 @@ export class AnalyticsService implements AnalyticsServiceInterface {
     completionPercentage?: number
   ): Promise<void> {
     const event = {
-      type: "investor_deck" as const,
+      type: 'investor_deck' as const,
       action,
       deckId,
       pageNumber,
@@ -347,23 +340,23 @@ export class AnalyticsService implements AnalyticsServiceInterface {
     buttonText: string,
     section: string,
     buttonType:
-      | "primary"
-      | "secondary"
-      | "cta"
-      | "navigation"
-      | "download"
-      | "contact"
-      | "social"
-      | "other",
-    buttonSize?: "small" | "medium" | "large",
+      | 'primary'
+      | 'secondary'
+      | 'cta'
+      | 'navigation'
+      | 'download'
+      | 'contact'
+      | 'social'
+      | 'other',
+    buttonSize?: 'small' | 'medium' | 'large',
     buttonTheme?: string,
-    position?: {x: number; y: number}
+    position?: { x: number; y: number }
   ): Promise<void> {
     const event = {
-      type: "button_click" as const,
+      type: 'button_click' as const,
       buttonId,
       buttonText,
-      position: position || {x: 0, y: 0},
+      position: position || { x: 0, y: 0 },
       section,
       buttonType,
       buttonSize,
@@ -376,13 +369,13 @@ export class AnalyticsService implements AnalyticsServiceInterface {
    * Track content engagement
    */
   async trackContentEngagement(
-    contentType: "image" | "video" | "link" | "download" | "text",
+    contentType: 'image' | 'video' | 'link' | 'download' | 'text',
     contentId: string,
-    action: "view" | "click" | "download" | "play" | "pause",
+    action: 'view' | 'click' | 'download' | 'play' | 'pause',
     section: string
   ): Promise<void> {
     const event = {
-      type: "content_engagement" as const,
+      type: 'content_engagement' as const,
       contentType,
       contentId,
       action,
@@ -398,15 +391,15 @@ export class AnalyticsService implements AnalyticsServiceInterface {
    */
   async trackPerformance(
     metric:
-      | "page_load"
-      | "first_contentful_paint"
-      | "largest_contentful_paint"
-      | "cumulative_layout_shift",
+      | 'page_load'
+      | 'first_contentful_paint'
+      | 'largest_contentful_paint'
+      | 'cumulative_layout_shift',
     value: number,
-    unit: "ms" | "score"
+    unit: 'ms' | 'score'
   ): Promise<void> {
     const event = {
-      type: "performance" as const,
+      type: 'performance' as const,
       metric,
       value,
       unit,
@@ -420,13 +413,13 @@ export class AnalyticsService implements AnalyticsServiceInterface {
    * Track error
    */
   async trackError(
-    errorType: "javascript" | "network" | "resource" | "analytics",
+    errorType: 'javascript' | 'network' | 'resource' | 'analytics',
     message: string,
-    severity: "low" | "medium" | "high" | "critical",
+    severity: 'low' | 'medium' | 'high' | 'critical',
     component?: string
   ): Promise<void> {
     const event = {
-      type: "error" as const,
+      type: 'error' as const,
       errorType,
       message,
       severity,
@@ -455,7 +448,7 @@ export class AnalyticsService implements AnalyticsServiceInterface {
       await this.sendEventBatch([...this.eventQueue]);
       this.eventQueue = [];
     } catch (error) {
-      console.error("Failed to flush events:", error);
+      console.error('Failed to flush events:', error);
     }
   }
 
@@ -464,7 +457,7 @@ export class AnalyticsService implements AnalyticsServiceInterface {
    */
   async clearOfflineStorage(): Promise<void> {
     if (isPlatformBrowser(this.platformId) && this.config.useOfflineStorage) {
-      localStorage.removeItem("analytics_events");
+      localStorage.removeItem('analytics_events');
     }
   }
 
@@ -473,7 +466,7 @@ export class AnalyticsService implements AnalyticsServiceInterface {
    */
   async clearSession(): Promise<void> {
     if (isPlatformBrowser(this.platformId)) {
-      localStorage.removeItem("analytics_session");
+      localStorage.removeItem('analytics_session');
       this.session = this.createNewSession();
     }
   }
@@ -491,7 +484,7 @@ export class AnalyticsService implements AnalyticsServiceInterface {
   } {
     if (!this.session) {
       return {
-        sessionId: "no-session",
+        sessionId: 'no-session',
         isNewSession: true,
         sessionStartTime: 0,
         duration: 0,
@@ -548,7 +541,7 @@ export class AnalyticsService implements AnalyticsServiceInterface {
     if (!isPlatformBrowser(this.platformId)) return null;
 
     try {
-      const storedSession = localStorage.getItem("analytics_session");
+      const storedSession = localStorage.getItem('analytics_session');
       if (storedSession) {
         const session: AnalyticsSession = JSON.parse(storedSession);
         // Update session with current data
@@ -569,7 +562,7 @@ export class AnalyticsService implements AnalyticsServiceInterface {
         return session;
       }
     } catch (error) {
-      console.warn("Failed to load existing session:", error);
+      console.warn('Failed to load existing session:', error);
     }
     return null;
   }
@@ -603,7 +596,7 @@ export class AnalyticsService implements AnalyticsServiceInterface {
     if (!isPlatformBrowser(this.platformId)) return;
 
     try {
-      localStorage.setItem("analytics_session", JSON.stringify(session));
+      localStorage.setItem('analytics_session', JSON.stringify(session));
 
       // Debug logging
       if (this.config.isDevelopment) {
@@ -614,7 +607,7 @@ export class AnalyticsService implements AnalyticsServiceInterface {
         // });
       }
     } catch (error) {
-      console.warn("Failed to store session:", error);
+      console.warn('Failed to store session:', error);
     }
   }
 
@@ -663,7 +656,7 @@ export class AnalyticsService implements AnalyticsServiceInterface {
         await this.sendSingleEvent(event);
       }
     } catch (error) {
-      console.error("Failed to send event batch:", error);
+      console.error('Failed to send event batch:', error);
 
       // Store events offline for retry
       if (this.config.useOfflineStorage) {
@@ -687,9 +680,9 @@ export class AnalyticsService implements AnalyticsServiceInterface {
       // });
 
       const response = await fetch(this.config.apiEndpoint, {
-        method: "POST",
+        method: 'POST',
         headers: {
-          "Content-Type": "application/json",
+          'Content-Type': 'application/json',
         },
         body: JSON.stringify(plausibleEvent),
       });
@@ -701,7 +694,6 @@ export class AnalyticsService implements AnalyticsServiceInterface {
 
       if (!response.ok) {
         const errorText = await response.text();
-        logError("API Error Response", errorText);
 
         // Try to parse error response for better error messages
         try {
@@ -712,11 +704,11 @@ export class AnalyticsService implements AnalyticsServiceInterface {
                 ([field, messages]) =>
                   `${field}: ${
                     Array.isArray(messages)
-                      ? messages.join(", ")
+                      ? messages.join(', ')
                       : String(messages)
                   }`
               )
-              .join("; ");
+              .join('; ');
             throw new Error(
               `Plausible API validation failed: ${errorMessages}`
             );
@@ -736,18 +728,17 @@ export class AnalyticsService implements AnalyticsServiceInterface {
       //   domain: plausibleEvent.d,
       // });
     } catch (error) {
-      logError("Failed to send single event", error);
       throw error;
     }
   }
 
   private validatePlausibleEvent(event: PlausibleRequestPayload): void {
-    const requiredFields: (keyof PlausibleRequestPayload)[] = ["d", "u", "n"];
+    const requiredFields: (keyof PlausibleRequestPayload)[] = ['d', 'u', 'n'];
     const missingFields = requiredFields.filter((field) => !event[field]);
 
     if (missingFields.length > 0) {
       throw new Error(
-        `Missing required Plausible API fields: ${missingFields.join(", ")}`
+        `Missing required Plausible API fields: ${missingFields.join(', ')}`
       );
     }
 
@@ -759,8 +750,8 @@ export class AnalyticsService implements AnalyticsServiceInterface {
     }
 
     // Validate event name is not empty
-    if (typeof event.n !== "string" || event.n.trim() === "") {
-      throw new Error("Event name cannot be empty");
+    if (typeof event.n !== 'string' || event.n.trim() === '') {
+      throw new Error('Event name cannot be empty');
     }
   }
 
@@ -784,135 +775,135 @@ export class AnalyticsService implements AnalyticsServiceInterface {
 
     // Add type-specific properties
     switch (event.type) {
-      case "navigation":
-        if ("loadTime" in event) {
-          props["load_time"] = event.loadTime.toString();
+      case 'navigation':
+        if ('loadTime' in event) {
+          props['load_time'] = event.loadTime.toString();
         }
-        if ("method" in event) {
-          props["navigation_method"] = event.method;
-        }
-        break;
-      case "performance":
-        if ("metric" in event) {
-          props["metric"] = event.metric;
-        }
-        if ("value" in event) {
-          props["value"] = event.value.toString();
-        }
-        if ("unit" in event) {
-          props["unit"] = event.unit;
-        }
-        if ("rating" in event) {
-          props["rating"] = event.rating;
+        if ('method' in event) {
+          props['navigation_method'] = event.method;
         }
         break;
-      case "language_switch":
-        if ("targetLanguage" in event) {
-          props["target_language"] = event.targetLanguage;
+      case 'performance':
+        if ('metric' in event) {
+          props['metric'] = event.metric;
         }
-        if ("fromLanguage" in event) {
-          props["from_language"] = event.fromLanguage;
+        if ('value' in event) {
+          props['value'] = event.value.toString();
         }
-        if ("switchSource" in event) {
-          props["switch_source"] = event.switchSource;
+        if ('unit' in event) {
+          props['unit'] = event.unit;
         }
-        break;
-      case "button_click":
-        if ("buttonId" in event) {
-          props["button_id"] = event.buttonId;
-        }
-        if ("buttonText" in event) {
-          props["button_text"] = event.buttonText;
-        }
-        if ("section" in event) {
-          props["section"] = event.section;
-        }
-        if ("buttonType" in event) {
-          props["button_type"] = event.buttonType;
-        }
-        if ("buttonSize" in event && event.buttonSize) {
-          props["button_size"] = event.buttonSize;
-        }
-        if ("buttonTheme" in event && event.buttonTheme) {
-          props["button_theme"] = event.buttonTheme;
+        if ('rating' in event) {
+          props['rating'] = event.rating;
         }
         break;
-      case "form_interaction":
-        if ("formId" in event) {
-          props["form_id"] = event.formId;
+      case 'language_switch':
+        if ('targetLanguage' in event) {
+          props['target_language'] = event.targetLanguage;
         }
-        if ("action" in event) {
-          props["action"] = event.action;
+        if ('fromLanguage' in event) {
+          props['from_language'] = event.fromLanguage;
         }
-        if ("fieldName" in event && event.fieldName) {
-          props["field_name"] = event.fieldName;
-        }
-        break;
-      case "scroll":
-        if ("scrollDepth" in event) {
-          props["scroll_depth"] = event.scrollDepth.toString();
-        }
-        if ("timeOnPage" in event) {
-          props["time_on_page"] = event.timeOnPage.toString();
+        if ('switchSource' in event) {
+          props['switch_source'] = event.switchSource;
         }
         break;
-      case "section_activation":
-        if ("sectionName" in event) {
-          props["section_name"] = event.sectionName;
+      case 'button_click':
+        if ('buttonId' in event) {
+          props['button_id'] = event.buttonId;
+        }
+        if ('buttonText' in event) {
+          props['button_text'] = event.buttonText;
+        }
+        if ('section' in event) {
+          props['section'] = event.section;
+        }
+        if ('buttonType' in event) {
+          props['button_type'] = event.buttonType;
+        }
+        if ('buttonSize' in event && event.buttonSize) {
+          props['button_size'] = event.buttonSize;
+        }
+        if ('buttonTheme' in event && event.buttonTheme) {
+          props['button_theme'] = event.buttonTheme;
         }
         break;
-      case "section_time":
-        if ("sectionName" in event) {
-          props["section_name"] = event.sectionName;
+      case 'form_interaction':
+        if ('formId' in event) {
+          props['form_id'] = event.formId;
         }
-        if ("timeSpent" in event) {
-          props["time_spent"] = event.timeSpent.toString();
+        if ('action' in event) {
+          props['action'] = event.action;
+        }
+        if ('fieldName' in event && event.fieldName) {
+          props['field_name'] = event.fieldName;
         }
         break;
-      case "investor_deck":
-        if ("action" in event) {
-          props["action"] = event.action;
+      case 'scroll':
+        if ('scrollDepth' in event) {
+          props['scroll_depth'] = event.scrollDepth.toString();
         }
-        if ("deckId" in event) {
-          props["deck_id"] = event.deckId;
+        if ('timeOnPage' in event) {
+          props['time_on_page'] = event.timeOnPage.toString();
         }
-        if ("pageNumber" in event && event.pageNumber) {
-          props["page_number"] = event.pageNumber.toString();
+        break;
+      case 'section_activation':
+        if ('sectionName' in event) {
+          props['section_name'] = event.sectionName;
         }
-        if ("totalPages" in event && event.totalPages) {
-          props["total_pages"] = event.totalPages.toString();
+        break;
+      case 'section_time':
+        if ('sectionName' in event) {
+          props['section_name'] = event.sectionName;
         }
-        if ("timeSpent" in event && event.timeSpent) {
-          props["time_spent"] = event.timeSpent.toString();
+        if ('timeSpent' in event) {
+          props['time_spent'] = event.timeSpent.toString();
         }
-        if ("completionPercentage" in event && event.completionPercentage) {
-          props["completion_percentage"] =
+        break;
+      case 'investor_deck':
+        if ('action' in event) {
+          props['action'] = event.action;
+        }
+        if ('deckId' in event) {
+          props['deck_id'] = event.deckId;
+        }
+        if ('pageNumber' in event && event.pageNumber) {
+          props['page_number'] = event.pageNumber.toString();
+        }
+        if ('totalPages' in event && event.totalPages) {
+          props['total_pages'] = event.totalPages.toString();
+        }
+        if ('timeSpent' in event && event.timeSpent) {
+          props['time_spent'] = event.timeSpent.toString();
+        }
+        if ('completionPercentage' in event && event.completionPercentage) {
+          props['completion_percentage'] =
             event.completionPercentage.toString();
         }
         break;
-      case "content_engagement":
-        if ("contentType" in event) {
-          props["content_type"] = event.contentType;
+      case 'content_engagement':
+        if ('contentType' in event) {
+          props['content_type'] = event.contentType;
         }
-        if ("contentId" in event) {
-          props["content_id"] = event.contentId;
+        if ('contentId' in event) {
+          props['content_id'] = event.contentId;
         }
-        if ("action" in event) {
-          props["action"] = event.action;
+        if ('action' in event) {
+          props['action'] = event.action;
         }
-        if ("section" in event) {
-          props["section"] = event.section;
+        if ('section' in event) {
+          props['section'] = event.section;
         }
         break;
-      case "error":
-        if ("errorType" in event) {
-          props["error_type"] = event.errorType;
+      case 'error':
+        if ('errorType' in event) {
+          props['error_type'] = event.errorType;
         }
-        if ("severity" in event) {
-          props["severity"] = event.severity;
+        if ('severity' in event) {
+          props['severity'] = event.severity;
         }
-        if ("component" in event && event.component) {
-          props["component"] = event.component;
+        if ('component' in event && event.component) {
+          props['component'] = event.component;
         }
         break;
     }
@@ -925,30 +916,30 @@ export class AnalyticsService implements AnalyticsServiceInterface {
 
   private getEventName(event: AnalyticsEvent): string {
     switch (event.type) {
-      case "navigation":
-        return "pageview";
-      case "performance":
-        return "performance";
-      case "language_switch":
-        return "language_switch";
-      case "button_click":
-        return "button_click";
-      case "form_interaction":
-        return "form_interaction";
-      case "scroll":
-        return "scroll";
-      case "section_activation":
-        return "section_activation";
-      case "section_time":
-        return "section_time";
-      case "investor_deck":
-        return "investor_deck";
-      case "loading":
-        return "loading";
-      case "content_engagement":
-        return "content_engagement";
-      case "error":
-        return "error";
+      case 'navigation':
+        return 'pageview';
+      case 'performance':
+        return 'performance';
+      case 'language_switch':
+        return 'language_switch';
+      case 'button_click':
+        return 'button_click';
+      case 'form_interaction':
+        return 'form_interaction';
+      case 'scroll':
+        return 'scroll';
+      case 'section_activation':
+        return 'section_activation';
+      case 'section_time':
+        return 'section_time';
+      case 'investor_deck':
+        return 'investor_deck';
+      case 'loading':
+        return 'loading';
+      case 'content_engagement':
+        return 'content_engagement';
+      case 'error':
+        return 'error';
       default:
         return event.type;
     }
@@ -959,12 +950,12 @@ export class AnalyticsService implements AnalyticsServiceInterface {
 
     try {
       const existingEvents = JSON.parse(
-        localStorage.getItem("analytics_events") || "[]"
+        localStorage.getItem('analytics_events') || '[]'
       );
       const allEvents = [...existingEvents, ...events];
-      localStorage.setItem("analytics_events", JSON.stringify(allEvents));
+      localStorage.setItem('analytics_events', JSON.stringify(allEvents));
     } catch (error) {
-      console.error("Failed to store events offline:", error);
+      console.error('Failed to store events offline:', error);
     }
   }
 
@@ -973,14 +964,14 @@ export class AnalyticsService implements AnalyticsServiceInterface {
 
     try {
       const storedEvents = JSON.parse(
-        localStorage.getItem("analytics_events") || "[]"
+        localStorage.getItem('analytics_events') || '[]'
       );
       if (storedEvents.length > 0) {
         await this.sendEventBatch(storedEvents);
-        localStorage.removeItem("analytics_events");
+        localStorage.removeItem('analytics_events');
       }
     } catch (error) {
-      console.error("Failed to load offline events:", error);
+      console.error('Failed to load offline events:', error);
     }
   }
 
@@ -988,13 +979,13 @@ export class AnalyticsService implements AnalyticsServiceInterface {
     if (!isPlatformBrowser(this.platformId)) return;
 
     // Track page load time
-    window.addEventListener("load", () => {
+    window.addEventListener('load', () => {
       const loadTime = performance.now();
-      this.trackPerformance("page_load", loadTime, "ms");
+      this.trackPerformance('page_load', loadTime, 'ms');
     });
 
     // Track Core Web Vitals
-    if ("web-vital" in window) {
+    if ('web-vital' in window) {
       // This would require the web-vitals library
       // For now, we'll implement basic performance tracking
     }
@@ -1003,15 +994,15 @@ export class AnalyticsService implements AnalyticsServiceInterface {
   private setupErrorTracking(): void {
     if (!isPlatformBrowser(this.platformId)) return;
 
-    window.addEventListener("error", (event) => {
-      this.trackError("javascript", event.message, "high", event.filename);
+    window.addEventListener('error', (event) => {
+      this.trackError('javascript', event.message, 'high', event.filename);
     });
 
-    window.addEventListener("unhandledrejection", (event) => {
+    window.addEventListener('unhandledrejection', (event) => {
       this.trackError(
-        "javascript",
-        event.reason?.toString() || "Unhandled promise rejection",
-        "high"
+        'javascript',
+        event.reason?.toString() || 'Unhandled promise rejection',
+        'high'
       );
     });
   }
@@ -1041,7 +1032,7 @@ export class AnalyticsService implements AnalyticsServiceInterface {
   }
 
   private getCurrentLanguage(): string {
-    return document.documentElement.lang || "en";
+    return document.documentElement.lang || 'en';
   }
 
   private getPageLoadTime(): number {
@@ -1051,14 +1042,14 @@ export class AnalyticsService implements AnalyticsServiceInterface {
   private getPerformanceRating(
     metric: string,
     value: number
-  ): "good" | "needs_improvement" | "poor" {
+  ): 'good' | 'needs_improvement' | 'poor' {
     // Basic performance rating logic
-    if (metric === "page_load") {
-      if (value < 1000) return "good";
-      if (value < 3000) return "needs_improvement";
-      return "poor";
+    if (metric === 'page_load') {
+      if (value < 1000) return 'good';
+      if (value < 3000) return 'needs_improvement';
+      return 'poor';
     }
-    return "good";
+    return 'good';
   }
 
   private getEventProperties(
@@ -1066,90 +1057,90 @@ export class AnalyticsService implements AnalyticsServiceInterface {
   ): Record<string, string> {
     const props: Record<string, string> = {
       language: this.getCurrentLanguage(),
-      session_id: this.session?.sessionId || "",
+      session_id: this.session?.sessionId || '',
     };
 
     // Add event-specific properties safely
     switch (event.type) {
-      case "language_switch":
-        if ("fromLanguage" in event)
-          props["from_language"] = event.fromLanguage;
-        if ("targetLanguage" in event)
-          props["to_language"] = event.targetLanguage;
-        if ("switchSource" in event)
-          props["switch_source"] = event.switchSource;
+      case 'language_switch':
+        if ('fromLanguage' in event)
+          props['from_language'] = event.fromLanguage;
+        if ('targetLanguage' in event)
+          props['to_language'] = event.targetLanguage;
+        if ('switchSource' in event)
+          props['switch_source'] = event.switchSource;
         break;
-      case "button_click":
-        if ("buttonId" in event) props["button_id"] = event.buttonId;
-        if ("buttonText" in event) props["button_text"] = event.buttonText;
-        if ("section" in event) props["section"] = event.section;
+      case 'button_click':
+        if ('buttonId' in event) props['button_id'] = event.buttonId;
+        if ('buttonText' in event) props['button_text'] = event.buttonText;
+        if ('section' in event) props['section'] = event.section;
         break;
-      case "form_interaction":
-        if ("formId" in event) props["form_id"] = event.formId;
-        if ("action" in event) props["action"] = event.action;
-        if ("fieldName" in event && event.fieldName)
-          props["field_name"] = event.fieldName;
+      case 'form_interaction':
+        if ('formId' in event) props['form_id'] = event.formId;
+        if ('action' in event) props['action'] = event.action;
+        if ('fieldName' in event && event.fieldName)
+          props['field_name'] = event.fieldName;
         break;
-      case "scroll":
-        if ("scrollDepth" in event)
-          props["scroll_depth"] = event.scrollDepth.toString();
-        if ("timeOnPage" in event)
-          props["time_on_page"] = event.timeOnPage.toString();
+      case 'scroll':
+        if ('scrollDepth' in event)
+          props['scroll_depth'] = event.scrollDepth.toString();
+        if ('timeOnPage' in event)
+          props['time_on_page'] = event.timeOnPage.toString();
         break;
-      case "section_activation":
-        if ("sectionName" in event) props["section_name"] = event.sectionName;
+      case 'section_activation':
+        if ('sectionName' in event) props['section_name'] = event.sectionName;
         break;
-      case "section_time":
-        if ("sectionName" in event) props["section_name"] = event.sectionName;
-        if ("timeSpent" in event)
-          props["time_spent"] = event.timeSpent.toString();
+      case 'section_time':
+        if ('sectionName' in event) props['section_name'] = event.sectionName;
+        if ('timeSpent' in event)
+          props['time_spent'] = event.timeSpent.toString();
         break;
-      case "investor_deck":
-        if ("action" in event) props["action"] = event.action;
-        if ("deckId" in event) props["deck_id"] = event.deckId;
-        if ("pageNumber" in event && event.pageNumber)
-          props["page_number"] = event.pageNumber.toString();
-        if ("totalPages" in event && event.totalPages)
-          props["total_pages"] = event.totalPages.toString();
-        if ("timeSpent" in event && event.timeSpent)
-          props["time_spent"] = event.timeSpent.toString();
-        if ("completionPercentage" in event && event.completionPercentage)
-          props["completion_percentage"] =
+      case 'investor_deck':
+        if ('action' in event) props['action'] = event.action;
+        if ('deckId' in event) props['deck_id'] = event.deckId;
+        if ('pageNumber' in event && event.pageNumber)
+          props['page_number'] = event.pageNumber.toString();
+        if ('totalPages' in event && event.totalPages)
+          props['total_pages'] = event.totalPages.toString();
+        if ('timeSpent' in event && event.timeSpent)
+          props['time_spent'] = event.timeSpent.toString();
+        if ('completionPercentage' in event && event.completionPercentage)
+          props['completion_percentage'] =
             event.completionPercentage.toString();
         break;
-      case "loading":
-        if ("action" in event) props["action"] = event.action;
-        if ("phase" in event) props["phase"] = event.phase;
-        if ("duration" in event && event.duration)
-          props["duration"] = event.duration.toString();
-        if ("metadata" in event && event.metadata) {
+      case 'loading':
+        if ('action' in event) props['action'] = event.action;
+        if ('phase' in event) props['phase'] = event.phase;
+        if ('duration' in event && event.duration)
+          props['duration'] = event.duration.toString();
+        if ('metadata' in event && event.metadata) {
           if (event.metadata.language)
-            props["language"] = event.metadata.language;
+            props['language'] = event.metadata.language;
           if (event.metadata.assetCount)
-            props["asset_count"] = event.metadata.assetCount.toString();
+            props['asset_count'] = event.metadata.assetCount.toString();
           if (event.metadata.serviceCount)
-            props["service_count"] = event.metadata.serviceCount.toString();
+            props['service_count'] = event.metadata.serviceCount.toString();
           if (event.metadata.totalSize)
-            props["total_size"] = event.metadata.totalSize.toString();
+            props['total_size'] = event.metadata.totalSize.toString();
         }
         break;
-      case "content_engagement":
-        if ("contentType" in event) props["content_type"] = event.contentType;
-        if ("contentId" in event) props["content_id"] = event.contentId;
-        if ("action" in event) props["action"] = event.action;
-        if ("section" in event) props["section"] = event.section;
+      case 'content_engagement':
+        if ('contentType' in event) props['content_type'] = event.contentType;
+        if ('contentId' in event) props['content_id'] = event.contentId;
+        if ('action' in event) props['action'] = event.action;
+        if ('section' in event) props['section'] = event.section;
         break;
-      case "performance":
-        if ("metric" in event) props["metric"] = event.metric;
-        if ("value" in event) props["value"] = event.value.toString();
-        if ("unit" in event) props["unit"] = event.unit;
-        if ("rating" in event) props["rating"] = event.rating;
+      case 'performance':
+        if ('metric' in event) props['metric'] = event.metric;
+        if ('value' in event) props['value'] = event.value.toString();
+        if ('unit' in event) props['unit'] = event.unit;
+        if ('rating' in event) props['rating'] = event.rating;
         break;
-      case "error":
-        if ("errorType" in event) props["error_type"] = event.errorType;
-        if ("severity" in event) props["severity"] = event.severity;
-        if ("component" in event && event.component)
-          props["component"] = event.component;
+      case 'error':
+        if ('errorType' in event) props['error_type'] = event.errorType;
+        if ('severity' in event) props['severity'] = event.severity;
+        if ('component' in event && event.component)
+          props['component'] = event.component;
         break;
     }
 
@@ -1161,13 +1152,13 @@ export class AnalyticsService implements AnalyticsServiceInterface {
    */
   trackLoading(
     action:
-      | "shown"
-      | "removed"
-      | "language_loaded"
-      | "app_initialized"
-      | "assets_loaded"
-      | "services_ready",
-    phase: "initial" | "language" | "assets" | "services" | "complete",
+      | 'shown'
+      | 'removed'
+      | 'language_loaded'
+      | 'app_initialized'
+      | 'assets_loaded'
+      | 'services_ready',
+    phase: 'initial' | 'language' | 'assets' | 'services' | 'complete',
     duration?: number,
     metadata?: {
       language?: string;
@@ -1177,7 +1168,7 @@ export class AnalyticsService implements AnalyticsServiceInterface {
     }
   ): void {
     const event = {
-      type: "loading" as const,
+      type: 'loading' as const,
       action,
       phase,
       duration,

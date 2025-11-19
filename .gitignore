@@ -41,8 +41,3 @@ testem.log
 .DS_Store
 Thumbs.db
 
-# Environment files (local configuration)
-src/environments/environment.ts
-
-# PHP configuration files with secrets
-scripts/odoo-config.php

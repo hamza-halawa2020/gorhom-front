@@ -5,11 +5,9 @@ import {
   AfterViewInit,
   OnDestroy,
 } from "@angular/core";
-import {SoundService} from "../../services/sound.service";
 import {TranslationService} from "../../services/translation.service";
 import {TranslatePipe} from "../../pipes/translate.pipe";
 import {ModelLoadingService} from "../../services/model-loading.service";
-import {logInfo, logWarn, logError} from "../../helpers/dev-logger";
 
 @Component({
   selector: "app-hero-section",
@@ -29,7 +27,6 @@ export class HeroSectionComponent implements AfterViewInit, OnDestroy {
   private animationFrameId: number | null = null;
 
   constructor(
-    private soundService: SoundService,
     public translationService: TranslationService,
     private modelLoadingService: ModelLoadingService
   ) {

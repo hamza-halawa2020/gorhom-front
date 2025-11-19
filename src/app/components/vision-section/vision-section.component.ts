@@ -1,6 +1,5 @@
 import {CommonModule} from "@angular/common";
 import {Component} from "@angular/core";
-import {SoundService} from "../../services/sound.service";
 import {TranslationService} from "../../services/translation.service";
 import {TranslatePipe} from "../../pipes/translate.pipe";
 
@@ -13,7 +12,6 @@ import {TranslatePipe} from "../../pipes/translate.pipe";
 })
 export class VisionSectionComponent {
   constructor(
-    private soundService: SoundService,
     public translationService: TranslationService
   ) {}
 }
