@@ -1,9 +1,8 @@
 <app-loading-car [loading]="isLoading"></app-loading-car>
-<div [class.hidden]="isLoading && !isFadingOut">
+<div [class.hidden]="isLoading">
   <app-navbar />
 
   <div class="page-content">
-    <app-humming-propulsion-simulator />
 
     <app-footer />
   </div>

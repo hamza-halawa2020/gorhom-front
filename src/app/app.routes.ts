@@ -4,22 +4,17 @@ import { LanguageGuard } from './guards/language.guard';
 import { AutoLanguageRedirectGuard } from './guards/auto-language-redirect.guard';
 import { RootRedirectComponent } from './components/root-redirect/root-redirect.component';
 import { BlogComponent } from './pages/blog/blog.component';
-import { BlogPostComponent } from './pages/blog/blog-post.component';
 import { RegisterComponent } from './pages/register/register.component';
 import { LoginComponent } from './pages/login/login.component';
 
 export const routes: Routes = [
   // Redirect root to current language
   { path: '', component: RootRedirectComponent },
-
-  // Language-based routes
   {
     path: ':lang',
     component: IndexComponent,
     canActivate: [LanguageGuard],
   },
-
-
   {
     path: ':lang/register',
     component: RegisterComponent,
@@ -36,14 +31,7 @@ export const routes: Routes = [
     component: BlogComponent,
     canActivate: [LanguageGuard],
   },
-  {
-    path: ':lang/blog/:slug',
-    component: BlogPostComponent,
-    canActivate: [LanguageGuard],
-  },
-
-  // Catch-all for any routes without language prefix
-  {
+   {
     path: '**',
     canActivate: [AutoLanguageRedirectGuard],
     children: [],

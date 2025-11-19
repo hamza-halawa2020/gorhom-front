@@ -1,177 +1,124 @@
-<!-- Navigation -->
+<!-- Navigation (Bootstrap 5) -->
 <nav
-  class="fixed w-full z-50 bg-black/80 backdrop-blur-md border-b border-sky-900/30 pb-16"
+  class="navbar navbar-expand-md navbar-dark bg-dark fixed-top border-bottom"
 >
-  <div
-    class="container mx-auto px-4 py-4 flex justify-between items-center min-h-[4rem]"
-  >
-    <a [routerLink]="['/', currentLang]">
-      <div class="flex items-center space-x-2">
-        <div
-          class="w-10 h-10 image-placeholder rounded-md flex items-center justify-center"
-        >
-          <span class="text-xs"
-            ><img src="../../assets/img/logo.png" alt=""
-          /></span>
-        </div>
-        <div class="text-sky-500 font-bold text-2xl">
-          <span class="text-white">HPS</span> AVIATION
-        </div>
+  <div class="container">
+    <!-- Brand -->
+    <a
+      class="navbar-brand d-flex align-items-center"
+      [routerLink]="['/', currentLang]"
+    >
+      <img
+        src="../../assets/img/logo.png"
+        alt="Logo"
+        height="40"
+        class="me-2"
+      />
+      <div class="fw-bold text-white">
+        HPS <small class="text-info">AVIATION</small>
       </div>
     </a>
-    <div class="hidden md:flex space-x-8">
-      <a
-        [routerLink]="['/', currentLang]"
-        fragment="vision"
-        (click)="navigateToSection('vision', $event)"
-        class="nav-link text-slate-300 hover:text-sky-400 transition-colors"
-        >{{ "nav_vision" | translate }}</a
-      >
-      <a
-        [routerLink]="['/', currentLang]"
-        fragment="innovation"
-        (click)="navigateToSection('innovation', $event)"
-        class="nav-link text-slate-300 hover:text-sky-400 transition-colors"
-        >{{ "nav_innovation" | translate }}</a
-      >
-      <a
-        [routerLink]="['/', currentLang]"
-        fragment="crow"
-        (click)="navigateToSection('crow', $event)"
-        class="nav-link text-slate-300 hover:text-sky-400 transition-colors"
-        >{{ "nav_crow_aircraft" | translate }}</a
-      >
 
-      <a
-        [routerLink]="['/', currentLang]"
-        fragment="contact"
-        (click)="navigateToSection('contact', $event)"
-        class="nav-link text-slate-300 hover:text-sky-400 transition-colors"
-        >{{ "nav_connect" | translate }}</a
-      >
-      <a
-        [routerLink]="['/', currentLang, 'products']"
-        routerLinkActive="active"
-        class="nav-link text-slate-300 hover:text-sky-400 transition-colors"
-        [routerLinkActiveOptions]="{ exact: true }"
-      >
-        {{ "products" | translate }}
-      </a>
-      <a
-        [routerLink]="['/', currentLang, 'blog']"
-        routerLinkActive="active"
-        class="nav-link text-slate-300 hover:text-sky-400 transition-colors"
-        [routerLinkActiveOptions]="{ exact: true }"
-      >
-        {{ "blog" | translate }}
-      </a>
-    </div>
+    <!-- Toggler/collapsible button -->
+    <button
+      class="navbar-toggler"
+      type="button"
+      (click)="toggleMobileMenu()"
+      aria-controls="navbarCollapse"
+      aria-expanded="false"
+      aria-label="Toggle navigation"
+    >
+      <span class="navbar-toggler-icon"></span>
+    </button>
 
-    <div class="flex items-center space-x-4">
-      <!-- Language Selector -->
-      <!-- <app-language-selector class="hidden md:block"></app-language-selector> -->
+    <!-- Navbar links -->
+    <div
+      class="collapse navbar-collapse"
+      [ngClass]="{ show: isMobileMenuOpen }"
+      id="navbarCollapse"
+    >
+      <ul class="navbar-nav me-auto mb-2 mb-md-0">
+        <li class="nav-item">
+          <a
+            class="nav-link text-light"
+            [routerLink]="['/', currentLang]"
+            fragment="vision"
+            (click)="navigateToSection('vision', $event)"
+            >{{ "nav_vision" | translate }}</a
+          >
+        </li>
+        <li class="nav-item">
+          <a
+            class="nav-link text-light"
+            [routerLink]="['/', currentLang]"
+            fragment="innovation"
+            (click)="navigateToSection('innovation', $event)"
+            >{{ "nav_innovation" | translate }}</a
+          >
+        </li>
+        <li class="nav-item">
+          <a
+            class="nav-link text-light"
+            [routerLink]="['/', currentLang]"
+            fragment="crow"
+            (click)="navigateToSection('crow', $event)"
+            >{{ "nav_crow_aircraft" | translate }}</a
+          >
+        </li>
+        <li class="nav-item">
+          <a
+            class="nav-link text-light"
+            [routerLink]="['/', currentLang]"
+            fragment="contact"
+            (click)="navigateToSection('contact', $event)"
+            >{{ "nav_connect" | translate }}</a
+          >
+        </li>
+        <li class="nav-item">
+          <a
+            class="nav-link text-light"
+            [routerLink]="['/', currentLang, 'products']"
+            routerLinkActive="active"
+            [routerLinkActiveOptions]="{ exact: true }"
+            >{{ "products" | translate }}</a
+          >
+        </li>
+        <li class="nav-item">
+          <a
+            class="nav-link text-light"
+            [routerLink]="['/', currentLang, 'blog']"
+            routerLinkActive="active"
+            [routerLinkActiveOptions]="{ exact: true }"
+            >{{ "blog" | translate }}</a
+          >
+        </li>
+      </ul>
 
-      <a
-        href="https://portal.hpsaviation.net/investor-form/new"
-        class="hidden md:block bg-transparent hover:bg-sky-900/50 text-sky-400 font-medium py-2 px-6 rounded-none transition-all border border-sky-500/50 hover:border-sky-400 hover:text-sky-300 relative overflow-hidden group"
-      >
-        <span class="relative z-10">{{ "nav_invest" | translate }}</span>
-        <span
-          class="absolute bottom-0 left-0 w-full h-0 bg-gradient-to-r from-sky-900/50 to-sky-800/30 transition-all duration-300 group-hover:h-full"
-        ></span>
-      </a>
-      <a
-        href="https://portal.hpsaviation.net/#login"
-        class="hidden md:block bg-transparent hover:bg-sky-900/50 text-sky-400 font-medium py-2 px-6 rounded-none transition-all border border-sky-500/50 hover:border-sky-400 hover:text-sky-300 relative overflow-hidden group"
-      >
-        <span class="relative z-10">{{ "investor_portal" | translate }}</span>
-        <span
-          class="absolute bottom-0 left-0 w-full h-0 bg-gradient-to-r from-sky-900/50 to-sky-800/30 transition-all duration-300 group-hover:h-full"
-        ></span>
-      </a>
-      <button (click)="toggleMobileMenu()" class="md:hidden text-white">
-        <svg
-          xmlns="http://www.w3.org/2000/svg"
-          class="h-6 w-6"
-          fill="none"
-          viewBox="0 0 24 24"
-          stroke="currentColor"
+      <!-- Action buttons + Language selector -->
+      <div class="d-flex align-items-center">
+        <a
+          href="https://portal.hpsaviation.net/investor-form/new"
+          class="btn btn-outline-info me-2 d-none d-md-inline-block"
         >
-          <path
-            stroke-linecap="round"
-            stroke-linejoin="round"
-            stroke-width="2"
-            d="M4 6h16M4 12h16M4 18h16"
-          ></path>
-        </svg>
-      </button>
-    </div>
-  </div>
+          {{ "nav_invest" | translate }}
+        </a>
+        <a
+          href="https://portal.hpsaviation.net/#login"
+          class="btn btn-outline-info d-none d-md-inline-block"
+        >
+          {{ "investor_portal" | translate }}
+        </a>
 
-  <!-- Mobile Menu -->
-  <div
-    id="mobileMenu"
-    class="md:hidden bg-black border-b border-sky-900/30"
-    [class.hidden]="!isMobileMenuOpen"
-  >
-    <div class="container mx-auto px-4 py-2 flex flex-col space-y-3">
-      <!-- Mobile Language Selector -->
-      <div class="py-2">
-        <!-- <app-language-selector></app-language-selector> -->
+        <!-- Language selector -->
+        <select
+          class="form-select form-select-sm ms-3"
+          [(ngModel)]="currentLang"
+          (change)="changeLanguage(currentLang)"
+        >
+          <option value="en">English</option>
+          <option value="ar">العربية</option>
+        </select>
       </div>
-
-      <a
-        [routerLink]="['/', currentLang]"
-        fragment="vision"
-        (click)="navigateToSection('vision', $event)"
-        class="py-2 text-slate-300 hover:text-sky-400 transition-colors"
-        >{{ "nav_vision" | translate }}</a
-      >
-      <a
-        [routerLink]="['/', currentLang]"
-        fragment="innovation"
-        (click)="navigateToSection('innovation', $event)"
-        class="py-2 text-slate-300 hover:text-sky-400 transition-colors"
-        >{{ "nav_innovation" | translate }}</a
-      >
-      <a
-        [routerLink]="['/', currentLang]"
-        fragment="crow"
-        (click)="navigateToSection('crow', $event)"
-        class="py-2 text-slate-300 hover:text-sky-400 transition-colors"
-        >{{ "nav_crow_aircraft" | translate }}</a
-      >
-      <a
-        [routerLink]="['/', currentLang]"
-        fragment="contact"
-        (click)="navigateToSection('contact', $event)"
-        class="py-2 text-slate-300 hover:text-sky-400 transition-colors"
-        >{{ "nav_connect" | translate }}</a
-      >
-      <a
-        class="py-2 text-slate-300 hover:text-sky-400 transition-colors"
-        [routerLink]="['/', currentLang, 'products']"
-      >
-        {{ "products" | translate }}</a
-      >
-      <a
-        class="py-2 text-slate-300 hover:text-sky-400 transition-colors"
-        [routerLink]="['/', currentLang, 'blog']"
-      >
-        {{ "blog" | translate }}</a
-      >
-      <a
-        href="https://portal.hpsaviation.net/investor-form/new"
-        class="bg-transparent border border-sky-500/50 text-sky-400 font-medium py-2 px-4 transition-colors text-center hover:bg-sky-900/30"
-      >
-        {{ "nav_invest" | translate }}
-      </a>
-      <a
-        href="https://portal.hpsaviation.net/#login"
-        class="bg-transparent border border-sky-500/50 text-sky-400 font-medium py-2 px-4 transition-colors text-center hover:bg-sky-900/30"
-      >
-        {{ "investor_portal" | translate }}
-      </a>
     </div>
   </div>
 </nav>
