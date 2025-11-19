@@ -1,0 +1,87 @@
+<div
+  *ngIf="loading"
+  class="fixed inset-0 bg-black flex items-center justify-center z-50 transition-opacity duration-700"
+>
+  <div class="text-center">
+    <svg
+      width="80"
+      height="60"
+      viewBox="0 0 120 100"
+      xmlns="http://www.w3.org/2000/svg"
+    >
+      <g id="car" transform="translate(30,45)">
+        <path
+          d="M6 15 
+            Q12 3 27 3 H45 Q57 3 63 15 
+            L66 24 L66 33 L6 33 Z"
+          fill="none"
+          stroke="#24C4C4"
+          stroke-width="2"
+          stroke-linejoin="round"
+          stroke-linecap="round"
+        />
+
+        <circle
+          cx="21"
+          cy="33"
+          r="5"
+          stroke="black"
+          stroke-width="2"
+          fill="white"
+        >
+          <animateTransform
+            attributeName="transform"
+            type="rotate"
+            from="0 21 33"
+            to="360 21 33"
+            dur="1s"
+            repeatCount="indefinite"
+          />
+        </circle>
+
+        <circle
+          cx="51"
+          cy="33"
+          r="5"
+          stroke="black"
+          stroke-width="2"
+          fill="white"
+        >
+          <animateTransform
+            attributeName="transform"
+            type="rotate"
+            from="0 51 33"
+            to="360 51 33"
+            dur="1s"
+            repeatCount="indefinite"
+          />
+        </circle>
+      </g>
+
+      <animateTransform
+        xlink:href="#car"
+        attributeName="transform"
+        type="translate"
+        values="30,45; 33,43.5; 30,45; 27,46.5; 30,45"
+        dur="0.6s"
+        repeatCount="indefinite"
+        begin="0s"
+        fill="freeze"
+      />
+
+      <animateTransform
+        xlink:href="#car"
+        attributeName="transform"
+        type="rotate"
+        values="0 30 45; 3 33 43.5; 0 30 45; -3 27 46.5; 0 30 45"
+        dur="0.6s"
+        repeatCount="indefinite"
+        begin="0s"
+        fill="freeze"
+        additive="sum"
+      />
+    </svg>
+
+    <p class="text-sky-400 mt-2">{{ text }}</p>
+  </div>
+</div>

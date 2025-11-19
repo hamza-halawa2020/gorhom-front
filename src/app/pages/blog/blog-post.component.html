@@ -1,0 +1,62 @@
+<app-loading-car [loading]="isLoading"></app-loading-car>
+<div [class.hidden]="isLoading">
+  <app-navbar></app-navbar>
+
+  <div class="page-content">
+    <section class="p-6 md:p-16 gradient-bg min-h-screen">
+      <div
+        class="max-w-6xl mx-auto tech-card rounded-2xl p-8 md:p-16 shadow-xl"
+      >
+        <button
+          class="border-glow px-6 py-3 mb-10 text-lg font-semibold hover:bg-blue-900 hover:border-blue-400 transition-all inline-flex items-center"
+          (click)="back()"
+        >
+          ← Back to Blog
+        </button>
+
+        <ng-container *ngIf="post">
+          <!-- Featured Image -->
+          <div
+            class="post-featured-container mb-12 flex justify-center"
+            *ngIf="post.featured_image_url"
+          >
+            <img
+              [src]="post.featured_image_url"
+              [alt]="post.featured_image_alt || post.title.rendered"
+              class="featured-image rounded-xl w-full max-h-[420px] object-cover shadow-2xl border border-blue-900"
+              style="margin-bottom: 2.5rem"
+            />
+          </div>
+
+          <div class="post-header mb-12">
+            <div
+              class="text-4xl md:text-4xl text-glow mb-6 font-extrabold text-center tracking-tight"
+              [innerHTML]="post.title.rendered"
+            ></div>
+
+            <div class="post-meta mb-6">
+              <div
+                class="flex flex-wrap gap-6 justify-center text-base text-gray-400"
+              >
+                <span>
+                  📅 <b>Published:</b> {{ post.date | date : "MMM d, yyyy" }}
+                </span>
+                <span *ngIf="post.modified !== post.date">
+                  ✏️ <b>Updated:</b> {{ post.modified | date : "MMM d, yyyy" }}
+                </span>
+              </div>
+            </div>
+          </div>
+
+          <!-- Content -->
+          <div
+            class="blog-content text-gray-100 leading-relaxed prose prose-invert max-w-none text-lg md:text-xl space-y-6"
+            [innerHTML]="post.content.rendered"
+          ></div>
+        </ng-container>
+      </div>
+    </section>
+
+    <app-footer></app-footer>
+  </div>
+</div>

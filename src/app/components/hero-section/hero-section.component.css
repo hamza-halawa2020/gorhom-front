@@ -1,0 +1,124 @@
+/* Blue directional lighting effects to match website theme */
+#carViewer {
+  position: relative;
+  filter: drop-shadow(0 0 20px rgba(56, 189, 248, 0.3));
+}
+
+#carViewer::before {
+  content: "";
+  position: absolute;
+  top: -20px;
+  left: -20px;
+  right: -20px;
+  bottom: -20px;
+  background: radial-gradient(
+    ellipse at center,
+    rgba(56, 189, 248, 0.15) 0%,
+    rgba(56, 189, 248, 0.08) 40%,
+    transparent 70%
+  );
+  pointer-events: none;
+  z-index: -1;
+  border-radius: 20px;
+}
+
+#carViewer::after {
+  content: "";
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  width: 120%;
+  height: 120%;
+  transform: translate(-50%, -50%);
+  background: conic-gradient(
+    from 45deg,
+    transparent 0deg,
+    rgba(56, 189, 248, 0.1) 45deg,
+    rgba(14, 165, 233, 0.15) 90deg,
+    rgba(56, 189, 248, 0.1) 135deg,
+    transparent 180deg,
+    rgba(56, 189, 248, 0.05) 225deg,
+    transparent 270deg,
+    rgba(56, 189, 248, 0.1) 315deg,
+    transparent 360deg
+  );
+  pointer-events: none;
+  z-index: -1;
+  border-radius: 50%;
+  animation: rotate-light 20s linear infinite;
+}
+
+@keyframes rotate-light {
+  0% {
+    transform: translate(-50%, -50%) rotate(0deg);
+  }
+  100% {
+    transform: translate(-50%, -50%) rotate(360deg);
+  }
+}
+
+/* Additional blue accent lighting */
+.hero-section {
+  position: relative;
+}
+
+.hero-section::before {
+  content: "";
+  position: absolute;
+  top: 30%;
+  left: 10%;
+  width: 200px;
+  height: 200px;
+  background: radial-gradient(
+    circle,
+    rgba(56, 189, 248, 0.2) 0%,
+    rgba(56, 189, 248, 0.1) 50%,
+    transparent 100%
+  );
+  border-radius: 50%;
+  pointer-events: none;
+  z-index: 1;
+  animation: pulse-blue 4s ease-in-out infinite;
+}
+
+.hero-section::after {
+  content: "";
+  position: absolute;
+  top: 60%;
+  right: 15%;
+  width: 150px;
+  height: 150px;
+  background: radial-gradient(
+    circle,
+    rgba(14, 165, 233, 0.15) 0%,
+    rgba(14, 165, 233, 0.08) 50%,
+    transparent 100%
+  );
+  border-radius: 50%;
+  pointer-events: none;
+  z-index: 1;
+  animation: pulse-blue 6s ease-in-out infinite reverse;
+}
+
+@keyframes pulse-blue {
+  0%,
+  100% {
+    opacity: 0.3;
+    transform: scale(1);
+  }
+  50% {
+    opacity: 0.6;
+    transform: scale(1.1);
+  }
+}
+
+/* Responsive model viewer - shorter on mobile, full height on desktop */
+.model-viewer-responsive {
+  height: 200px; /* Default mobile height */
+}
+
+@media (min-width: 768px) {
+  .model-viewer-responsive {
+    height: 500px; /* Full height on desktop */
+  }
+}

@@ -1,0 +1,73 @@
+<div class="relative" style="width: var(--language-selector-width, 140px)">
+  <button
+    (click)="toggleDropdown()"
+    class="flex items-center justify-center w-full py-2 px-4 bg-transparent hover:bg-sky-900/50 text-sky-400 font-medium transition-all border border-sky-500/50 hover:border-sky-400 hover:text-sky-300 relative overflow-hidden group rounded-none"
+  >
+    <!-- Centered container with three elements -->
+    <div class="flex items-center space-x-2 relative z-10">
+      <img
+        [src]="getCurrentLanguageInfo()?.flag"
+        [alt]="getCurrentLanguageInfo()?.name + ' flag'"
+        class="w-5 h-4 object-cover rounded-sm flex-shrink-0"
+      />
+      <span class="text-sm font-medium whitespace-nowrap">{{
+        getCurrentLanguageInfo()?.name
+      }}</span>
+      <svg
+        class="w-4 h-4 transition-transform duration-200 flex-shrink-0"
+        [class.rotate-180]="isDropdownOpen"
+        fill="none"
+        stroke="currentColor"
+        viewBox="0 0 24 24"
+        width="16"
+        height="16"
+      >
+        <path
+          stroke-linecap="round"
+          stroke-linejoin="round"
+          stroke-width="2"
+          d="M19 9l-7 7-7-7"
+        ></path>
+      </svg>
+    </div>
+    <!-- Hover background effect -->
+    <span
+      class="absolute bottom-0 left-0 w-full h-0 bg-gradient-to-r from-sky-900/50 to-sky-800/30 transition-all duration-300 group-hover:h-full"
+    ></span>
+  </button>
+
+  <div
+    *ngIf="isDropdownOpen"
+    class="absolute top-full mt-2 right-0 bg-black border border-sky-500/50 rounded-none shadow-xl z-50"
+    style="width: var(--language-selector-width, 140px)"
+  >
+    <div class="py-2 px-2">
+      <button
+        *ngFor="let lang of languages"
+        (click)="selectLanguage(lang.code)"
+        class="w-full flex items-center space-x-2 px-4 py-2 text-sky-400 hover:text-sky-300 hover:bg-sky-900/50 transition-all border-0 bg-transparent my-1"
+      >
+        <img
+          [src]="lang.flag"
+          [alt]="lang.name + ' flag'"
+          class="w-5 h-4 object-cover rounded-sm"
+        />
+        <span class="text-sm font-medium flex-1">{{ lang.name }}</span>
+        <div class="w-4 h-4 flex items-center justify-center flex-shrink-0">
+          <svg
+            *ngIf="lang.code === currentLanguage"
+            class="w-4 h-4"
+            fill="currentColor"
+            viewBox="0 0 20 20"
+          >
+            <path
+              fill-rule="evenodd"
+              d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z"
+              clip-rule="evenodd"
+            ></path>
+          </svg>
+        </div>
+      </button>
+    </div>
+  </div>
+</div>

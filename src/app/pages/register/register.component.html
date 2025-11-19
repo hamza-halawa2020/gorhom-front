@@ -1,0 +1,74 @@
+<app-navbar></app-navbar>
+
+<div class="page-content">
+  <div id="registerScreen" class="screen active">
+    <div class="auth-shell">
+      <div>
+        <div class="auth-logo"><span>HPS</span> AVIATION</div>
+        <div class="auth-title">Investor Onboarding</div>
+        <div class="auth-sub">
+          Register as an investor to access your HPS Aviation investor
+          dashboard.
+        </div>
+      </div>
+
+      <div class="auth-grid">
+        <div class="form-group">
+          <label>Full name</label>
+          <input id="regName" type="text" placeholder="Ahmed Hamza" />
+        </div>
+        <div class="form-group">
+          <label>Email</label>
+          <input id="regEmail" type="email" placeholder="you@example.com" />
+        </div>
+        <div class="form-group">
+          <label>Phone</label>
+          <input id="regPhone" type="tel" placeholder="+971…" />
+        </div>
+        <div class="form-group">
+          <label>Nationality</label>
+          <input id="regNationality" type="text" placeholder="Egyptian" />
+        </div>
+      </div>
+
+      <div class="form-group">
+        <label>Proposed investment amount (USD)</label>
+        <input
+          id="regAmount"
+          type="number"
+          min="0"
+          step="1000"
+          placeholder="25000"
+        />
+        <div class="hint">
+          This is indicative only. Your account will remain inactive until
+          payment is received and verified.
+        </div>
+      </div>
+
+      <!-- Referral code input -->
+      <div class="form-group">
+        <label>Referral code (optional)</label>
+        <input
+          id="regReferral"
+          type="text"
+          placeholder="Enter referral code if available"
+        />
+        <div class="hint">
+          If another investor invited you, enter their investor ID or referral
+          code so they can receive their bonus.
+        </div>
+      </div>
+
+      <div class="auth-footer">
+        <button class="btn-primary" id="btnRegister">
+          Register &amp; send verification email
+        </button>
+        <button class="btn-ghost" id="goToLoginFromReg">
+          Already registered? Sign in
+        </button>
+      </div>
+    </div>
+  </div>
+</div>
+<app-footer></app-footer>

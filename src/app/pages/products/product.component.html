@@ -1,0 +1,26 @@
+<app-navbar></app-navbar>
+
+<div class="page-content">
+  <div class="p-6 md:p-12 gradient-bg">
+  <div class="max-w-5xl mx-auto">
+    <div class="text-4xl text-glow mb-6 font-bold">Products</div>
+
+    <div class="grid gap-6 grid-cols-1 md:grid-cols-2">
+      <article *ngFor="let p of products" class="tech-card p-4 rounded-md product-card">
+        <div class="product-thumb" *ngIf="p.images?.length">
+          <img [src]="p.images[0]" alt="{{p.name}}" />
+        </div>
+        <div class="product-body">
+          <h3 class="text-xl text-white mt-6">{{p.name}}</h3>
+          <div class="text-sm text-gray-400 mb-2">{{p.price}}</div>
+          <p class="text-gray-200">{{p.excerpt}}</p>
+          <div class="mt-3">
+            <button class="read-btn border-glow px-6" (click)="openProduct(p)">View details</button>
+          </div>
+        </div>
+      </article>
+    </div>
+  </div>
+</div>
+  <app-footer></app-footer>
+</div>

@@ -1,0 +1,53 @@
+/* Language Selector Styles */
+.rtl {
+  direction: rtl;
+}
+
+/* Dropdown Animation */
+.dropdown-enter {
+  opacity: 0;
+  transform: translateY(-10px);
+}
+
+.dropdown-enter-active {
+  opacity: 1;
+  transform: translateY(0);
+  transition: opacity 0.2s ease, transform 0.2s ease;
+}
+
+/* Mobile Responsive */
+@media (max-width: 768px) {
+  .language-selector {
+    position: relative;
+  }
+
+  .dropdown-menu {
+    position: absolute;
+    top: 100%;
+    right: 0;
+    left: auto;
+    min-width: 140px;
+  }
+}
+
+/* RTL Specific Styles */
+[dir="rtl"] .dropdown-menu {
+  right: auto;
+  left: 0;
+}
+
+[dir="rtl"] .language-selector-button {
+  flex-direction: row-reverse;
+}
+
+/* Hover Effects */
+.language-option:hover {
+  background-color: rgba(14, 165, 233, 0.1);
+  color: rgb(56, 189, 248);
+}
+
+/* Active State */
+.language-option.active {
+  background-color: rgba(14, 165, 233, 0.2);
+  color: rgb(56, 189, 248);
+}

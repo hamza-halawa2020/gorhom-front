@@ -1,0 +1,45 @@
+/* Enable smooth scrolling */
+html {
+  scroll-behavior: smooth;
+}
+
+/* Green gradient background similar to blue-gradient */
+.green-gradient {
+  background: linear-gradient(
+    135deg,
+    rgba(6, 78, 59, 0.9) 0%,
+    rgba(4, 120, 87, 0.95) 25%,
+    rgba(5, 150, 105, 1) 50%,
+    rgba(16, 185, 129, 0.8) 75%,
+    rgba(52, 211, 153, 0.6) 100%
+  );
+  position: relative;
+}
+
+.green-gradient::before {
+  content: "";
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: linear-gradient(
+    135deg,
+    rgba(52, 211, 153, 0.2) 0%,
+    rgba(16, 185, 129, 0.1) 30%,
+    rgba(5, 150, 105, 0.15) 60%,
+    rgba(4, 120, 87, 0.25) 100%
+  );
+  border-radius: inherit;
+  pointer-events: none;
+}
+
+/* Force green border - override tech-card styles */
+.green-gradient {
+  border: 1px solid rgba(16, 185, 129, 0.5) !important;
+}
+
+.green-gradient:hover {
+  border: 1px solid rgba(52, 211, 153, 1) !important;
+  box-shadow: 0 0 10px rgba(52, 211, 153, 0.5);
+}

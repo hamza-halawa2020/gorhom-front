@@ -1,0 +1,71 @@
+<app-loading-car [loading]="isLoading"></app-loading-car>
+<div [class.hidden]="isLoading">
+  <app-navbar></app-navbar>
+
+  <div class="page-content">
+    <section class="p-6 md:p-12 gradient-bg min-h-screen">
+      <div class="max-w-6xl mx-auto">
+        <div class="text-4xl md:text-5xl mb-2 text-glow font-bold">Blog</div>
+        <p class="text-lg text-gray-300 mb-12">
+          Latest updates, design notes and roadmap posts.
+        </p>
+
+        <div class="space-y-8">
+          <article
+            *ngFor="let post of posts"
+            id="{{ post.id }}"
+            class="tech-card rounded-lg post-list-item hover:shadow-lg transition-shadow duration-300"
+          >
+            <div class="post-row">
+              <div class="post-thumb">
+                <img
+                  [src]="
+                    post.featured_image_url
+                      ? post.featured_image_url
+                      : 'assets/img/1.jpeg'
+                  "
+                  [alt]="post.featured_image_alt || post.title.rendered"
+                  class="featured-img"
+                />
+              </div>
+
+              <div class="post-content">
+                <div class="post-meta">
+                  <div
+                    class="text-xl md:text-2xl text-white mb-2 font-bold hover:text-blue-400 transition-colors"
+                    [innerHTML]="post.title.rendered"
+                  ></div>
+
+                  <div class="text-sm text-gray-400">
+                    {{ post.date | date : "short" }}
+                  </div>
+                </div>
+
+                <p class="post-excerpt mt-4 text-gray-200 line-clamp-3">
+                  {{ truncateWords(post.excerpt.rendered, 30) }}
+                </p>
+
+                <div class="mt-5">
+                  <button
+                    class="read-btn border-glow hover:bg-blue-900 hover:border-blue-400 transition-all"
+                    (click)="openPost(post)"
+                  >
+                    Read More →
+                  </button>
+                </div>
+              </div>
+            </div>
+          </article>
+        </div>
+      </div>
+
+      <div class="text-center mt-6" *ngIf="!allLoaded">
+        <button class="border-glow px-6 py-3" (click)="loadPosts()">
+          Load More
+        </button>
+      </div>
+    </section>
+
+    <app-footer></app-footer>
+  </div>
+</div>
