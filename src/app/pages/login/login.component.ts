@@ -7,6 +7,7 @@ import { FooterComponent } from '../../components/footer/footer.component';
   selector: 'app-login-page',
   templateUrl: './login.component.html',
   styleUrls: ['../register/register.component.css'],
+  standalone: true,
   imports: [CommonModule, NavbarComponent, FooterComponent],
 })
 export class LoginComponent {}

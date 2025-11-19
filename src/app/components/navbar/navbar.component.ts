@@ -16,6 +16,7 @@ import {Subscription} from "rxjs";
   imports: [CommonModule, TranslatePipe, LanguageSelectorComponent,RouterModule  ],
   templateUrl: "./navbar.component.html",
   styleUrl: "./navbar.component.css",
+  
 })
 export class NavbarComponent implements OnInit, AfterViewInit, OnDestroy {
   isMobileMenuOpen: boolean = false;
