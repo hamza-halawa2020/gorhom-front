@@ -1,0 +1,69 @@
+<app-navbar />
+
+<app-page-banner />
+
+<div class="border-bottom"></div>
+
+<!-- Contact Info -->
+
+<!-- START ADDRESS -->
+<section class="address_area section-padding">
+    <div class="container">
+        <div class="row text-center">
+            <div
+                class="col-lg-4 col-sm-4 col-xs-12 wow fadeInUp"
+                data-wow-duration="1s"
+                data-wow-delay="0.1s"
+                data-wow-offset="0"
+            >
+                <div class="single_address">
+                    <i class="fa-solid fa-location-dot"></i>
+                    <h4>{{ "OUR_LOCATION" | translate }}</h4>
+                    <p>
+                        {{ "LOCATION_ADDRESS" | translate }}
+                    </p>
+                </div>
+            </div>
+            <!-- END COL -->
+            <div
+                class="col-lg-4 col-sm-4 col-xs-12 wow fadeInUp"
+                data-wow-duration="1s"
+                data-wow-delay="0.2s"
+                data-wow-offset="0"
+            >
+                <div class="single_address sabr">
+                    <i class="fa-solid fa-mobile-screen-button"></i>
+                    <h4>{{ "TELEPHONE" | translate }}</h4>
+                    <p>{{ "TELEPHONE_1" | translate }}</p>
+                    <p>{{ "TELEPHONE_2" | translate }}</p>
+                </div>
+            </div>
+            <!-- END COL -->
+            <div
+                class="col-lg-4 col-sm-4 col-xs-12 wow fadeInUp"
+                data-wow-duration="1s"
+                data-wow-delay="0.3s"
+                data-wow-offset="0"
+            >
+                <div class="single_address">
+                    <i class="fa-solid fa-envelope"></i>
+                    <h4>{{ "SEND_EMAIL" | translate }}</h4>
+                    <p>{{ infoEmail }}</p>
+                    <p>{{ adminEmail }}</p>
+                </div>
+            </div>
+            <!-- END COL -->
+        </div>
+        <!--- END ROW -->
+    </div>
+    <!--- END CONTAINER -->
+</section>
+<!-- END ADDRESS -->
+
+<!-- End Contact Info -->
+
+<app-contact />
+
+<app-footer />
+
+<app-back-to-top />

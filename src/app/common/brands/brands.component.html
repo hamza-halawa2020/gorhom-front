@@ -1,0 +1,27 @@
+<div [dir]="translate.currentLang === 'ar' ? 'rtl' : 'ltr'">
+    <section class="">
+        <div class="container">
+            <div class="text-center mt-5 mb-3">
+                <h2>{{ "OUR_BRANDS" | translate }}</h2>
+            </div>
+            <div class="upcoming-courses-slides mx-auto">
+                <owl-carousel-o [options]="currentOptions">
+                    <ng-template carouselSlide *ngFor="let slide of sliderData">
+                        <a routerLink="/categories/{{ slide.id }}">
+                            <div class="event-slide position-relative">
+                                <div class="event-img">
+                                    <img
+                                        src="{{ image + slide.image }}"
+                                        class="bg-image max-height"
+                                        alt="bg-image"
+                                    />
+                                </div>
+                                <div class="p-2 text-center">{{slide.name}}</div>
+                            </div>
+                        </a>
+                    </ng-template>
+                </owl-carousel-o>
+            </div>
+        </div>
+    </section>
+</div>

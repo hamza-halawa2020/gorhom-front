@@ -1,0 +1,38 @@
+<div [dir]="translateService.currentLang === 'ar' ? 'rtl' : 'ltr'">
+    <!-- START FAQS -->
+    <!-- <section class="faqs section-padding"> -->
+        <div class="container">
+            <!-- <div class="section-title text-center">
+                <p [innerHTML]="'OUR_FAQS' | translate"></p>
+            </div> -->
+
+            <div class="row justify-content-center">
+                <div class="col-lg-12 col-sm-12 col-xs-12">
+                    <div
+                        ngbAccordion
+                        #acc="ngbAccordion"
+                        [closeOthers]="true"
+                        id="accordionExample"
+                    >
+                        <div ngbAccordionItem *ngFor="let faqs of data">
+                            <h2 ngbAccordionHeader>
+                                <button ngbAccordionButton>
+                                    {{
+                                        faqs.translatedQuestion || faqs.question
+                                    }}
+                                </button>
+                            </h2>
+                            <div ngbAccordionCollapse>
+                                <div class="accordion-body">
+                                    {{ faqs.translatedAnswer || faqs.answer }}
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <!-- END COL -->
+            </div>
+        </div>
+    <!-- </section> -->
+    <!-- END FAQS -->
+</div>

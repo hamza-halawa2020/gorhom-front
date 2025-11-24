@@ -1,0 +1,455 @@
+<div [dir]="translateService.currentLang === 'ar' ? 'rtl' : 'ltr'">
+    <!-- Loading Spinner -->
+    <div *ngIf="isLoading" class="loader-overlay">
+        <div class="spinner"></div>
+        <p>{{ "LOADING" | translate }}</p>
+    </div>
+
+    <app-navbar />
+
+    <app-page-banner />
+
+    <!-- Success Message as a Toast -->
+    <div
+        *ngIf="successMessage"
+        class="toast-container position-fixed top-0"
+        [class.start-0]="translateService.currentLang === 'ar'"
+        [class.end-0]="translateService.currentLang !== 'ar'"
+        p-3
+    >
+        <div
+            class="toast show"
+            role="alert"
+            aria-live="assertive"
+            aria-atomic="true"
+        >
+            <div class="toast-header">
+                <strong
+                    [class.ms-auto]="translateService.currentLang === 'ar'"
+                    [class.me-auto]="translateService.currentLang !== 'ar'"
+                    class="text-success"
+                >
+                    {{ "SUCCESS" | translate }}
+                </strong>
+            </div>
+            <div class="toast-body">
+                <h6>{{ successMessage }}</h6>
+            </div>
+        </div>
+    </div>
+
+    <!-- Error Message as a Toast -->
+    <div
+        *ngIf="errorMessage"
+        class="toast-container position-fixed top-0"
+        [class.start-0]="translateService.currentLang === 'ar'"
+        [class.end-0]="translateService.currentLang !== 'ar'"
+        p-3
+    >
+        <div
+            class="toast show"
+            role="alert"
+            aria-live="assertive"
+            aria-atomic="true"
+        >
+            <div class="toast-header">
+                <strong
+                    [class.ms-auto]="translateService.currentLang === 'ar'"
+                    [class.me-auto]="translateService.currentLang !== 'ar'"
+                    class="text-danger"
+                >
+                    {{ "ERROR" | translate }}
+                </strong>
+            </div>
+            <div class="toast-body">
+                <h6>{{ errorMessage }}</h6>
+            </div>
+        </div>
+    </div>
+
+    <div *ngIf="checkoutData; else elseBlock">
+        <!-- Start Checkout -->
+        <section class="shop checkout section">
+            <div class="container">
+                <div class="row">
+                    <div class="col-lg-8 col-12">
+                        <div class="checkout-form">
+                            <div class="row">
+                                <div class="col-12">
+                                    <h2 class="checkout-title">
+                                        {{ "CHECKOUT_DETAILS" | translate }}
+                                    </h2>
+
+                                    <!-- Display Order Items -->
+                                    <div
+                                        class="checkout-section"
+                                        *ngIf="checkoutData?.orderItems"
+                                    >
+                                        <h4 class="section-title">
+                                            {{ "ORDER_ITEMS" | translate }}
+                                        </h4>
+                                        <ul class="order-items-list">
+                                            <li
+                                                class="order-item"
+                                                *ngFor="
+                                                    let item of checkoutData.orderItems
+                                                "
+                                            >
+                                                <span class="product-id">
+                                                    {{ "PRODUCT" | translate }}:
+                                                    <a
+                                                        routerLink="/product/{{
+                                                            item.product_id
+                                                        }}"
+                                                    >
+                                                        <img
+                                                            width="50px"
+                                                            height="50px"
+                                                            [src]="
+                                                                image +
+                                                                getProductDetails(
+                                                                    item.product_id
+                                                                ).image
+                                                            "
+                                                            [alt]="
+                                                                getProductDetails(
+                                                                    item.product_id
+                                                                ).title
+                                                            "
+                                                            class="product-image rounded"
+                                                        />
+                                                    </a>
+                                                </span>
+                                                <span class="quantity">
+                                                    {{
+                                                        "QUANTITY" | translate
+                                                    }}:
+                                                    {{ item.quantity }}
+                                                </span>
+                                            </li>
+                                        </ul>
+                                    </div>
+
+                                    <!-- Display Address -->
+                                    <div class="checkout-section">
+                                        <h4 class="section-title">
+                                            {{ "ADDRESS" | translate }}
+                                        </h4>
+                                        <span class="detail-label">
+                                            {{ "COUNTRY" | translate }}:
+                                        </span>
+                                        <div
+                                            class="col country-details order-item"
+                                            *ngIf="checkoutData?.country_id"
+                                        >
+                                            {{ totalPriceData.country }}
+                                        </div>
+                                        <span class="detail-label">
+                                            {{ "CITY" | translate }}:
+                                        </span>
+                                        <div
+                                            class="col city-details order-item"
+                                            *ngIf="checkoutData?.city_id"
+                                        >
+                                            {{ totalPriceData.city }}
+                                        </div>
+                                        <span class="detail-label">
+                                            {{ "ADDRESS" | translate }}:
+                                        </span>
+                                        <div
+                                            *ngIf="checkoutData?.address"
+                                            class="col address-details order-item"
+                                        >
+                                            {{ checkoutData.address }}
+                                        </div>
+                                        <span class="detail-label">
+                                            {{ "NOTES" | translate }}:
+                                        </span>
+                                        <div
+                                            *ngIf="checkoutData?.notes"
+                                            class="col address-details order-item"
+                                        >
+                                            {{ checkoutData.notes }}
+                                        </div>
+                                    </div>
+
+                                    <!-- Display Coupon -->
+                                    <div
+                                        class="checkout-section"
+                                        *ngIf="checkoutData?.coupon_id"
+                                    >
+                                        <h4 class="section-title">
+                                            {{ "COUPON" | translate }}
+                                        </h4>
+                                        <p class="coupon-details order-item">
+                                            {{ "COUPON" | translate }}:
+                                            {{
+                                                totalPriceData.couponName ||
+                                                    totalPriceData.coupon ||
+                                                    "N/A"
+                                            }}
+                                        </p>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-lg-4 col-12">
+                        <div class="order-details">
+                            <!-- Order Widget -->
+                            <div class="single-widget">
+                                <h2>{{ "CART_TOTALS" | translate }}</h2>
+
+                                <div class="container">
+                                    <table
+                                        class="table table-bordered text-center"
+                                    >
+                                        <thead class="table-dark">
+                                            <tr>
+                                                <th>
+                                                    {{
+                                                        "DESCRIPTION"
+                                                            | translate
+                                                    }}
+                                                </th>
+                                                <th>
+                                                    {{ "AMOUNT" | translate }}
+                                                </th>
+                                            </tr>
+                                        </thead>
+                                        <tbody>
+                                            <tr>
+                                                <td>
+                                                    {{
+                                                        "SUB_TOTAL" | translate
+                                                    }}
+                                                </td>
+                                                <td>
+                                                    <span
+                                                        *ngIf="
+                                                            totalPriceData?.totalAmount
+                                                        "
+                                                    >
+                                                        {{
+                                                            totalPriceData.totalAmount
+                                                        }}
+                                                    </span>
+                                                </td>
+                                            </tr>
+                                            <tr>
+                                                <td>
+                                                    {{ "DISCOUNT" | translate }}
+                                                </td>
+                                                <td>
+                                                    <span
+                                                            class="badge bg-success"
+                                                            *ngIf="totalPriceData?.discount"
+                                                            >
+                                                    {{totalPriceData?.discount | number:'1.0-0' }}%
+                                                
+                                                </span>
+                                                <span class="badge bg-danger" *ngIf="!totalPriceData?.discount">
+                                                                0
+                                                </span>
+                                                </td>
+                                            </tr>
+                                            <tr
+                                                *ngIf="
+                                                    totalPriceData?.shipmentCost
+                                                "
+                                            >
+                                                <td>
+                                                    {{ "SHIPPING" | translate }}
+                                                </td>
+                                                <td>
+                                                    {{
+                                                        totalPriceData.shipmentCost
+                                                    }}
+                                                </td>
+                                            </tr>
+                                            
+                                            <tr class="table-success">
+                                                <td>
+                                                    <strong>{{
+                                                        "TOTAL" | translate
+                                                    }}</strong>
+                                                </td>
+                                                <td>
+                                                    <span
+                                                        *ngIf="
+                                                            totalPriceData?.finalPrice
+                                                        "
+                                                    >
+                                                        {{
+                                                            totalPriceData.finalPrice
+                                                        }}
+                                                    </span>
+                                                </td>
+                                            </tr>
+                                        </tbody>
+                                    </table>
+                                </div>
+                            </div>
+                            <!--/ End Order Widget -->
+                            <!-- Order Widget -->
+                            <div class="single-widget">
+                                <h2>{{ "PAYMENTS" | translate }}</h2>
+                                <div class="content">
+                                    <div class="container mt-2">
+                                        <div class="form-check">
+                                            <input
+                                                class="form-check-input"
+                                                type="radio"
+                                                name="payment_method"
+                                                id="cashOnDelivery"
+                                                (change)="
+                                                    updatePaymentMethod(
+                                                        'cash_on_delivery'
+                                                    )
+                                                "
+                                            />
+                                            <label
+                                                class="form-check-label"
+                                                for="cashOnDelivery"
+                                            >
+                                                {{
+                                                    "CASH_ON_DELIVERY"
+                                                        | translate
+                                                }}
+                                            </label>
+                                        </div>
+                                        <div class="form-check">
+                                            <input
+                                                class="form-check-input"
+                                                type="radio"
+                                                name="payment_method"
+                                                id="visaMaster"
+                                                (change)="
+                                                    updatePaymentMethod('visa')
+                                                "
+                                            />
+                                            <label
+                                                class="form-check-label"
+                                                for="visaMaster"
+                                            >
+                                                {{
+                                                    "VISA_MASTER_CARD"
+                                                        | translate
+                                                }}
+                                            </label>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <!--/ End Order Widget -->
+                            <!-- Payment Method Widget -->
+                            <div class="single-widget payement">
+                                <div class="content">
+                                    <img
+                                        src="/assets/images/5.png"
+                                        class="img-fluid"
+                                        [alt]="'PAYMENT_METHODS' | translate"
+                                    />
+                                </div>
+                            </div>
+                            <!--/ End Payment Method Widget -->
+                            <!-- Button Widget -->
+                            <div
+                                class="single-widget get-button"
+                                *ngIf="isLoggedIn"
+                            >
+                                <div class="content">
+                                    <!-- Disable button during loading -->
+                                    <button
+                                        (click)="proceedToCheckout()"
+                                        class="btn"
+                                        [title]="
+                                            'PROCEED_TO_CHECKOUT' | translate
+                                        "
+                                        [disabled]="isLoading"
+                                    >
+                                        {{ "PROCEED_TO_CHECKOUT" | translate }}
+                                    </button>
+                                </div>
+                            </div>
+                            <div
+                                class="single-widget get-button"
+                                *ngIf="!isLoggedIn"
+                            >
+                                <div class="content">
+                                    <!-- Disable button during loading -->
+                                    <button
+                                        (click)="proceedToClientCheckout()"
+                                        class="btn"
+                                        [title]="
+                                            'PROCEED_TO_CHECKOUT' | translate
+                                        "
+                                        [disabled]="isLoading"
+                                    >
+                                        {{ "PROCEED_TO_CHECKOUT" | translate }}
+                                    </button>
+                                </div>
+                            </div>
+                            <!--/ End Button Widget -->
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+        <!--/ End Checkout -->
+
+        <!-- Start Shop Services Area -->
+        <section class="shop-services section" style="margin-bottom: 60px">
+            <div class="container">
+                <div class="row">
+                    <div class="col-lg-3 col-md-6 col-12">
+                        <div class="single-service">
+                            <i class="fa-solid fa-rocket"></i>
+                            <h4>{{ "FREE_SHIPPING" | translate }}</h4>
+                            <p>{{ "FREE_SHIPPING_DESC" | translate }}</p>
+                        </div>
+                    </div>
+                    <div class="col-lg-3 col-md-6 col-12">
+                        <div class="single-service">
+                            <i class="fa-solid fa-arrows-rotate"></i>
+                            <h4>{{ "FREE_RETURN" | translate }}</h4>
+                            <p>{{ "FREE_RETURN_DESC" | translate }}</p>
+                        </div>
+                    </div>
+                    <div class="col-lg-3 col-md-6 col-12">
+                        <div class="single-service">
+                            <i class="fa-solid fa-lock"></i>
+                            <h4>{{ "SECURE_PAYMENT" | translate }}</h4>
+                            <p>{{ "SECURE_PAYMENT_DESC" | translate }}</p>
+                        </div>
+                    </div>
+                    <div class="col-lg-3 col-md-6 col-12">
+                        <div class="single-service">
+                            <i class="fa-solid fa-tags"></i>
+                            <h4>{{ "BEST_PRICE" | translate }}</h4>
+                            <p>{{ "BEST_PRICE_DESC" | translate }}</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+        <!-- End Shop Services Area -->
+    </div>
+
+    <ng-template #elseBlock>
+        <div class="container text-center">
+            <div class="row">
+                <div class="empty-cart my-5">
+                    <h3>{{ "NO_CHECKOUT_DATA" | translate }}</h3>
+                    <a routerLink="/products" class="btn_one mt-3">
+                        {{ "CONTINUE_SHOPPING" | translate }}
+                    </a>
+                </div>
+            </div>
+        </div>
+    </ng-template>
+
+    <app-footer />
+
+    <app-back-to-top />
+</div>

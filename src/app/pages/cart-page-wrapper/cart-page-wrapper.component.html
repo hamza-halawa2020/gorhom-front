@@ -1,0 +1,6 @@
+<ng-container *ngIf="userType === 'loggedIn'; else guestCart">
+    <app-cart-page></app-cart-page>
+</ng-container>
+<ng-template #guestCart>
+    <app-client-cart-page></app-client-cart-page>
+</ng-template>

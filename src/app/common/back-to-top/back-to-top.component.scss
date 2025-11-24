@@ -1,0 +1,38 @@
+.go-top {
+    z-index: 5;
+    right: 30px;
+    width: 50px;
+    height: 50px;
+    bottom: 150px;
+    cursor: pointer;
+    color: #013c4a;
+    transition: var(--transition);
+    box-shadow: rgba(0, 0, 0, 0.05) 0px 6px 24px 0px,
+        rgba(0, 0, 0, 0.08) 0px 0px 0px 1px;
+
+    i {
+        left: 0;
+        top: 50%;
+        right: 0;
+        margin-top: 1px;
+        position: absolute;
+        transform: translateY(-50%);
+    }
+    &:hover {
+        background-color: #013c4a;
+    }
+}
+
+/* Max width 767px */
+@media only screen and (max-width: 767px) {
+    .go-top {
+        right: 30px;
+        width: 50px;
+        bottom: 140px;
+        height: 50px;
+
+        i {
+            margin-top: 0;
+        }
+    }
+}

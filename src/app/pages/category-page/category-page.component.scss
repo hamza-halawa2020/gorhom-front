@@ -1,0 +1,92 @@
+.grid-view-options {
+    display: flex;
+    gap: 10px;
+
+    .btn {
+        padding: 5px 10px;
+        border-radius: 5px;
+        border: 1px solid #ccc;
+        background: #fff;
+
+        &.active {
+            border-color: #000;
+
+            .custom-grid-icon {
+                span {
+                    background: #fff;
+                }
+            }
+        }
+    }
+
+    .custom-grid-icon {
+        display: flex;
+        gap: 2px;
+
+        &.grid-2 {
+            span {
+                width: 10px;
+                height: 10px;
+                background: #999;
+                border: 1px solid #ccc;
+            }
+        }
+
+        &.grid-3 {
+            span {
+                width: 8px;
+                height: 10px;
+                background: #999;
+                border: 1px solid #ccc;
+            }
+        }
+
+        &.grid-4 {
+            span {
+                width: 6px;
+                height: 10px;
+                background: #999;
+                border: 1px solid #ccc;
+            }
+        }
+
+        &.grid-6 {
+            span {
+                width: 4px;
+                height: 10px;
+                background: #999;
+                border: 1px solid #ccc;
+            }
+        }
+    }
+}
+.product-grid {
+    margin-bottom: 20px;
+    transition: all 0.3s ease;
+}
+
+.product-image {
+    position: relative;
+    width: 100%;
+    overflow: hidden;
+}
+
+.imageClass {
+    width: 100%;
+    aspect-ratio: 1 / 1;
+    object-fit: cover;
+}
+
+.w-25 {
+    .form-control {
+        border-radius: 5px;
+        border: 1px solid #ccc;
+        padding: 5px;
+        font-size: 14px;
+    }
+
+    label {
+        font-size: 14px;
+        margin-bottom: 5px;
+    }
+}

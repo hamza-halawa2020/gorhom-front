@@ -1,0 +1,513 @@
+<div [dir]="getCurrentLanguage() === 'ar' ? 'rtl' : 'ltr'">
+    <!-- Top Bar -->
+    <div class="bg-light py-2">
+        <div class="container">
+            <div
+                class="top-bar d-flex align-items-center justify-content-between"
+            >
+                <!-- Left: About/Contact Links (Hidden on Small Screens) -->
+                <ul class="list-inline mb-0 d-none d-md-flex">
+                    <li class="list-inline-item">
+                        <a
+                            routerLink="/about"
+                            class="text-dark text-decoration-none"
+                        >
+                            {{ "ABOUT_US" | translate }}
+                        </a>
+                    </li>
+                    <li class="list-inline-item">
+                        <a
+                            routerLink="/contacts"
+                            class="text-dark text-decoration-none"
+                        >
+                            {{ "Contact Us" | translate }}
+                        </a>
+                    </li>
+                </ul>
+
+                <!-- Center: Welcome Message (Hidden on Small Screens) -->
+                <span
+                    class="fw-bold welcome-message text-center d-none d-md-block"
+                >
+                    {{ "welocme to rimansan company" | translate }}
+                </span>
+
+                <!-- Center: Language Dropdown (Always Visible, Centered on Small Screens) -->
+                <div class="dropdown mx-auto">
+                    <a
+                        class="dropdown-toggle fw-bold fs-6"
+                        type="button"
+                        id="languageDropDown"
+                        data-bs-toggle="dropdown"
+                        aria-expanded="false"
+                    >
+                        {{
+                            getCurrentLanguage() === "ar"
+                                ? "العربية"
+                                : "English"
+                        }}
+                    </a>
+                    <ul
+                        class="dropdown-menu"
+                        aria-labelledby="languageDropDown"
+                    >
+                        <li>
+                            <a
+                                (click)="switchLanguage('en')"
+                                class="dropdown-item"
+                                style="cursor: pointer"
+                                >English</a
+                            >
+                        </li>
+                        <li>
+                            <a
+                                (click)="switchLanguage('ar')"
+                                class="dropdown-item"
+                                style="cursor: pointer"
+                                >العربية</a
+                            >
+                        </li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Navbar -->
+    <nav
+        class="navbar navbar-expand-lg navbar-light site-navigation d-flex align-items-center"
+        [ngClass]="{ sticky: isSticky }"
+    >
+        <div
+            class="custom-container d-flex align-items-center justify-content-between position-relative"
+        >
+            <!-- Toggler for mobile view -->
+            <button
+                style="background-color: white; border: none"
+                class="navbar-toggler"
+                type="button"
+                (click)="isCollapsed = !isCollapsed"
+                aria-controls="navbarSupportedContent"
+                aria-expanded="false"
+                aria-label="Toggle navigation"
+            >
+                <svg
+                    width="30"
+                    height="16"
+                    viewBox="0 0 30 16"
+                    fill="currentColor"
+                >
+                    <rect width="30" height="1.5"></rect>
+                    <rect y="7" width="20" height="1.5"></rect>
+                    <rect y="14" width="30" height="1.5"></rect>
+                </svg>
+            </button>
+
+            <!-- Navigation Links -->
+            <div
+                class="collapse navbar-collapse"
+                id="navbarSupportedContent"
+                [ngbCollapse]="isCollapsed"
+            >
+                <ul
+                    class="navbar-nav mb-2 mb-lg-0"
+                    [ngClass]="
+                        getCurrentLanguage() === 'ar' ? 'ms-auto' : 'me-auto'
+                    "
+                >
+                    <li
+                        class="nav-item"
+                        routerLinkActive="active-link"
+                        [routerLinkActiveOptions]="{ exact: true }"
+                    >
+                        <a class="nav-link" routerLink="/">
+                            <svg
+                                width="16"
+                                height="16"
+                                fill="currentColor"
+                                viewBox="0 0 16 16"
+                            >
+                                <path
+                                    d="M8.354 1.146a.5.5 0 0 0-.708 0l-6 6A.5.5 0 0 0 1.5 7.5v7a.5.5 0 0 0 .5.5h4.5a.5.5 0 0 0 .5-.5v-4h2v4a.5.5 0 0 0 .5.5H14a.5.5 0 0 0 .5-.5v-7a.5.5 0 0 0-.146-.354L13 5.793V2.5a.5.5 0 0 0-.5-.5h-1a.5.5 0 0 0-.5.5v1.293zM2.5 14V7.707l5.5-5.5 5.5 5.5V14H10v-4a.5.5 0 0 0-.5-.5h-3a.5.5 0 0 0-.5.5v4z"
+                                />
+                            </svg>
+                            {{ "HOME" | translate }}
+                        </a>
+                    </li>
+                    <li
+                        class="nav-item"
+                        routerLinkActive="active-link"
+                        [routerLinkActiveOptions]="{ exact: true }"
+                    >
+                        <a class="nav-link" routerLink="/shop">
+                            <svg
+                                width="16"
+                                height="16"
+                                fill="currentColor"
+                                viewBox="0 0 16 16"
+                            >
+                                <path
+                                    d="M8 1a2 2 0 0 1 2 2v2H6V3a2 2 0 0 1 2-2m3 4V3a3 3 0 1 0-6 0v2H3.36a1.5 1.5 0 0 0-1.483 1.277L.85 13.13A2.5 2.5 0 0 0 3.322 16h9.355a2.5 2.5 0 0 0 2.473-2.87l-1.028-6.853A1.5 1.5 0 0 0 12.64 5zm-1 1v1.5a.5.5 0 0 0 1 0V6h1.639a.5.5 0 0 1 .494.426l1.028 6.851A1.5 1.5 0 0 1 12.678 15H3.322a1.5 1.5 0 0 1-1.483-1.723l1.028-6.851A.5.5 0 0 1 3.36 6H5v1.5a.5.5 0 1 0 1 0V6z"
+                                />
+                            </svg>
+                            {{ "SHOP" | translate }}
+                        </a>
+                    </li>
+                    <li
+                        class="nav-item"
+                        routerLinkActive="active-link"
+                        [routerLinkActiveOptions]="{ exact: true }"
+                    >
+                        <a class="nav-link" routerLink="/posts">
+                            <svg
+                                width="16"
+                                height="16"
+                                viewBox="0 0 50 50"
+                                fill="currentColor"
+                            >
+                                <path
+                                    d="M47,5.025a.975.975,0,0,1-.281.715.968.968,0,0,1-.144.095l-2.69,2.69.69.69a.919.919,0,0,1,.144.1,1.049,1.049,0,0,1,0,1.429.919.919,0,0,1-.144.1L12.861,42.55a.99.99,0,0,1-.523.481l-9.8,3.844a1.016,1.016,0,0,1-.181.071l-.012.005c-.008,0-.017,0-.024,0A1.049,1.049,0,0,1,2.035,47a.937.937,0,0,1-.283-.041c-.02-.006-.039,0-.06-.009s-.013-.01-.021-.013a.94.94,0,0,1-.24-.141.885.885,0,0,1-.113-.086.884.884,0,0,1-.086-.113.952.952,0,0,1-.141-.24.239.239,0,0,1-.013-.021c-.007-.02,0-.04-.009-.061a.985.985,0,0,1-.041-.281,1.1,1.1,0,0,1,.045-.287c0-.008,0-.016,0-.023l.006-.013a1.043,1.043,0,0,1,.07-.181L5,35.69a1,1,0,0,1,.482-.523L33.242,7.406a2.045,2.045,0,0,0-3.485-.754l0,0L26.5,9.9l0,0L19.67,16.74a.977.977,0,0,1-1.381-1.381L28.338,5.311c.017-.017.038-.022.056-.037a3.954,3.954,0,0,1,6.288.693L37.2,3.454a.959.959,0,0,1,.1-.143,1.05,1.05,0,0,1,1.43,0,.959.959,0,0,1,.1.143l.69.69,2.69-2.69a.959.959,0,0,1,.1-.143,1.05,1.05,0,0,1,1.43,0,.959.959,0,0,1,.1.143l2.762,2.762a.968.968,0,0,1,.144.095A.983.983,0,0,1,47,5.025ZM3.875,44.155l6.376-2.5L6.376,37.778ZM38,5.406,7.385,36.025,12,40.644,42.623,10.025Zm5-2L40.885,5.525,42.5,7.144l2.119-2.119Z"
+                                />
+                            </svg>
+                            {{ "BLOG" | translate }}
+                        </a>
+                    </li>
+                    <li
+                        class="nav-item"
+                        routerLinkActive="active-link"
+                        [routerLinkActiveOptions]="{ exact: true }"
+                    >
+                        <a class="nav-link" routerLink="/factory">
+                            <svg
+                                width="16"
+                                height="16"
+                                viewBox="0 0 36 36"
+                                fill="none"
+                                stroke="currentColor"
+                                stroke-width="2"
+                                stroke-linecap="round"
+                                stroke-linejoin="round"
+                                preserveAspectRatio="xMidYMid meet"
+                            >
+                                <rect
+                                    x="2"
+                                    y="8"
+                                    width="32"
+                                    height="24"
+                                    rx="2"
+                                    ry="2"
+                                    fill="none"
+                                />
+                                <path d="M10 12 V2 M26 12 V2" />
+                                <rect x="14" y="8" width="8" height="2" />
+                                <path d="M16 18 L22 24 M22 24 L28 18" />
+                            </svg>
+                            {{ "FACTORY" | translate }}
+                        </a>
+                    </li>
+
+                    <li class="nav-item d-md-none">
+                        <a class="nav-link" routerLink="/about">{{
+                            "ABOUT_US" | translate
+                        }}</a>
+                    </li>
+                    <li class="nav-item d-md-none">
+                        <a
+                            class="nav-link"
+                            routerLink="/contacts"
+                            >{{ "Contact Us" | translate }}</a
+                        >
+                    </li>
+                    <li class="nav-item dropdown">
+                        <a
+                            class="nav-link dropdown-toggle"
+                            href="#"
+                            id="educationDropdown"
+                            role="button"
+                            data-bs-toggle="dropdown"
+                            aria-expanded="false"
+                        >
+                            <svg
+                                width="16"
+                                height="16"
+                                viewBox="0 0 1024 1024"
+                                fill="currentColor"
+                            >
+                                <path
+                                    d="M197.769 791.767l60.672-286.853c2.341-11.066-4.733-21.934-15.799-24.275s-21.934 4.733-24.275 15.799l-60.672 286.853c-2.341 11.066 4.733 21.934 15.799 24.275s21.934-4.733 24.275-15.799zm571.063-286.786l61.778 287.068c2.38 11.058 13.273 18.093 24.33 15.713s18.093-13.273 15.713-24.33l-61.778-287.068c-2.38-11.058-13.273-18.093-24.33-15.713s-18.093 13.273-15.713 24.33z"
+                                />
+                                <path
+                                    d="M967.45 386.902L535.9 208.126c-10.609-4.399-30.569-4.442-41.207-.088L57.821 386.901l436.881 178.857c10.624 4.355 30.583 4.313 41.207-.085L967.45 386.901zM551.583 603.516c-20.609 8.533-51.787 8.599-72.409.145L24.437 417.494c-32.587-13.359-32.587-47.847.009-61.188l454.73-186.174c20.641-8.448 51.818-8.382 72.407.156l448.836 185.936c32.466 13.442 32.466 47.913.004 61.354l-448.84 185.938zm288.673 166.569c-98 57.565-209.669 88.356-325.888 88.356-116.363 0-228.162-30.866-326.246-88.564-9.749-5.735-22.301-2.481-28.036 7.268s-2.481 22.301 7.268 28.036c104.336 61.377 223.297 94.22 347.014 94.22 123.564 0 242.386-32.763 346.634-93.998 9.753-5.729 13.015-18.279 7.286-28.032s-18.279-13.015-28.032-7.286z"
+                                />
+                                <path
+                                    d="M983.919 383.052v296.233c0 11.311 9.169 20.48 20.48 20.48s20.48-9.169 20.48-20.48V383.052c0-11.311-9.169-20.48-20.48-20.48s-20.48 9.169-20.48 20.48z"
+                                />
+                            </svg>
+                            {{ "EDUCATION" | translate }}
+                        </a>
+                        <ul
+                            class="dropdown-menu text-center"
+                            aria-labelledby="educationDropdown"
+                        >
+                           
+                           
+                           
+                        </ul>
+                    </li>
+                </ul>
+            </div>
+
+            <!-- Logo (Center) -->
+            <a
+                class="navbar-brand mx-auto position-absolute start-50 translate-middle-x"
+                routerLink="/"
+            >
+                <img
+                    src="/assets/images/new-logo.png"
+                    alt="Logo"
+                    class="logo-img"
+                />
+            </a>
+
+            <!-- Right Side Icons (Always Visible, Adjusted for Mobile) -->
+            <div class="d-flex align-items-center">
+                <!-- Profile Dropdown for Logged In Users -->
+                <div
+                    *ngIf="isLoggedIn"
+                    class="dropdown d-lg-flex d-none"
+                    [ngClass]="getCurrentLanguage() === 'ar' ? 'ms-3' : 'me-3'"
+                >
+                    <a
+                        class="nav-link dropdown-toggle"
+                        href="#"
+                        id="profileDropdown"
+                        role="button"
+                        data-bs-toggle="dropdown"
+                        aria-expanded="false"
+                    >
+                        <svg
+                            width="30"
+                            height="30"
+                            fill="currentColor"
+                            class="bi bi-person"
+                            viewBox="0 0 16 16"
+                        >
+                            <path
+                                d="M8 8a3 3 0 1 0 0-6 3 3 0 0 0 0 6m2-3a2 2 0 1 1-4 0 2 2 0 0 1 4 0m4 8c0 1-1 1-1 1H3s-1 0-1-1 1-4 6-4 6 3 6 4m-1-.004c-.001-.246-.154-.986-.832-1.664C11.516 10.68 10.289 10 8 10s-3.516.68-4.168 1.332c-.678.678-.83 1.418-.832 1.664z"
+                            />
+                        </svg>
+                    </a>
+                    <ul class="dropdown-menu" aria-labelledby="profileDropdown">
+                        <li>
+                            <a class="dropdown-item" routerLink="/profile">{{
+                                "PROFILE" | translate
+                            }}</a>
+                        </li>
+                        <li>
+                            <a
+                                class="dropdown-item"
+                                (click)="logout()"
+                                style="cursor: pointer"
+                                >{{ "LOGOUT" | translate }}</a
+                            >
+                        </li>
+                    </ul>
+                </div>
+
+                <!-- Login Icon for Non-Logged In Users -->
+                <a
+                    *ngIf="!isLoggedIn"
+                    routerLink="/login"
+                    class="nav-link d-lg-flex d-none"
+                    [ngClass]="getCurrentLanguage() === 'ar' ? 'ms-3' : 'me-3'"
+                >
+                    <svg
+                        width="30"
+                        height="30"
+                        fill="currentColor"
+                        class="bi bi-person"
+                        viewBox="0 0 16 16"
+                    >
+                        <path
+                            d="M8 8a3 3 0 1 0 0-6 3 3 0 0 0 0 6m2-3a2 2 0 1 1-4 0 2 2 0 0 1 4 0m4 8c0 1-1 1-1 1H3s-1 0-1-1 1-4 6-4 6 3 6 4m-1-.004c-.001-.246-.154-.986-.832-1.664C11.516 10.68 10.289 10 8 10s-3.516.68-4.168 1.332c-.678.678-.83 1.418-.832 1.664z"
+                        />
+                    </svg>
+                </a>
+
+                <!-- Wishlist Icon -->
+                <a
+                    routerLink="/wishlist"
+                    [ngClass]="getCurrentLanguage() === 'ar' ? 'ms-3' : 'me-3'"
+                    class="position-relative nav-link"
+                >
+                    <svg
+                        width="25"
+                        height="25"
+                        fill="currentColor"
+                        class="bi bi-heart"
+                        viewBox="0 0 16 16"
+                    >
+                        <path
+                            d="m8 2.748-.717-.737C5.6.281 2.514.878 1.4 3.053c-.523 1.023-.641 2.5.314 4.385.92 1.815 2.834 3.989 6.286 6.357 3.452-2.368 5.365-4.542 6.286-6.357.955-1.886.838-3.362.314-4.385C13.486.878 10.4.28 8.717 2.01zM8 15C-7.333 4.868 3.279-3.04 7.824 1.143q.09.083.176.171a3 3 0 0 1 .176-.17C12.72-3.042 23.333 4.867 8 15"
+                        />
+                    </svg>
+                    <span
+                        class="position-absolute top-0 translate-middle badge rounded-pill bg-dark"
+                        [ngClass]="
+                            getCurrentLanguage() === 'ar'
+                                ? 'start-0'
+                                : 'start-100'
+                        "
+                    >
+                        {{ isLoggedIn ? favData.length : favClientData.length }}
+                    </span>
+                </a>
+
+                <!-- Cart Icon -->
+                <a
+                    routerLink="/cart"
+                    [ngClass]="getCurrentLanguage() === 'ar' ? 'ms-3' : 'me-3'"
+                    class="position-relative nav-link"
+                >
+                    <svg
+                        width="25"
+                        height="25"
+                        viewBox="0 0 24 24"
+                        fill="none"
+                        stroke="currentColor"
+                        stroke-width="1.5"
+                        stroke-linecap="round"
+                        stroke-linejoin="round"
+                    >
+                        <circle cx="9" cy="21" r="1"></circle>
+                        <circle cx="20" cy="21" r="1"></circle>
+                        <path
+                            d="M1 1h4l2.68 13.39a2 2 0 0 0 2 1.61h9.72a2 2 0 0 0 2-1.61L23 6H6"
+                        ></path>
+                    </svg>
+                    <span
+                        class="position-absolute top-0 translate-middle badge rounded-pill bg-dark"
+                        [ngClass]="
+                            getCurrentLanguage() === 'ar'
+                                ? 'start-0'
+                                : 'start-100'
+                        "
+                    >
+                        {{
+                            isLoggedIn ? cartData.length : cartClientData.length
+                        }}
+                    </span>
+                </a>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Bottom Navigation Bar for Mobile -->
+    <div class="bottom-nav d-lg-none">
+        <a routerLink="/" class="bottom-nav-item">
+            <svg width="25" height="25" fill="currentColor" viewBox="0 0 16 16">
+                <path
+                    d="M8.354 1.146a.5.5 0 0 0-.708 0l-6 6A.5.5 0 0 0 1.5 7.5v7a.5.5 0 0 0 .5.5h4.5a.5.5 0 0 0 .5-.5v-4h2v4a.5.5 0 0 0 .5.5H14a.5.5 0 0 0 .5-.5v-7a.5.5 0 0 0-.146-.354L13 5.793V2.5a.5.5 0 0 0-.5-.5h-1a.5.5 0 0 0-.5.5v1.293zM2.5 14V7.707l5.5-5.5 5.5 5.5V14H10v-4 Liabilities
+                    a.5.5 0 0 0-.5-.5h-3a.5.5 0 0 0-.5.5v4z"
+                />
+            </svg>
+            <span>{{ "HOME" | translate }}</span>
+        </a>
+        <a routerLink="/wishlist" class="bottom-nav-item">
+            <svg
+                width="25"
+                height="25"
+                fill="currentColor"
+                class="bi bi-heart"
+                viewBox="0 0 16 16"
+            >
+                <path
+                    d="m8 2.748-.717-.737C5.6.281 2.514.878 1.4 3.053c-.523 1.023-.641 2.5.314 4.385.92 1.815 2.834 3.989 6.286 6.357 3.452-2.368 5.365-4.542 6.286-6.357.955-1.886.838-3.362.314-4.385C13.486.878 10.4.28 8.717 2.01zM8 15C-7.333 4.868 3.279-3.04 7.824 1.143q.09.083.176.171a3 3 0 0 1 .176-.17C12.72-3.042 23.333 4.867 8 15"
+                />
+            </svg>
+            <span>{{ "WISHLIST" | translate }}</span>
+            <span class="badge rounded-pill bg-dark bottom-nav-badge">
+                {{ isLoggedIn ? favData.length : favClientData.length }}
+            </span>
+        </a>
+        <a routerLink="/cart" class="bottom-nav-item">
+            <svg
+                width="25"
+                height="25"
+                viewBox="0 0 24 24"
+                fill="none"
+                stroke="currentColor"
+                stroke-width="1.5"
+                stroke-linecap="round"
+                stroke-linejoin="round"
+            >
+                <circle cx="9" cy="21" r="1"></circle>
+                <circle cx="20" cy="21" r="1"></circle>
+                <path
+                    d="M1 1h4l2.68 13.39a2 2 0 0 0 2 1.61h9.72a2 2 0 0 0 2-1.61L23 6H6"
+                ></path>
+            </svg>
+            <span>{{ "CART" | translate }}</span>
+            <span class="badge rounded-pill bg-dark bottom-nav-badge">
+                {{ isLoggedIn ? cartData.length : cartClientData.length }}
+            </span>
+        </a>
+        <div class="bottom-nav-item">
+            <div *ngIf="isLoggedIn" class="dropdown">
+                <a
+                    class="nav-link dropdown-toggle"
+                    href="#"
+                    id="profileDropdownBottom"
+                    role="button"
+                    data-bs-toggle="dropdown"
+                    aria-expanded="false"
+                >
+                    <svg
+                        width="25"
+                        height="25"
+                        fill="currentColor"
+                        class="bi bi-person"
+                        viewBox="0 0 16 16"
+                    >
+                        <path
+                            d="M8 8a3 3 0 1 0 0-6 3 3 0 0 0 0 6m2-3a2 2 0 1 1-4 0 2 2 0 0 1 4 0m4 8c0 1-1 1-1 1H3s-1 0-1-1 1-4 6-4 6 3 6 4m-1-.004c-.001-.246-.154-.986-.832-1.664C11.516 10.68 10.289 10 8 10s-3.516.68-4.168 1.332c-.678.678-.83 1.418-.832 1.664z"
+                        />
+                    </svg>
+                    <span>{{ "ACCOUNT" | translate }}</span>
+                </a>
+                <ul
+                    class="dropdown-menu"
+                    aria-labelledby="profileDropdownBottom"
+                >
+                    <li>
+                        <a class="dropdown-item" routerLink="/profile">{{
+                            "PROFILE" | translate
+                        }}</a>
+                    </li>
+                    <li>
+                        <a
+                            class="dropdown-item"
+                            (click)="logout()"
+                            style="cursor: pointer"
+                            >{{ "LOGOUT" | translate }}</a
+                        >
+                    </li>
+                </ul>
+            </div>
+            <a *ngIf="!isLoggedIn" routerLink="/login" class="nav-link">
+                <svg
+                    width="25"
+                    height="25"
+                    fill="currentColor"
+                    class="bi bi-person"
+                    viewBox="0 0 16 16"
+                >
+                    <path
+                        d="M8 8a3 3 0 1 0 0-6 3 3 0 0 0 0 6m2-3a2 2 0 1 1-4 0 2 2 0 0 1 4 0m4 8c0 1-1 1-1 1H3s-1 0-1-1 1-4 6-4 6 3 6 4m-1-.004c-.001-.246-.154-.986-.832-1.664C11.516 10.68 10.289 10 8 10s-3.516.68-4.168 1.332c-.678.678-.83 1.418-.832 1.664z"
+                    />
+                </svg>
+                <span>{{ "ACCOUNT" | translate }}</span>
+            </a>
+        </div>
+    </div>
+</div>

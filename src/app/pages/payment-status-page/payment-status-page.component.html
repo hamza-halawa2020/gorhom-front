@@ -1,0 +1,126 @@
+<div [dir]="translateService.currentLang === 'ar' ? 'rtl' : 'ltr'">
+    <app-navbar />
+
+    <app-page-banner />
+
+    <section class="faq_area section-padding">
+        <div class="container text-center">
+            <div class="status-box p-4 rounded shadow-sm">
+                <h2
+                    class="status-title mb-3"
+                    [ngClass]="{
+                        'text-success': success,
+                        'text-danger': !success
+                    }"
+                >
+                    {{
+                        success
+                            ? ("PAYMENT_SUCCESSFUL" | translate)
+                            : ("PAYMENT_FAILED" | translate)
+                    }}
+                </h2>
+                   <!-- Order Details Section -->
+                <div *ngIf="order.order_number" class="order-details mt-5">
+                    <h3>{{ "ORDER_DETAILS" | translate }}</h3>
+                    <p>
+                        <strong>{{ "ORDER_NUMBER" | translate }}:</strong>
+                        {{ order.order_number }}
+                    </p>
+                    <p>
+                        <strong>{{ "STATUS" | translate }}:</strong>
+                        {{ order.status }}
+                    </p>
+                    <p>
+                        <strong>{{ "TOTAL_PRICE" | translate }}:</strong>
+                        {{ order.total_price }} EGP
+                    </p>
+                    <p>
+                        <strong>{{ "SHIPPING_COST" | translate }}:</strong>
+                        {{ order.shipment_cost }} EGP
+                    </p>
+                    <p>
+                        <strong>{{ "PAYMENT_METHOD" | translate }}:</strong>
+                        {{ order.payment_method }}
+                    </p>
+
+                    <!-- Address Details -->
+                    <!-- <h4>{{ "SHIPPING_ADDRESS" | translate }}</h4> -->
+                    <!-- <p>{{ order.address.address }}, {{ order.address.city }}, {{ order.address.country }}</p> -->
+
+                    <!-- Order Items -->
+                    <h4>{{ "ORDER_ITEMS" | translate }}</h4>
+                    <ul class="list-group list-group-flush">
+                        <li
+                            *ngFor="let item of order.orderItems"
+                            class="list-group-item"
+                        >
+                            <div class="">
+                                <div>
+                                    <strong>{{ item.product.title }}</strong
+                                    ><br />
+                                    {{ item.product.description }}<br />
+                                    {{ "QUANTITY" | translate }}:
+                                    {{ item.quantity }}<br />
+                                    {{ "PRICE" | translate }}:
+                                    {{ item.total }} EGP
+                                </div>
+                                <img
+                                    *ngIf="item.product.productImages[0]"
+                                    src="{{
+                                        image +
+                                            item.product.productImages[0].image
+                                    }}"
+                                    alt=""
+                                    class="img-fluid"
+                                    style="max-width: 100px"
+                                />
+                            </div>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </section>
+    <app-footer />
+    <app-back-to-top />
+</div>
+
+
+<!-- 
+https://rimansan.net/payment-status?
+id=305852079&
+pending=false&
+amount_cents=35000&
+success=true&
+is_auth=false&
+is_capture=false&
+is_standalone_payment=true&
+is_voided=false&
+is_refunded=false&
+is_3d_secure=true&
+integration_id=5034866&
+profile_id=1035336&
+has_parent_transaction=false&
+order=341664637&
+created_at=2025-06-11T23:27:57.612350&
+currency=EGP&
+merchant_commission=0&
+discount_details=%5B%5D&
+is_void=false&
+is_refund=false&
+error_occured=false&
+refunded_amount_cents=0&
+captured_amount=0&
+updated_at=2025-06-11T23:28:19.356062&
+is_settled=false&
+bill_balanced=false&
+is_bill=false&
+owner=1942095&
+merchant_order_id=020ec878-3123-4450-9541-5356671fb99a&
+data.message=Approved&
+source_data.type=card&
+source_data.pan=2346&
+source_data.sub_type=MasterCard&
+acq_response_code=00&
+txn_response_code=APPROVED&
+hmac=5de18ee8b86533ac1f6ad0f5c08ee9fa53bd97b31cde5960fb5d28b09c6ea6e35d57cb42b99f42330d9eb743126ca83adf70941eb5ec14b9958e8b1826f7cfd2 -->

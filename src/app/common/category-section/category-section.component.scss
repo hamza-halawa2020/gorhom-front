@@ -1,0 +1,240 @@
+.category-section {
+    background-color: #fff;
+
+    h3 {
+        font-size: calc(1.6rem + 0.8vw); /* حجم ديناميكي للعنوان */
+        font-weight: 600;
+        color: #333;
+        text-transform: uppercase;
+    }
+
+    .w-50 {
+        margin: 0 auto; /* تمركز أفقي */
+    }
+
+    .category-card {
+        text-decoration: none;
+        display: block;
+
+        .card {
+            border: none;
+            border-radius: 0;
+            transition: all 0.3s ease;
+            position: relative;
+            overflow: hidden;
+
+            &.large-card {
+                height: 50vw; /* ارتفاع أساسي */
+                min-height: 250px; /* الحد الأدنى */
+                max-height: 500px; /* الحد الأقصى */
+            }
+
+            &.small-card {
+                height: 33.33vw; /* نسبة 2:3 مقارنة بـ large-card */
+                min-height: 166px;
+                max-height: 333px;
+            }
+
+            .card-img {
+                width: 100%;
+                height: 100%;
+                object-fit: cover;
+                transition: transform 1.3s ease;
+            }
+
+            .overlay {
+                position: absolute;
+                top: 50%;
+                left: 50%;
+                width: 50%; /* حجم ديناميكي للدائرة */
+                height: 50%;
+                background: rgba(255, 255, 255, 0.1);
+                border-radius: 50%;
+                transform: translate(-50%, -50%);
+                opacity: 0;
+                transition: opacity 0.3s ease;
+            }
+
+            .category-title {
+                position: absolute;
+                bottom: 0;
+                left: 0;
+                width: 100%;
+                background: #58ccc3;
+                color: white;
+                padding: calc(6px + 0.3vw); /* حشوة */
+                text-align: center;
+                font-size: calc(0.9rem + 0.3vw); /* حجم نص */
+                font-weight: 500;
+                text-transform: uppercase;
+            }
+        }
+
+        &:hover {
+            .card {
+                .card-img {
+                    transform: scale(1.1);
+                }
+
+                .overlay {
+                    opacity: 1;
+                    animation: bubbleEffect 0.5s ease-in-out forwards;
+                }
+            }
+        }
+    }
+
+    .explore-link {
+        display: inline-block;
+        font-size: calc(0.9rem + 0.3vw); /* حجم ديناميكي */
+        font-weight: 500;
+        color: #333;
+        text-transform: uppercase;
+        text-decoration: none;
+        border-bottom: 2px solid #58ccc3;
+        padding-bottom: calc(3px + 0.2vw);
+        transition: color 0.3s ease;
+
+        &:hover {
+            color: #58ccc3;
+        }
+    }
+
+    .d-flex.flex-column {
+        gap: 0; /* إزالة الفجوة بين البطاقات */
+    }
+
+    @keyframes bubbleEffect {
+        0% {
+            width: 50%;
+            height: 50%;
+            opacity: 1;
+        }
+        70% {
+            width: 150%;
+            height: 150%;
+            opacity: 1;
+        }
+        100% {
+            width: 150%;
+            height: 150%;
+            opacity: 0;
+        }
+    }
+
+    /* تعديلات للشاشات أقل من 1000px */
+    @media (max-width: 1000px) {
+        h3 {
+            font-size: calc(1.5rem + 0.7vw);
+        }
+
+        .category-card {
+            .card {
+                &.large-card {
+                    height: 45vw; /* تصغير طفيف */
+                    min-height: 230px;
+                }
+
+                &.small-card {
+                    height: 30vw; /* الحفاظ على النسبة */
+                    min-height: 153px;
+                }
+
+                .category-title {
+                    font-size: calc(0.85rem + 0.3vw);
+                    padding: calc(5px + 0.2vw);
+                }
+
+                .overlay {
+                    width: 55%;
+                    height: 55%;
+                }
+            }
+        }
+
+        .explore-link {
+            font-size: calc(0.85rem + 0.2vw);
+            padding-bottom: calc(2px + 0.1vw);
+        }
+    }
+
+    /* تعديلات للشاشات المتوسطة (أقل من 768px) */
+    @media (max-width: 768px) {
+        h3 {
+            font-size: calc(1.4rem + 0.6vw);
+        }
+
+        .w-50 {
+            width: 75%; /* زيادة العرض قليلاً لتحسين المظهر على الموبايل */
+        }
+
+        .category-card {
+            .card {
+                &.large-card {
+                    height: 40vw; /* تصغير إضافي */
+                    min-height: 200px;
+                }
+
+                &.small-card {
+                    height: 26.67vw; /* الحفاظ على النسبة */
+                    min-height: 133px;
+                }
+
+                .category-title {
+                    font-size: calc(0.8rem + 0.3vw);
+                    padding: calc(4px + 0.2vw);
+                }
+
+                .overlay {
+                    width: 60%;
+                    height: 60%;
+                }
+            }
+        }
+
+        .explore-link {
+            font-size: calc(0.8rem + 0.2vw);
+            padding-bottom: calc(2px + 0.1vw);
+        }
+    }
+
+    /* تعديلات للشاشات الصغيرة جدًا (أقل من 576px) */
+    @media (max-width: 576px) {
+        h3 {
+            font-size: calc(1.3rem + 0.5vw);
+        }
+
+        .w-50 {
+            width: 90%; /* زيادة العرض أكثر على الشاشات الصغيرة */
+        }
+
+        .category-card {
+            .card {
+                &.large-card {
+                    height: 35vw; /* تصغير أكثر لتجنب الإطالة */
+                    min-height: 180px;
+                }
+
+                &.small-card {
+                    height: 23.33vw; /* الحفاظ على نسبة 2:3 */
+                    min-height: 120px;
+                }
+
+                .category-title {
+                    font-size: calc(0.7rem + 0.2vw);
+                    padding: calc(3px + 0.2vw);
+                }
+
+                .overlay {
+                    width: 65%; /* دائرة أكبر لتحسين الرؤية */
+                    height: 65%;
+                }
+            }
+        }
+
+        .explore-link {
+            font-size: calc(0.7rem + 0.2vw);
+            padding-bottom: calc(2px + 0.1vw);
+        }
+    }
+}

@@ -1,0 +1,586 @@
+/* You can add global styles to this file, and also import other style files */
+
+// @font-face {
+//     font-family: "LyonArabic";
+//     src: url("/assets/fonts/LyonArabicTextRegular.otf") format("opentype");
+//     font-weight: normal;
+//     font-style: normal;
+// }
+
+#loading-screen {
+    position: fixed;
+    width: 100%;
+    height: 100%;
+    background: rgba(255, 255, 255, 0.5); /* شفافية 50% */
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    z-index: 9999;
+    backdrop-filter: blur(5px); /* تأثير الضبابية */
+    transition: opacity 0.5s ease-out, visibility 0.5s ease-out;
+}
+
+#loading-screen img {
+    width: 150px;
+    animation: fadeIn 1.5s ease-in-out infinite alternate;
+    border-radius: 50%;
+}
+
+@keyframes fadeIn {
+    from {
+        opacity: 0.5;
+    }
+    to {
+        opacity: 1;
+    }
+}
+
+/* إخفاء اللودر بسلاسة */
+.hidden {
+    opacity: 0;
+    visibility: hidden;
+}
+
+:root {
+    --fontFamily: "LyonArabic";
+    --headingFontFamily: "LyonArabic";
+    --primaryColor: #c4edff;
+    --secondaryColor: #4c0048;
+    --paragraphColor: #000;
+    --whiteColor: #ffffff;
+    --blackColor: #000000;
+    --transition: 0.5s;
+    --fontSize: 20px;
+}
+body {
+    margin: 0;
+    padding: 0;
+    color: #4c0048;
+}
+.h1,
+.h2,
+.h3,
+.h4,
+.h5,
+.h6,
+h1,
+h2,
+h3,
+h4,
+h5,
+h6 {
+    color: #4c0048;
+}
+a {
+    transition: var(--transition);
+    color: #4c0048;
+    text-decoration: none;
+    outline: 0 !important;
+
+    &:hover {
+        text-decoration: none;
+        color: var(--paragraphColor);
+    }
+}
+:focus {
+    outline: 0 !important;
+}
+.d-table {
+    width: 100%;
+    height: 100%;
+
+    &-cell {
+        vertical-align: middle;
+    }
+}
+img {
+    max-width: 100%;
+    height: auto;
+}
+p {
+    color: var(--paragraphColor);
+    margin-bottom: 15px;
+    line-height: 1.5;
+
+    &:last-child {
+        margin-bottom: 0;
+    }
+}
+.mb-25 {
+    margin-bottom: 25px;
+}
+.ptb-120 {
+    padding: {
+        top: 120px;
+        bottom: 120px;
+    }
+}
+.pt-120 {
+    padding-top: 120px;
+}
+.pb-120 {
+    padding-bottom: 120px;
+}
+.ptb-95 {
+    padding: {
+        top: 95px;
+        bottom: 95px;
+    }
+}
+.pt-95 {
+    padding-top: 95px;
+}
+.pb-95 {
+    padding-bottom: 95px;
+}
+
+// BG Color
+.bg-fbfbfb {
+    background-color: #fbfbfb;
+}
+.bg-f6ffeb {
+    background-color: #f6ffeb;
+}
+.bg-f3f3f3 {
+    background-color: #f3f3f3;
+}
+.bg-f6ffeb {
+    background-color: #f6ffeb;
+}
+.bg-1c1c1c {
+    background-color: #1c1c1c;
+    color: var(--whiteColor);
+
+    .h1,
+    .h2,
+    .h3,
+    .h4,
+    .h5,
+    .h6,
+    h1,
+    h2,
+    h3,
+    h4,
+    h5,
+    h6 {
+        color: var(--whiteColor);
+    }
+    a {
+        color: var(--whiteColor);
+
+        &:hover {
+            color: #fbe8fe;
+        }
+    }
+    p {
+        color: #f3f3f3;
+    }
+    .default-btn {
+        color: #4c0048;
+
+        &:hover {
+            color: var(--whiteColor);
+        }
+    }
+}
+.bg-282828 {
+    background-color: #282828;
+}
+
+// Border
+.border-top,
+.border-bottom {
+    border-color: var(--paragraphColor) !important;
+}
+
+// Default Btn
+.default-btn {
+    border: 0;
+    padding: 15px 30px;
+    border-radius: 5px;
+    display: inline-block;
+    color: #4c0048;
+    transition: var(--transition);
+    background-color: #fbe8fe;
+
+    &:hover {
+        color: var(--whiteColor);
+        background-color: #4c0048;
+    }
+}
+
+// Section Title
+.section-title {
+    margin-bottom: 30px;
+
+    &.mb-40 {
+        margin-bottom: 40px;
+    }
+    h2 {
+        max-width: 540px;
+        line-height: 1.25;
+    }
+    p {
+        margin-top: 20px;
+    }
+    .default-btn {
+        right: 0;
+        bottom: 10px;
+        position: absolute;
+    }
+    .title {
+        max-width: 500px;
+
+        h2 {
+            max-width: 100%;
+        }
+        p {
+            line-height: 1.8;
+            margin-top: 25px;
+        }
+    }
+    .link-btn {
+        width: 160px;
+        height: 160px;
+        padding-top: 34px;
+        background-color: #fbe8fe;
+
+        span {
+            margin-bottom: 5px;
+        }
+        img {
+            transition: var(--transition);
+        }
+        &:hover {
+            img {
+                transform: translateY(5px);
+            }
+        }
+    }
+}
+
+// Scroll Down Text
+.scroll-down-text {
+    top: 0;
+    right: 0;
+    bottom: 0;
+    width: 60px;
+    overflow: hidden;
+    position: absolute;
+    border-left: 1px solid #4c0048;
+
+    div {
+        margin-left: -64px;
+        white-space: nowrap;
+        letter-spacing: 3px;
+        transform: rotate(-90deg);
+
+        img {
+            top: -2px;
+            margin-right: 7px;
+            position: relative;
+            transform: rotate(90deg);
+        }
+    }
+    &.left {
+        right: auto;
+        left: 0;
+        border: {
+            left-width: 0;
+            right: 1px solid #4c0048;
+        }
+    }
+}
+
+// Shapes
+.shape1 {
+    top: 10.9%;
+    z-index: -1;
+    right: 16.26%;
+    position: absolute;
+}
+.shape2 {
+    z-index: -1;
+    left: 49.2%;
+    bottom: 8.4%;
+    position: absolute;
+}
+.shape3 {
+    top: 13%;
+    left: 4%;
+    z-index: -1;
+    position: absolute;
+}
+.shape4 {
+    top: 35.3%;
+    left: 16.6%;
+    z-index: -1;
+    position: absolute;
+}
+.shape5 {
+    top: 42.2%;
+    z-index: -1;
+    right: 20.3%;
+    position: absolute;
+}
+
+/* Max width 767px */
+@media only screen and (max-width: 767px) {
+    .ptb-120 {
+        padding: {
+            top: 60px;
+            bottom: 60px;
+        }
+    }
+    .pt-120 {
+        padding-top: 60px;
+    }
+    .pb-120 {
+        padding-bottom: 60px;
+    }
+    .ptb-95 {
+        padding: {
+            top: 35px;
+            bottom: 35px;
+        }
+    }
+    .pt-95 {
+        padding-top: 35px;
+    }
+    .pb-95 {
+        padding-bottom: 35px;
+    }
+
+    // Default Btn
+    .default-btn {
+        padding: 13px 25px;
+    }
+
+    // Section Title
+    .section-title {
+        margin-bottom: 30px;
+        text-align: center;
+
+        &.mb-40 {
+            margin-bottom: 30px;
+        }
+        h2 {
+            max-width: 100%;
+        }
+        p {
+            margin-top: 15px;
+        }
+        .default-btn {
+            bottom: 0;
+            margin-top: 18px;
+            position: relative;
+        }
+        .title {
+            max-width: 100%;
+
+            p {
+                line-height: 1.6;
+                margin-top: 15px;
+            }
+        }
+        .link-btn {
+            width: 120px;
+            height: 120px;
+            margin-top: 18px;
+            padding-top: 24px;
+
+            span {
+                margin-bottom: 10px;
+                max-width: 130px;
+                margin: {
+                    left: auto;
+                    right: auto;
+                }
+            }
+        }
+    }
+
+    // Scroll Down Text
+    .scroll-down-text {
+        display: none !important;
+    }
+
+    // Shapes
+    .shape1,
+    .shape2,
+    .shape3,
+    .shape4,
+    .shape5 {
+        display: none;
+    }
+}
+
+/* Min width 576px to Max width 767px */
+@media only screen and (min-width: 576px) and (max-width: 767px) {
+}
+
+/* Min width 768px to Max width 991px */
+@media only screen and (min-width: 768px) and (max-width: 991px) {
+    .ptb-120 {
+        padding: {
+            top: 80px;
+            bottom: 80px;
+        }
+    }
+    .pt-120 {
+        padding-top: 80px;
+    }
+    .pb-120 {
+        padding-bottom: 80px;
+    }
+    .ptb-95 {
+        padding: {
+            top: 55px;
+            bottom: 55px;
+        }
+    }
+    .pt-95 {
+        padding-top: 55px;
+    }
+    .pb-95 {
+        padding-bottom: 55px;
+    }
+
+    // Default Btn
+    .default-btn {
+        padding: 13px 30px;
+    }
+
+    // Section Title
+    .section-title {
+        h2 {
+            max-width: 470px;
+        }
+        p {
+            margin-top: 15px;
+        }
+        .default-btn {
+            bottom: 5px;
+        }
+        .title {
+            max-width: 500px;
+
+            p {
+                line-height: 1.7;
+                margin-top: 20px;
+            }
+        }
+        .link-btn {
+            width: 135px;
+            height: 135px;
+            padding-top: 31px;
+        }
+    }
+
+    // Scroll Down Text
+    .scroll-down-text {
+        display: none !important;
+    }
+
+    // Shapes
+    .shape1,
+    .shape2,
+    .shape3,
+    .shape4,
+    .shape5 {
+        display: none;
+    }
+}
+
+/* Min width 992px to Max width 1199px */
+@media only screen and (min-width: 992px) and (max-width: 1199px) {
+    .ptb-120 {
+        padding: {
+            top: 100px;
+            bottom: 100px;
+        }
+    }
+    .pt-120 {
+        padding-top: 100px;
+    }
+    .pb-120 {
+        padding-bottom: 100px;
+    }
+    .ptb-95 {
+        padding: {
+            top: 75px;
+            bottom: 75px;
+        }
+    }
+    .pt-95 {
+        padding-top: 75px;
+    }
+    .pb-95 {
+        padding-bottom: 75px;
+    }
+
+    // Default Btn
+    .default-btn {
+        padding: 14px 30px;
+    }
+
+    // Section Title
+    .section-title {
+        p {
+            margin-top: 15px;
+        }
+    }
+
+    // Scroll Down Text
+    .scroll-down-text {
+        display: none !important;
+    }
+
+    // Shapes
+    .shape1 {
+        top: 12%;
+        right: 5%;
+        width: 100px;
+    }
+    .shape4,
+    .shape5 {
+        display: none;
+    }
+}
+
+/* Min width 1200px to Max width 1399px */
+@media only screen and (min-width: 1200px) and (max-width: 1399px) {
+    // Scroll Down Text
+    .scroll-down-text {
+        width: 40px;
+
+        div {
+            margin-left: -75px;
+        }
+    }
+
+    // Shapes
+    .shape1 {
+        right: 5%;
+    }
+}
+
+/* Min width 1600px */
+@media only screen and (min-width: 1600px) {
+    // Scroll Down Text
+    .scroll-down-text {
+        width: 150px;
+
+        div {
+            margin-left: -21px;
+        }
+    }
+
+    // Shapes
+    .shape1 {
+        right: 25.74%;
+    }
+    .shape2 {
+        left: 49.2%;
+    }
+}

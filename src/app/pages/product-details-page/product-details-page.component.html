@@ -1,0 +1,495 @@
+<div [dir]="translateService.currentLang === 'ar' ? 'rtl' : 'ltr'">
+    <app-navbar />
+    <app-page-banner />
+
+    <!-- Success/Error Messages -->
+    <div
+        *ngIf="successMessage"
+        class="toast-container position-fixed top-0"
+        [class.start-0]="translateService.currentLang === 'ar'"
+        [class.end-0]="translateService.currentLang !== 'ar'"
+        p-3
+    >
+        <div
+            class="toast show"
+            role="alert"
+            aria-live="assertive"
+            aria-atomic="true"
+        >
+            <div class="toast-header">
+                <strong
+                    [class.ms-auto]="translateService.currentLang === 'ar'"
+                    [class.me-auto]="translateService.currentLang !== 'ar'"
+                    class="text-success"
+                >
+                    {{ "SUCCESS" | translate }}
+                </strong>
+            </div>
+            <div class="toast-body">
+                <h6>{{ successMessage }}</h6>
+            </div>
+        </div>
+    </div>
+
+    <div
+        *ngIf="errorMessage"
+        class="toast-container position-fixed top-0"
+        [class.start-0]="translateService.currentLang === 'ar'"
+        [class.end-0]="translateService.currentLang !== 'ar'"
+        p-3
+    >
+        <div
+            class="toast show"
+            role="alert"
+            aria-live="assertive"
+            aria-atomic="true"
+        >
+            <div class="toast-header">
+                <strong
+                    [class.ms-auto]="translateService.currentLang === 'ar'"
+                    [class.me-auto]="translateService.currentLang !== 'ar'"
+                    class="text-danger"
+                >
+                    {{ "ERROR" | translate }}
+                </strong>
+            </div>
+            <div class="toast-body">
+                <h6>{{ errorMessage }}</h6>
+            </div>
+        </div>
+    </div>
+
+    <!-- Product Details Area -->
+    <div class="prdct_dtls_page_area section-padding">
+        <div class="container">
+            <div class="row">
+                <div
+                    class="modal fade bs-example-modal-xl transparent-modal"
+                    id="imageModal"
+                    tabindex="-1"
+                    aria-hidden="true"
+                >
+                    <div class="modal-dialog modal-xl modal-dialog-centered">
+                        <div class="modal-content">
+                            <div class="modal-header">
+                                <button
+                                    type="button"
+                                    class="btn-close"
+                                    data-bs-dismiss="modal"
+                                    [attr.aria-label]="'CLOSE' | translate"
+                                ></button>
+                            </div>
+                            <div
+                                class="modal-body text-center position-relative"
+                            >
+                                <button
+                                    *ngIf="modalCurrentIndex > 0"
+                                    class="btn btn-light position-absolute start-0 top-50 translate-middle-y"
+                                    (click)="prevModalImage()"
+                                    [title]="'PREVIOUS_IMAGE' | translate"
+                                >
+                                    <i class="fa fa-chevron-left"></i>
+                                </button>
+                                <img
+                                    [src]="modalSelectedImage"
+                                    class="img-fluid"
+                                    alt="Selected Image"
+                                />
+                                <button
+                                    *ngIf="
+                                        modalCurrentIndex <
+                                        details?.productImages.length - 1
+                                    "
+                                    class="btn btn-light position-absolute end-0 top-50 translate-middle-y"
+                                    (click)="nextModalImage()"
+                                    [title]="'NEXT_IMAGE' | translate"
+                                    style="
+                                        top: 50%;
+                                        transform: translateY(-50%);
+                                    "
+                                >
+                                    <i class="fa fa-chevron-right"></i>
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Product Image Section -->
+                <div class="col-md-6 col-xs-12">
+                    <div class="product-image-gallery">
+                        <div class="thumbnails">
+                            <div
+                                class="thumbnail"
+                                *ngFor="
+                                    let related of details?.productImages;
+                                    let i = index
+                                "
+                                [class.active]="i === currentIndex"
+                                (click)="selectImage(image + related?.image, i)"
+                            >
+                                <img
+                                    [src]="image + related?.image"
+                                    alt="Thumbnail"
+                                    class="thumbnail-img"
+                                />
+                            </div>
+                        </div>
+
+                        <div class="main-image-wrapper">
+                            <div class="zoom-container" (click)="openModal()">
+                                <button
+                                    *ngIf="currentIndex > 0"
+                                    class="btn btn-light position-absolute start-0 top-50 translate-middle-y custom-btn"
+                                    (click)="
+                                        prevImage(); $event.stopPropagation()
+                                    "
+                                    [title]="'PREVIOUS_IMAGE' | translate"
+                                >
+                                    <i class="fa fa-chevron-left"></i>
+                                </button>
+                                <img
+                                    [src]="selectedImage"
+                                    class="main-image"
+                                    alt="Product Image"
+                                    (mousemove)="onMouseMove($event)"
+                                    (mouseleave)="onMouseLeave()"
+                                />
+                                <div
+                                    class="zoom-lens"
+                                    *ngIf="showZoom"
+                                    [style.left.px]="zoomPosition.x"
+                                    [style.top.px]="zoomPosition.y"
+                                    [style.background-image]="
+                                        'url(' + selectedImage + ')'
+                                    "
+                                    [style.background-position]="
+                                        zoomBackgroundPosition
+                                    "
+                                ></div>
+                                <button
+                                    *ngIf="
+                                        currentIndex <
+                                        details?.productImages.length - 1
+                                    "
+                                    class="btn btn-light position-absolute end-0 top-50 translate-middle-y custom-btn"
+                                    (click)="
+                                        nextImage(); $event.stopPropagation()
+                                    "
+                                    [title]="'NEXT_IMAGE' | translate"
+                                    style="
+                                        top: 50%;
+                                        transform: translateY(-50%);
+                                    "
+                                >
+                                    <i class="fa fa-chevron-right"></i>
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Product Details Content -->
+                <div class="col-md-6 col-xs-12">
+                    <div class="row mt-4">
+                        <a class="pd_title">{{ details?.translatedName }}</a>
+                        <div class="my-1">
+                            <div class="pd_price">
+                                <span class="new"
+                                    >{{ details?.priceAfterDiscount }}
+                                    {{ "EGP" | translate }}</span
+                                >
+                           
+                                <span class="old" *ngIf="details?.priceBeforeDiscount !== details?.priceAfterDiscount">
+                                ({{ details?.priceBeforeDiscount }} {{ 'EGP' | translate }})
+                                </span>
+
+                            </div>
+                        </div>
+                        <div class="mt-4">
+                            <p>{{ details?.translatedDescription }}</p>
+                        </div>
+                        <div class="people-viewing my-2">
+                            <i class="fa fa-eye me-1"></i>
+                            <span
+                                >{{ peopleViewing }}
+                                {{ "PEOPLE_VIEWING" | translate }}</span
+                            >
+                        </div>
+                        <div class="action-buttons" *ngIf="isLoggedIn">
+                            <a
+                                class="btn animated-cart-btn acc_btn"
+                                (click)="addToCart(details.id)"
+                                [title]="'ADD_TO_CART' | translate"
+                            >
+                                <i class="fa fa-shopping-cart me-2"></i>
+                                {{ "ADD_TO_CART" | translate }}
+                            </a>
+                            <a
+                                (click)="addToFavourite(details.id)"
+                                class="btn btn-default acc_btn btn_icn"
+                                [title]="'ADD_TO_WISHLIST' | translate"
+                            >
+                                <i class="fa fa-heart"></i>
+                            </a>
+                        </div>
+                        <div class="action-buttons" *ngIf="!isLoggedIn">
+                            <a
+                                class="btn animated-cart-btn acc_btn"
+                                (click)="addToClientCart(details)"
+                                [title]="'ADD_TO_CART' | translate"
+                            >
+                                <i class="fa fa-shopping-cart me-2"></i>
+                                {{ "ADD_TO_CART" | translate }}
+                            </a>
+                            <a
+                                (click)="addToClientFavourite(details)"
+                                class="btn btn-default acc_btn btn_icn"
+                                [title]="'ADD_TO_WISHLIST' | translate"
+                            >
+                                <i class="fa fa-heart"></i>
+                            </a>
+                        </div>
+                        <div class="social-share mt-3">
+                            <span class="me-2">{{ "SHARE" | translate }}:</span>
+                            <a
+                                class="social-icon"
+                                (click)="shareOnFacebook()"
+                                [title]="'SHARE_ON_FACEBOOK' | translate"
+                            >
+                                <i class="fab fa-facebook-f"></i>
+                            </a>
+                            <a
+                                class="social-icon"
+                                (click)="shareOnTwitter()"
+                                [title]="'SHARE_ON_TWITTER' | translate"
+                            >
+                                <i class="fab fa-twitter"></i>
+                            </a>
+                            <a
+                                class="social-icon"
+                                (click)="shareOnWhatsApp()"
+                                [title]="'SHARE_ON_WHATSAPP' | translate"
+                            >
+                                <i class="fab fa-whatsapp"></i>
+                            </a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Reviews Section -->
+            <div class="course-details-content section-bg">
+                <div class="client-review p-4">
+                    <div class="review-comments">
+                        <h6 class="review-title">
+                            {{ "REVIEWS" | translate }} ({{
+                                details?.productReviews.length
+                            }})
+                        </h6>
+                        <ul class="review-contents">
+                            <li *ngFor="let review of details?.productReviews">
+                                <div class="cont">
+                                    <h6 class="subtitle">
+                                        {{ review?.user || review?.client }}
+                                    </h6>
+                                    <div class="ratings cl-theme">
+                                        <rating
+                                            [(ngModel)]="review.rating"
+                                            [max]="5"
+                                            [readonly]="true"
+                                            style="
+                                                color: #e1b619;
+                                                font-size: 25px;
+                                            "
+                                        ></rating>
+                                    </div>
+                                    <p>{{ review?.review }}</p>
+                                </div>
+                            </li>
+                        </ul>
+                    </div>
+                    <div class="review-form">
+                        <h6 class="review-title">
+                            {{ "ADD_A_REVIEW" | translate }}
+                        </h6>
+                        <form
+                            class="row client-form align-items-center"
+                            *ngIf="isLoggedIn"
+                        >
+                            <div class="col-md-4 col-12">
+                                <div class="rating">
+                                    <span class="rating-title"
+                                        >{{ "YOUR_RATING" | translate }}:
+                                    </span>
+                                    <rating
+                                        [max]="5"
+                                        style="color: #e1b619; font-size: 25px"
+                                        [(ngModel)]="newRate"
+                                        name="newRate"
+                                    ></rating>
+                                </div>
+                            </div>
+                            <div class="col-md-12 col-12 d-inline-flex">
+                                <textarea
+                                    rows="5"
+                                    [placeholder]="
+                                        'TYPE_HERE_MESSAGE' | translate
+                                    "
+                                    [(ngModel)]="newReview"
+                                    name="newReview"
+                                ></textarea>
+                            </div>
+                            <div class="col-12 pb-4">
+                                <button
+                                    type="button"
+                                    class="custom-button rounded"
+                                    (click)="addReview(newReview, newRate)"
+                                >
+                                    {{ "SUBMIT_REVIEW" | translate }}
+                                </button>
+                            </div>
+                        </form>
+                        <form
+                            class="row client-form align-items-center"
+                            *ngIf="!isLoggedIn"
+                        >
+                            <div class="col-md-4 col-12">
+                                <input
+                                    type="text"
+                                    name="name"
+                                    [placeholder]="'FULL_NAME' | translate"
+                                    [(ngModel)]="name"
+                                />
+                            </div>
+                            <div class="col-md-4 col-12">
+                                <input
+                                    type="email"
+                                    name="email"
+                                    [placeholder]="'EMAIL_ADDRESS' | translate"
+                                    [(ngModel)]="email"
+                                />
+                            </div>
+                            <div class="col-md-4 col-12">
+                                <input
+                                    type="text"
+                                    name="phone"
+                                    [placeholder]="'PHONE_NUMBER' | translate"
+                                    [(ngModel)]="phone"
+                                />
+                            </div>
+                            <div class="col-md-4 col-12">
+                                <div class="rating">
+                                    <span class="rating-title"
+                                        >{{ "YOUR_RATING" | translate }}:
+                                    </span>
+                                    <rating
+                                        [max]="5"
+                                        style="color: #e1b619; font-size: 25px"
+                                        [(ngModel)]="newRate"
+                                        name="newRate"
+                                    ></rating>
+                                </div>
+                            </div>
+                            <div class="col-md-12 col-12 d-inline-flex">
+                                <textarea
+                                    rows="5"
+                                    [placeholder]="
+                                        'TYPE_HERE_MESSAGE' | translate
+                                    "
+                                    [(ngModel)]="newReview"
+                                    name="newReview"
+                                ></textarea>
+                            </div>
+                            <div class="col-12 pb-4">
+                                <button
+                                    type="button"
+                                    class="custom-button rounded"
+                                    (click)="
+                                        addClientReview(
+                                            newReview,
+                                            newRate,
+                                            name,
+                                            email,
+                                            phone
+                                        )
+                                    "
+                                >
+                                    {{ "SUBMIT_REVIEW" | translate }}
+                                </button>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Related Products -->
+    <div
+        class="related_prdct_area text-center"
+        *ngIf="details?.relatedProducts?.length"
+    >
+        <div class="container">
+            <div class="rp_title text-center">
+                <h3>{{ "RELATED_PRODUCTS" | translate }}</h3>
+            </div>
+            <div class="related-products-slides mx-auto">
+                <owl-carousel-o [options]="relatedProductsOptions">
+                    <ng-template
+                        carouselSlide
+                        *ngFor="let related of details?.relatedProducts"
+                    >
+                        <a routerLink="/product/{{ related.id }}">
+                            <div class="event-slide position-relative">
+                                <div class="event-img">
+                                    <img
+                                        [src]="image + (related.productImages?.[0]?.image || 'fallback-image.jpg')"
+                                        class="bg-image max-height"
+                                        alt="Product Image"
+                                        (load)="
+                                            onImageLoad(
+                                                image +
+                                                    related.productImages[0]
+                                                        .image
+                                            )
+                                        "
+                                        (error)="onImageError($event)"
+                                    />
+                                    <span
+                                        class="product-new-label"
+                                        *ngIf="related.discount"
+                                    >
+                                        {{ "DISCOUNT" | translate }}:
+                                        {{ related.discount }}
+                                        {{ "EGP" | translate }}
+                                    </span>
+                                </div>
+                                <div class="event-content">
+                                    <h3>
+                                        {{
+                                            related.translatedName ||
+                                                related.title
+                                        }}
+                                    </h3>
+                                    <div class="price">
+                                        {{ related.priceAfterDiscount }}
+                                        {{ "EGP" | translate }}
+                                        <span
+                                             *ngIf="related?.priceBeforeDiscount !== related?.priceAfterDiscount"
+                                            >{{ related.priceBeforeDiscount }}
+                                            {{ "EGP" | translate }}</span
+                                        >
+                                    </div>
+                                </div>
+                            </div>
+                        </a>
+                    </ng-template>
+                </owl-carousel-o>
+            </div>
+        </div>
+    </div>
+
+    <app-footer />
+    <app-back-to-top />
+</div>

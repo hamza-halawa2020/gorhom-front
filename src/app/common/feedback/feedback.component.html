@@ -1,0 +1,64 @@
+<div class="">
+    <div class="container text-center">
+        <div class="text-center mb-4">
+            <h2>{{ "FEEDBACK_TITLE" | translate }}</h2>
+        </div>
+        <div class="feedback-slides mx-auto">
+            <owl-carousel-o [options]="currentOptions">
+                <ng-template
+                    carouselSlide
+                    *ngFor="let group of groupedSliderData"
+                >
+                    <div class="d-flex justify-content-center">
+                        <div
+                            class="col-lg-4 col-md-6 col-sm-12 mb-4"
+                            *ngFor="let slide of group"
+                        >
+                            <div class="single-feedback-item text-center p-3">
+                                <div class="rating">
+                                    <span
+                                        *ngFor="
+                                            let star of getStars(slide.rating);
+                                            let i = index
+                                        "
+                                    >
+                                        <i
+                                            class="fa-star"
+                                            [ngClass]="star ? 'fas' : 'far'"
+                                        ></i>
+                                    </span>
+                                </div>
+                                <div class="info">
+                                    <img
+                                        src="{{
+                                            productImage + slide.product_image
+                                        }}"
+                                        class="rounded-circle"
+                                        alt="user-image"
+                                    />
+                                    <h3 class="fw-semibold">
+                                        {{ slide.user || slide.client }}
+                                    </h3>
+                                    <span class="d-block review-text">{{
+                                        slide.review
+                                    }}</span>
+                                    <p
+                                        class="fw-medium"
+                                        [title]="
+                                            slide.created_at
+                                                | date
+                                                    : ('DATE_FORMAT'
+                                                          | translate)
+                                        "
+                                    >
+                                        {{ getRelativeTime(slide.created_at) }}
+                                    </p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </ng-template>
+            </owl-carousel-o>
+        </div>
+    </div>
+</div>

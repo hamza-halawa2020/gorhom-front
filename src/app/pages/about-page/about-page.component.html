@@ -1,0 +1,354 @@
+<app-navbar />
+
+<app-page-banner />
+
+<!-- START TOP PROMO FEATURES -->
+<section class="tp_feature">
+    <div class="container-fluid">
+        <div class="row">
+            <div
+                class="col-lg-4 col-sm-4 col-xs-12 no-padding wow fadeInUp"
+                data-wow-duration="1s"
+                data-wow-delay="0.2s"
+                data-wow-offset="0"
+            >
+                <div class="single_tp">
+                    <h3>{{ "QUALITY_EDUCATION" | translate }}</h3>
+                    <p>{{ "QUALITY_EDUCATION_DESC" | translate }}</p>
+                </div>
+            </div>
+            <!-- END COL -->
+            <div
+                class="col-lg-4 col-sm-4 col-xs-12 no-padding wow fadeInUp"
+                data-wow-duration="1s"
+                data-wow-delay="0.3s"
+                data-wow-offset="0"
+            >
+                <div class="single_tp">
+                    <h3>{{ "EXPERIENCED_TEACHERS" | translate }}</h3>
+                    <p>{{ "EXPERIENCED_TEACHERS_DESC" | translate }}</p>
+                </div>
+            </div>
+            <!-- END COL -->
+            <div
+                class="col-lg-4 col-sm-4 col-xs-12 no-padding wow fadeInUp"
+                data-wow-duration="1s"
+                data-wow-delay="0.4s"
+                data-wow-offset="0"
+            >
+                <div class="single_tp">
+                    <h3>{{ "LIFETIME_SUPPORT" | translate }}</h3>
+                    <p>{{ "LIFETIME_SUPPORT_DESC" | translate }}</p>
+                </div>
+            </div>
+            <!-- END COL -->
+        </div>
+        <!-- END ROW -->
+    </div>
+    <!-- END CONTAINER -->
+</section>
+<!-- END TOP PROMO FEATURES -->
+
+<!-- START ABOUT US HOME ONE -->
+<section class="ab_one section-padding">
+    <div class="container">
+        <div class="row">
+            <div
+                class="col-lg-6 col-sm-12 col-xs-12 wow fadeInUp"
+                data-wow-duration="1s"
+                data-wow-delay="0.2s"
+                data-wow-offset="0"
+            >
+                <div class="ab_img">
+                    <img
+                        src="assets/images/1.jpg"
+                        class="img-fluid"
+                        alt="image"
+                    />
+                </div>
+            </div>
+            <!--- END COL -->
+            <div
+                class="col-lg-6 col-sm-12 col-xs-12 wow fadeInUp"
+                data-wow-duration="1s"
+                data-wow-delay="0.1s"
+                data-wow-offset="0"
+            >
+                <div class="ab_content">
+                    <h2 [innerHTML]="'LEARN_NEW_SKILLS' | translate"></h2>
+                    <p>{{ "ABOUT_US_DESC_1" | translate }}</p>
+                    <p>
+                        <strong>{{ "ABOUT_US_DESC_2" | translate }}</strong>
+                    </p>
+                </div>
+            </div>
+            <!--- END COL -->
+        </div>
+        <!--- END ROW -->
+    </div>
+    <!--- END CONTAINER -->
+</section>
+<!-- END ABOUT US HOME ONE -->
+
+<!-- START WHY CHOOSE US-->
+<section class="marketing_content_area section-padding">
+    <div class="container">
+        <div class="section-title">
+            <h2>{{ "WHY_CHOOSE_PENN" | translate }}</h2>
+            <p [innerHTML]="'FIND_BEST_FEATURES' | translate"></p>
+        </div>
+        <div class="row">
+            <div
+                class="col-lg-4 col-sm-6 col-xs-12 wow fadeInUp"
+                data-wow-duration="1s"
+                data-wow-delay="0.1s"
+                data-wow-offset="0"
+            >
+                <div class="single_feature_one">
+                    <div class="sf_top">
+                        <span class="ti-book ss_one"
+                            ><i class="fa-solid fa-book-open"></i
+                        ></span>
+                        <h2>
+                            <a target="_blank">{{
+                                "LEARN_ANYWHERE" | translate
+                            }}</a>
+                        </h2>
+                    </div>
+                    <p>{{ "LEARN_ANYWHERE_DESC" | translate }}</p>
+                </div>
+            </div>
+            <!-- END COL -->
+            <div
+                class="col-lg-4 col-sm-6 col-xs-12 wow fadeInUp"
+                data-wow-duration="1s"
+                data-wow-delay="0.2s"
+                data-wow-offset="0"
+            >
+                <div class="single_feature_one">
+                    <div class="sf_top">
+                        <span class="ti-heart ss_two"
+                            ><i class="fa-regular fa-heart"></i
+                        ></span>
+                        <h2>
+                            <a target="_blank">{{
+                                "EXPERT_INSTRUCTOR" | translate
+                            }}</a>
+                        </h2>
+                    </div>
+                    <p>{{ "EXPERT_INSTRUCTOR_DESC" | translate }}</p>
+                </div>
+            </div>
+            <!-- END COL -->
+            <div
+                class="col-lg-4 col-sm-6 col-xs-12 wow fadeInUp"
+                data-wow-duration="1s"
+                data-wow-delay="0.3s"
+                data-wow-offset="0"
+            >
+                <div class="single_feature_one">
+                    <div class="sf_top">
+                        <span class="ti-user ss_three"
+                            ><i class="fa-solid fa-users"></i
+                        ></span>
+                        <h2>
+                            <a target="_blank">{{
+                                "TEAM_MANAGEMENT" | translate
+                            }}</a>
+                        </h2>
+                    </div>
+                    <p>{{ "TEAM_MANAGEMENT_DESC" | translate }}</p>
+                </div>
+            </div>
+            <!-- END COL -->
+            <div
+                class="col-lg-4 col-sm-6 col-xs-12 wow fadeInUp"
+                data-wow-duration="1s"
+                data-wow-delay="0.4s"
+                data-wow-offset="0"
+            >
+                <div class="single_feature_one">
+                    <div class="sf_top">
+                        <span class="ti-eye ss_four"
+                            ><i class="fa-solid fa-eye"></i
+                        ></span>
+                        <h2>
+                            <a target="_blank">{{
+                                "COURSE_PLANNING" | translate
+                            }}</a>
+                        </h2>
+                    </div>
+                    <p>{{ "COURSE_PLANNING_DESC" | translate }}</p>
+                </div>
+            </div>
+            <!-- END COL -->
+            <div
+                class="col-lg-4 col-sm-6 col-xs-12 wow fadeInUp"
+                data-wow-duration="1s"
+                data-wow-delay="0.5s"
+                data-wow-offset="0"
+            >
+                <div class="single_feature_one">
+                    <div class="sf_top">
+                        <span class="ti-light-bulb ss_five"
+                            ><i class="fa-regular fa-lightbulb"></i
+                        ></span>
+                        <h2>
+                            <a target="_blank">{{
+                                "TEACHER_MONITORING" | translate
+                            }}</a>
+                        </h2>
+                    </div>
+                    <p>{{ "TEACHER_MONITORING_DESC" | translate }}</p>
+                </div>
+            </div>
+            <!-- END COL -->
+            <div
+                class="col-lg-4 col-sm-6 col-xs-12 wow fadeInUp"
+                data-wow-duration="1s"
+                data-wow-delay="0.6s"
+                data-wow-offset="0"
+            >
+                <div class="single_feature_one">
+                    <div class="sf_top">
+                        <span class="ti-email ss_six"
+                            ><i class="fa-regular fa-envelope"></i
+                        ></span>
+                        <h2>
+                            <a target="_blank">{{
+                                "STRONG_SUPPORT" | translate
+                            }}</a>
+                        </h2>
+                    </div>
+                    <p>{{ "STRONG_SUPPORT_DESC" | translate }}</p>
+                </div>
+            </div>
+            <!-- END COL -->
+        </div>
+        <!-- END ROW -->
+    </div>
+    <!-- END CONTAINER -->
+</section>
+<!-- END WHY CHOOSE US -->
+
+
+
+<!-- START FAQ -->
+<section class="faq_area section-padding">
+    <div class="container">
+        <div class="section-title">
+            <h2>{{ "FAQ_TITLE" | translate }}</h2>
+            <p [innerHTML]="'GENERAL_QUESTIONS' | translate"></p>
+        </div>
+        <div class="row justify-content-center">
+            <div class="col-lg-6 col-sm-6 col-xs-12">
+                <app-faqs />
+            </div>
+            <!-- END COL  -->
+            <div class="col-lg-6 col-sm-6 col-xs-12">
+                <div class="pt_faq">
+                    <img
+                        src="assets/images/1.jpg"
+                        class="img-fluid"
+                        alt="image"
+                    />
+                </div>
+            </div>
+            <!-- END COL  -->
+        </div>
+        <!--END  ROW  -->
+    </div>
+    <!--- END CONTAINER -->
+</section>
+<!-- END FAQ -->
+
+<!-- START COMPANY PARTNER LOGO -->
+<div class="partner-logo section-padding">
+    <div class="container">
+        <div class="row">
+            <!-- <div class="col-lg-12 text-center">
+                <div class="partner_title">
+                    <h3>{{ "TRUSTED_COMPANY" | translate }}</h3>
+                </div>
+                <div
+                    id="partnerCarousel"
+                    class="carousel slide"
+                    data-bs-ride="carousel"
+                >
+                    <div class="carousel-inner">
+                        <div class="carousel-item active">
+                            <div class="d-flex justify-content-around">
+                                <img
+                                    src="assets/images/1.jpg"
+                                    class="d-block mx-auto"
+                                    alt="Client 1"
+                                />
+                                <img
+                                    src="assets/images/3.jpg"
+                                    class="d-block mx-auto"
+                                    alt="Client 2"
+                                />
+                                <img
+                                    src="assets/images/3.jpg"
+                                    class="d-block mx-auto"
+                                    alt="Client 2"
+                                />
+                            </div>
+                        </div>
+                        <div class="carousel-item">
+                            <img
+                                src="assets/images/2.jpg"
+                                class="d-block mx-auto"
+                                alt="Client 2"
+                            />
+                        </div>
+                        <div class="carousel-item">
+                            <img
+                                src="assets/images/3.jpg"
+                                class="d-block mx-auto"
+                                alt="Client 2"
+                            />
+                        </div>
+                    </div>
+
+                    <button
+                        class="carousel-control-prev"
+                        type="button"
+                        data-bs-target="#partnerCarousel"
+                        data-bs-slide="prev"
+                    >
+                        <span
+                            class="carousel-control-prev-icon pointer"
+                            aria-hidden="true"
+                        ></span>
+                        <span class="visually-hidden">{{
+                            "PREVIOUS" | translate
+                        }}</span>
+                    </button>
+                    <button
+                        class="carousel-control-next"
+                        type="button"
+                        data-bs-target="#partnerCarousel"
+                        data-bs-slide="next"
+                    >
+                        <span
+                            class="carousel-control-next-icon pointer"
+                            aria-hidden="true"
+                        ></span>
+                        <span class="visually-hidden">{{
+                            "NEXT" | translate
+                        }}</span>
+                    </button>
+                </div>
+            </div> -->
+            <!-- END COL -->
+        </div>
+        <!--END ROW -->
+    </div>
+    <!-- END CONTAINER -->
+</div>
+<!-- END COMPANY PARTNER LOGO -->
+
+<app-footer />
+
+<app-back-to-top />

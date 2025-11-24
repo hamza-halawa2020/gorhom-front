@@ -1,0 +1,208 @@
+<div [dir]="translate.currentLang === 'ar' ? 'rtl' : 'ltr'">
+    <app-navbar />
+
+    <app-page-banner />
+
+    <!-- Success Message as a Toast -->
+    <div
+        *ngIf="successMessage"
+        class="toast-container position-fixed top-0"
+        [class.start-0]="translate.currentLang === 'ar'"
+        [class.end-0]="translate.currentLang !== 'ar'"
+        p-3
+    >
+        <div
+            class="toast show"
+            role="alert"
+            aria-live="assertive"
+            aria-atomic="true"
+        >
+            <div class="toast-header">
+                <strong
+                    [class.ms-auto]="translate.currentLang === 'ar'"
+                    [class.me-auto]="translate.currentLang !== 'ar'"
+                    [class.text-success]="true"
+                >
+                    {{ 'SUCCESS' | translate }}
+                </strong>
+            </div>
+            <div class="toast-body">
+                <h6>{{ successMessage }}</h6>
+            </div>
+        </div>
+    </div>
+
+    <!-- Error Message as a Toast -->
+    <div
+        *ngIf="errorMessage"
+        class="toast-container position-fixed top-0"
+        [class.start-0]="translate.currentLang === 'ar'"
+        [class.end-0]="translate.currentLang !== 'ar'"
+        p-3
+    >
+        <div
+            class="toast show"
+            role="alert"
+            aria-live="assertive"
+            aria-atomic="true"
+        >
+            <div class="toast-header">
+                <strong
+                    [class.ms-auto]="translate.currentLang === 'ar'"
+                    [class.me-auto]="translate.currentLang !== 'ar'"
+                    [class.text-danger]="true"
+                >
+                    {{ 'ERROR' | translate }}
+                </strong>
+            </div>
+            <div class="toast-body">
+                <h6>{{ errorMessage }}</h6>
+            </div>
+        </div>
+    </div>
+
+    <!-- Register -->
+    <div class="register-area bg-fbfbfb pt-5 pb-5">
+        <div class="container">
+            <div class="row align-items-center">
+                <div
+                    class="col-lg-6 col-md-12"
+                    [class.order-2]="translate.currentLang === 'ar'"
+                    [class.order-1]="translate.currentLang !== 'ar'"
+                >
+                    <div class="register-image text-center">
+                        <img src="assets/images/1.jpg" alt="register-image" />
+                    </div>
+                </div>
+                <div
+                    class="col-lg-6 col-md-12"
+                    [class.order-1]="translate.currentLang === 'ar'"
+                    [class.order-2]="translate.currentLang !== 'ar'"
+                >
+                    <div class="register-content">
+                        <ul class="links p-0 list-unstyled">
+                            <li class="d-inline-block mx-2">
+                                <a
+                                    routerLink="/login"
+                                    class="d-block position-relative"
+                                >
+                                    {{ 'LOGIN' | translate }}
+                                </a>
+                            </li>
+                            <li class="d-inline-block">
+                                <a
+                                    routerLink="/register"
+                                    class="d-block position-relative active"
+                                >
+                                    {{ 'REGISTER' | translate }}
+                                </a>
+                            </li>
+                        </ul>
+                        <h3 class="fw-medium">{{ 'CREATE_ACCOUNT' | translate }}</h3>
+
+                        <form [formGroup]="registerForm" (ngSubmit)="register()">
+                            <div class="form-group">
+                                <input
+                                    type="text"
+                                    class="form-control shadow-none"
+                                    [placeholder]="'NAME' | translate"
+                                    formControlName="name"
+                                />
+                            </div>
+                            <div class="form-group">
+                                <input
+                                    type="text"
+                                    class="form-control shadow-none"
+                                    [placeholder]="'EMAIL' | translate"
+                                    formControlName="email"
+                                />
+                            </div>
+                            <div class="form-group">
+                                <input
+                                    type="text"
+                                    class="form-control shadow-none"
+                                    [placeholder]="'PHONE' | translate"
+                                    formControlName="phone"
+                                />
+                            </div>
+                            <div class="form-group">
+                                <input
+                                    type="file"
+                                    class="form-control shadow-none"
+                                    (change)="onFileSelected($event)"
+                                />
+                            </div>
+                            <div class="form-group position-relative">
+                                <input
+                                    [type]="passwordVisible ? 'text' : 'password'"
+                                    id="passwordInput"
+                                    class="form-control shadow-none"
+                                    [placeholder]="'PASSWORD' | translate"
+                                    formControlName="password"
+                                />
+                                <button
+                                    type="button"
+                                    class="p-0 bg-transparent border-0 position-absolute"
+                                    [class.start-0]="translate.currentLang === 'ar'"
+                                    [class.end-0]="translate.currentLang !== 'ar'"
+                                    [class.ms-2]="translate.currentLang === 'ar'"
+                                    [class.me-2]="translate.currentLang !== 'ar'"
+                                    (click)="togglePasswordVisibility()"
+                                >
+                                    <i
+                                        [ngClass]="
+                                            passwordVisible
+                                                ? 'fa-regular fa-eye'
+                                                : 'fa-regular fa-eye-slash'
+                                        "
+                                    ></i>
+                                </button>
+                            </div>
+                            <div class="form-group position-relative">
+                                <input
+                                    [type]="
+                                        passwordConfirmationVisible
+                                            ? 'text'
+                                            : 'password'
+                                    "
+                                    id="passwordInput"
+                                    class="form-control shadow-none"
+                                    [placeholder]="'CONFIRM_PASSWORD' | translate"
+                                    formControlName="password_confirmation"
+                                />
+                                <button
+                                    type="button"
+                                    class="p-0 bg-transparent border-0 position-absolute"
+                                    [class.start-0]="translate.currentLang === 'ar'"
+                                    [class.end-0]="translate.currentLang !== 'ar'"
+                                    [class.ms-2]="translate.currentLang === 'ar'"
+                                    [class.me-2]="translate.currentLang !== 'ar'"
+                                    (click)="togglePasswordConfirmationVisibility()"
+                                >
+                                    <i
+                                        [ngClass]="
+                                            passwordConfirmationVisible
+                                                ? 'fa-regular fa-eye'
+                                                : 'fa-regular fa-eye-slash'
+                                        "
+                                    ></i>
+                                </button>
+                            </div>
+                            <a routerLink="/login" class="forgot-password">
+                                {{ 'DO_YOU_HAVE_ACCOUNT' | translate }}
+                            </a>
+                            <button type="submit" class="default-btn d-block w-100">
+                                {{ 'REGISTER' | translate }}
+                            </button>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!-- End Register -->
+
+    <app-footer />
+
+    <app-back-to-top />
+</div>

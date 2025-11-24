@@ -1,0 +1,351 @@
+.upcoming-courses-area {
+    padding-bottom: 40px;
+    padding-top: 20px;
+
+    .section-title {
+        margin-bottom: 40px;
+
+        h2 {
+            max-width: 980px;
+        }
+    }
+}
+.max-height{
+    max-height: 450px;
+}
+.single-upcoming-course-box {
+    .image {
+        img {
+            transition: var(--transition);
+
+            &:nth-child(2) {
+                top: 0;
+                left: 0;
+                right: 0;
+                bottom: 0;
+                opacity: 0;
+                visibility: hidden;
+                position: absolute;
+            }
+        }
+    }
+    .content {
+        left: 0;
+        right: 0;
+        top: 50%;
+        position: absolute;
+        transform: translateY(-50%);
+        padding: {
+            left: 45px;
+            right: 45px;
+        }
+        h3 {
+            transition: var(--transition);
+            color: var(--whiteColor);
+            margin-bottom: 15px;
+            padding-left: 40px;
+            font: {
+                size: 24px;
+                family: var(--fontFamily);
+            }
+        }
+        ul {
+            margin-bottom: 20px;
+
+            li {
+                margin-bottom: 10px;
+                color: var(--whiteColor);
+                transition: var(--transition);
+
+                span {
+                    color: var(--whiteColor);
+                    transition: var(--transition);
+                }
+                &:nth-child(1) {
+                    padding-left: 28px;
+                }
+                &:nth-child(2) {
+                    padding-left: 15px;
+                }
+                &:last-child {
+                    margin-bottom: 0;
+                }
+            }
+        }
+        .instructor {
+            transition: var(--transition);
+
+            img {
+                width: 50px;
+                margin-right: 10px;
+            }
+            h4 {
+                margin-bottom: 3px;
+                color: var(--whiteColor);
+                font: {
+                    size: 20px;
+                    family: var(--fontFamily);
+                }
+            }
+            span {
+                color: #f3f3f3;
+            }
+        }
+    }
+    .default-btn {
+        bottom: 0;
+        opacity: 0;
+        right: 55px;
+        visibility: hidden;
+        position: absolute;
+        color: var(--whiteColor);
+        background-color: #1c1c1c;
+        border: 3px solid #f3f3f3;
+        border-radius: 50px 0 15px 50px;
+        padding: {
+            top: 12px;
+            bottom: 12px;
+        }
+    }
+}
+::ng-deep {
+    .upcoming-courses-slides2 {
+        max-width: 450px;
+        // max-width: 930px;
+        .owl-theme {
+            .owl-nav {
+                margin-top: 0;
+
+                [class*="owl-"] {
+                    top: 50%;
+                    margin: 0;
+                    padding: 0;
+                    width: 60px;
+                    left: -70px;
+                    height: 60px;
+                    font-size: 20px;
+                    margin-top: 25px;
+                    position: absolute;
+                    border-radius: 50%;
+                    color: #4c0048;
+                    transform: translateY(-50%);
+                    transition: var(--transition);
+                    background-color: #fbe8fe;
+
+                    i {
+                        left: 0;
+                        right: 0;
+                        top: 50%;
+                        position: absolute;
+                        transform: translateY(-50%);
+                    }
+                    &.owl-next {
+                        left: auto;
+                        right: -70px;
+                    }
+                    // &:hover {
+                    //     color: var(--whiteColor);
+                    //     background-color: #4c0048;
+                    // }
+                }
+            }
+        }
+    }
+}
+
+/* Max width 767px */
+@media only screen and (max-width: 767px) {
+    .upcoming-courses-area {
+        .section-title {
+            margin-bottom: 30px;
+
+            h2 {
+                max-width: 100%;
+            }
+        }
+    }
+    .single-upcoming-course-box {
+        transition: var(--transition);
+        background: #1c1c1c;
+        border-radius: 15px;
+        padding: 20px;
+
+        .image {
+            display: none;
+        }
+        .content {
+            top: 0;
+            position: relative;
+            transform: translateY(0);
+            padding: {
+                left: 0;
+                right: 0;
+            }
+            h3 {
+                margin-bottom: 15px;
+                padding-left: 0;
+                font-size: 20px;
+            }
+            ul {
+                li {
+                    &:nth-child(1) {
+                        padding-left: 0;
+                    }
+                    &:nth-child(2) {
+                        padding-left: 0;
+                    }
+                }
+            }
+            .instructor {
+                h4 {
+                    font-size: 18px;
+                }
+            }
+        }
+        .default-btn {
+            right: 0;
+            padding: {
+                top: 11px;
+                bottom: 11px;
+            }
+        }
+        // &:hover {
+        //     background: #fbe8fe;
+
+        //     .default-btn {
+        //         opacity: 1;
+        //         visibility: visible;
+        //     }
+        // }
+    }
+    ::ng-deep {
+        .upcoming-courses-slides2 {
+            max-width: 100%;
+            padding: {
+                left: 0;
+                right: 0;
+            }
+            .owl-theme {
+                .owl-nav {
+                    margin-top: 25px;
+
+                    [class*="owl-"] {
+                        top: 0;
+                        left: 0;
+                        width: 45px;
+                        height: 45px;
+                        margin-top: 0;
+                        font-size: 15px;
+                        line-height: 45px;
+                        position: relative;
+                        transform: translateY(0);
+                        margin: {
+                            left: 5px;
+                            right: 5px;
+                        }
+                        &.owl-next {
+                            right: 0;
+                        }
+                    }
+                }
+            }
+        }
+    }
+}
+
+/* Min width 576px to Max width 767px */
+@media only screen and (min-width: 576px) and (max-width: 767px) {
+}
+
+/* Min width 768px to Max width 991px */
+@media only screen and (min-width: 768px) and (max-width: 991px) {
+    .upcoming-courses-area {
+        .section-title {
+            margin-bottom: 30px;
+
+            h2 {
+                max-width: 100%;
+            }
+        }
+    }
+    .single-upcoming-course-box {
+        .content {
+            padding: {
+                left: 35px;
+                right: 35px;
+            }
+            h3 {
+                font-size: 20px;
+            }
+            .instructor {
+                h4 {
+                    font-size: 18px;
+                }
+            }
+        }
+        .default-btn {
+            right: 45px;
+        }
+    }
+    ::ng-deep {
+        .upcoming-courses-slides2 {
+            max-width: 100%;
+            padding: {
+                left: 0;
+                right: 0;
+            }
+            .owl-theme {
+                .owl-nav {
+                    margin-top: 25px;
+
+                    [class*="owl-"] {
+                        top: 0;
+                        left: 0;
+                        width: 55px;
+                        height: 55px;
+                        margin-top: 0;
+                        font-size: 16px;
+                        position: relative;
+                        transform: translateY(0);
+                        margin: {
+                            left: 8px;
+                            right: 8px;
+                        }
+                        &.owl-next {
+                            right: 0;
+                        }
+                    }
+                }
+            }
+        }
+    }
+}
+
+/* Min width 992px to Max width 1199px */
+@media only screen and (min-width: 992px) and (max-width: 1199px) {
+    ::ng-deep {
+        .upcoming-courses-slides2 {
+            .owl-theme {
+                .owl-nav {
+                    [class*="owl-"] {
+                        left: -60px;
+                        font-size: 18px;
+
+                        &.owl-next {
+                            left: auto;
+                            right: -60px;
+                        }
+                    }
+                }
+            }
+        }
+    }
+}
+
+/* Min width 1200px to Max width 1399px */
+@media only screen and (min-width: 1200px) and (max-width: 1399px) {
+}
+
+/* Min width 1600px */
+@media only screen and (min-width: 1600px) {
+}

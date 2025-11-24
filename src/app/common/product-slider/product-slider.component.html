@@ -1,0 +1,35 @@
+<div class="border-top border-bottom bg-f3f3f3 pt-5 pb-5">
+    <div class="container">
+        <div class="section-title position-relative">
+            <div class="section-title">
+                <h2>{{ "OUR_PRODUCTS" | translate }}</h2>
+                <p [innerHTML]="'CHOOSE_OUR_PRODUCTS' | translate"></p>
+            </div>
+
+            <!-- <a routerLink="/products" class="default-btn">
+                {{ "EXPLORE_ALL_PRODUCTS" | translate }}
+            </a> -->
+        </div>
+        <div class="upcoming-courses-slides2 mx-auto">
+            <owl-carousel-o [options]="currentOptions">
+                <ng-template carouselSlide *ngFor="let slide of sliderData">
+                    <a routerLink="{{ '/product/' + slide.id }}">
+                        <div
+                            class="single-upcoming-course-box position-relative"
+                        >
+                            <div class="image position-relative">
+                                <div class="text-center max-height">
+                                    <img
+                                        src="{{ image + slide.productImages?.[0]?.image }}"
+                                        class="bg-image"
+                                        alt="bg-image"
+                                    />
+                                </div>
+                            </div>
+                        </div>
+                    </a>
+                </ng-template>
+            </owl-carousel-o>
+        </div>
+    </div>
+</div>

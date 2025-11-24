@@ -1,0 +1,163 @@
+.image-container {
+    position: relative;
+    width: 100%;
+    height: 50vw; 
+    min-height: 200px; 
+    max-height: 500px; 
+}
+
+.new-class {
+    position: relative;
+}
+
+.carousel-image {
+    width: 100%;
+    height: 50vw; 
+    min-height: 200px;
+    max-height: 500px;
+    object-fit: cover;
+}
+
+.overlay-content {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    text-align: center;
+    color: white;
+    width: 80%;
+    max-width: 600px;
+    text-shadow: 0 2px 4px rgba(0, 0, 0, 0.5);
+}
+
+.overlay-content h3 {
+    font-size: calc(1.5rem + 1vw); 
+    margin-bottom: 0.5rem;
+    font-weight: 700;
+}
+
+.overlay-content p {
+    font-size: calc(0.8rem + 0.5vw); 
+    line-height: 1.4;
+    font-weight: 500;
+}
+
+.owl-dots {
+    position: absolute;
+    bottom: 10px;
+    left: 50%;
+    transform: translateX(-50%);
+    z-index: 10;
+
+    .owl-dot {
+        span {
+            background: rgba(255, 255, 255, 0.5);
+            width: calc(8px + 0.5vw); 
+            height: calc(8px + 0.5vw);
+            margin: 0 calc(3px + 0.2vw);
+            border-radius: 50%;
+            transition: background 0.3s ease;
+        }
+
+        &.active span {
+            background: #fff;
+        }
+
+        &:hover span {
+            background: rgba(255, 255, 255, 0.8);
+        }
+    }
+}
+
+.custom-nav {
+    .nav-btn {
+        position: absolute;
+        top: 50%;
+        transform: translateY(-50%);
+        background: rgba(0, 0, 0, 0.158);
+        color: white;
+        border: none;
+        padding: calc(8px + 0.5vw); 
+        font-size: calc(0.9rem + 0.3vw);
+        cursor: pointer;
+        opacity: 0;
+        transition: opacity 0.3s ease, background 0.3s ease;
+        z-index: 10;
+        border-radius: 15px;
+    }
+
+    .prev-btn {
+        left: 15px;
+    }
+
+    .next-btn {
+        right: 15px;
+    }
+}
+
+.main-slider:hover {
+    .custom-nav .nav-btn {
+        opacity: 1;
+    }
+}
+
+.custom-nav .nav-btn:hover {
+    background: rgba(0, 0, 0, 0.8);
+}
+
+[dir="rtl"] {
+    .custom-nav {
+        .prev-btn {
+            right: 15px;
+            left: auto;
+            i {
+                transform: rotate(180deg);
+            }
+        }
+
+        .next-btn {
+            left: 15px;
+            right: auto;
+            i {
+                transform: rotate(180deg);
+            }
+        }
+    }
+}
+
+
+@media (max-width: 576px) {
+    .image-container {
+        height: 40vw; 
+        min-height: 150px;
+    }
+
+    .carousel-image {
+        height: 40vw;
+        min-height: 150px;
+    }
+
+    .overlay-content h3 {
+        font-size: calc(1.2rem + 0.5vw);
+    }
+
+    .overlay-content p {
+        font-size: calc(0.7rem + 0.3vw);
+    }
+
+    .custom-nav .nav-btn {
+        padding: calc(6px + 0.3vw);
+        font-size: calc(0.8rem + 0.2vw);
+    }
+
+    .owl-dots {
+        bottom: 5px;
+        .owl-dot {
+            span {
+                width: calc(6px + 0.3vw);
+                height: calc(6px + 0.3vw);
+                margin: 0 calc(2px + 0.2vw);
+            }
+        }
+    }
+}
