@@ -1,5 +1,5 @@
 {
-  "name": "rimansan",
+  "name": "gorhom",
   "version": "1.0.0",
   "scripts": {
     "ng": "ng",
@@ -7,7 +7,7 @@
     "build": "ng build",
     "watch": "ng build --watch --configuration development",
     "test": "ng test",
-    "serve:ssr:rimansan": "node dist/rimansan/server/server.mjs"
+    "serve:ssr:gorhom": "node dist/gorhom/server/server.mjs"
   },
   "private": true,
   "dependencies": {

@@ -30,7 +30,7 @@
   "Reveal your beauty without straining your budget. Our cost-effective beauty options and personalized packages make luxury accessible to all.": "كشف عن جمالك دون إجهاد ميزانيتك. خيارات الجمال التكلفة فعالة وحزمنا الشخصية تجعل الفخامة متاحة للجميع.",
   "About Us": "معلومات عنا",
   "Leading the way in cosmetics.": "نحن الرائدين في مجال مستحضرات التجميل.",
-  "Riman-San stands as a pioneering influence in the beauty industry, establishing the benchmark for memorable beauty experiences. With an unwavering dedication to excellence and creativity, we welcome you to journey through the realm of beauty with our meticulously crafted products.": "تقف ريمان-سان كنفوذ رائد في صناعة الجمال، وترسي معايير تجارب الجمال التي لا تنسى. مع التفاني الثابت للتفوق والإبداع، نرحب بك لتسلق معنا في عالم الجمال مع منتجاتنا المصقولة بعناية.",
+  "gorhom stands as a pioneering influence in the beauty industry, establishing the benchmark for memorable beauty experiences. With an unwavering dedication to excellence and creativity, we welcome you to journey through the realm of beauty with our meticulously crafted products.": "تقف ريمان-سان كنفوذ رائد في صناعة الجمال، وترسي معايير تجارب الجمال التي لا تنسى. مع التفاني الثابت للتفوق والإبداع، نرحب بك لتسلق معنا في عالم الجمال مع منتجاتنا المصقولة بعناية.",
   "Igniting Extraordinary Beauty": "إشعال جمال استثنائي",
   "Passion, Quality, Integrity": "العاطفة، الجودة، النزاهة",
   "Beauty Exploration": "استكشاف الجمال",
@@ -46,7 +46,7 @@
   "Saturday - Thursday": "السبت - الخميس",
   "Friday": "الجمعة",
   "Closed": "مغلق",
-  "Copyright © Riman-San, All Right Reserved.": "حقوق النشر © الحقوق محفوظة لدي , ريمان-سان .",
+  "Copyright © gorhom, All Right Reserved.": "حقوق النشر © الحقوق محفوظة لدي , ريمان-سان .",
   "Made with": "صُنع بشغف",
   "by": "بواسطة",
   "Our Products": "منتجاتنا",
@@ -451,7 +451,7 @@
   "ABOUT_US_DESC": "نحن ملتزمون بتعزيز مجتمع نابض بالحياة من متعلمي اللغة المكرسين للكفاءة اللغوية والتقدير الثقافي. تأسس في عام 2002.",
   "ENROLL_NOW": "سجل الآن",
   "CLOSE": "إغلاق",
-  "RIMAN_SAN": "ريمان سان",
+  "gorhom": "ريمان سان",
   "OUR_POSTS": "منشوراتنا",
   "CHECK_ALL_POSTS": "تحقق من جميع منشوراتنا",
   "EXPLORE_ALL_POSTS": "استكشف جميع المنشورات",
@@ -745,10 +745,9 @@
   "PLACED": "تم الطلب",
   "please choose city": "من فضلك اختر مدينة",
   "LOADING": "جاري التحميل...",
-  
-    "STATUS_PENDING": "قيد الانتظار",
-    "STATUS_AWAITING_PAYMENT": "في انتظار الدفع",
-    "STATUS_SHIPPED": "تم الشحن",
-    "STATUS_DELIVERED": "تم التوصيل",
-    "UNKNOWN_STATUS": "حالة غير معروفة"
+  "STATUS_PENDING": "قيد الانتظار",
+  "STATUS_AWAITING_PAYMENT": "في انتظار الدفع",
+  "STATUS_SHIPPED": "تم الشحن",
+  "STATUS_DELIVERED": "تم التوصيل",
+  "UNKNOWN_STATUS": "حالة غير معروفة"
 }

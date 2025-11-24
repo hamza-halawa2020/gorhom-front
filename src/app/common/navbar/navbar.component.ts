@@ -29,7 +29,7 @@ export class NavbarComponent implements OnInit, OnDestroy {
     cartClientData: any[] = [];
     favClientData: any[] = [];
     favData: any[] = [];
-    EMAIL: string = 'info@rimansan.net';
+    EMAIL: string = 'info@gorhom.net';
     public cartSubscription!: Subscription;
     public cartClientSubscription!: Subscription;
     public favSubscription!: Subscription;

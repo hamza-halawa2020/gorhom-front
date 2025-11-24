@@ -95,7 +95,7 @@ export class ProductsSectionComponent implements OnInit {
     getRandomImage(images: any[]): string {
         if (!images || images.length <= 1) {
             // If 0 or 1 image, no hover options
-            return 'assets/default-image.jpg';
+            return 'assets/images/logo.svg';
         }
         // Select from images excluding index 0
         const randomIndex = Math.floor(Math.random() * (images.length - 1)) + 1; // Start from 1 to length-1
@@ -103,7 +103,7 @@ export class ProductsSectionComponent implements OnInit {
     }
 
     onImageError(event: Event): void {
-        (event.target as HTMLImageElement).src = 'assets/default-image.jpg';
+        (event.target as HTMLImageElement).src = 'assets/images/logo.svg';
     }
 
     onMouseEnter(productId: number, images: any[]): void {

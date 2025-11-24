@@ -11,7 +11,7 @@ import { TranslateModule } from '@ngx-translate/core';
     styleUrls: ['./footer.component.scss'],
 })
 export class FooterComponent {
-    email: string = 'info@rimansan.net';
+    email: string = 'info@gorhom.net';
     phone: string = '+201068743043';
 
     accordionState: { [key: string]: boolean } = {
@@ -22,7 +22,7 @@ export class FooterComponent {
         newsletter: false,
     };
 
-    constructor(public router: Router) {}
+    constructor(public router: Router) { }
 
     toggleAccordion(section: string) {
         this.accordionState[section] = !this.accordionState[section];

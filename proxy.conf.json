@@ -1,6 +1,6 @@
 {
     "/public/i18n": {
-        "target": "https://new-backend.rimansan.net",
+        "target": "https://new-backend.gorhom.net",
         "secure": true,
         "changeOrigin": true,
         "logLevel": "debug"

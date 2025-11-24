@@ -11,10 +11,9 @@ import { HttpClient } from '@angular/common/http';
     styleUrl: './app.component.scss',
 })
 export class AppComponent {
-    title = 'Riman-San';
+    title = 'gorhom';
 
     constructor(
-        private http: HttpClient,
         private router: Router,
         private viewportScroller: ViewportScroller
     ) {

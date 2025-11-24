@@ -125,14 +125,14 @@
                         <a routerLink="/product/{{ product.id }}">
                             <img
                                 class="default-image img-fluid"
-                                [src]="product.productImages?.[0]?.image ? image + product.productImages[0].image : 'assets/default-image.jpg'"
+                                [src]="product.productImages?.[0]?.image ? image + product.productImages[0].image : 'assets/images/logo.svg'"
                                 [alt]="product.title"
                                 (error)="onImageError($event)"
                             />
                             <!-- Hover Image -->
                             <img
                                 class="hover-image img-fluid"
-                                [src]="hoverImages[product.id] || (product.productImages?.[0]?.image ? image + product.productImages[0].image : 'assets/default-image.jpg')"
+                                [src]="hoverImages[product.id] || (product.productImages?.[0]?.image ? image + product.productImages[0].image : 'assets/images/logo.svg')"
                                 [alt]="product.title"
                                 (error)="onImageError($event)"
                             />

@@ -37,13 +37,13 @@ export class ShopPageComponent implements OnInit {
     successMessage: string = '';
     errorMessage: string = '';
     // AllProductsImage: string =environment.imgUrl + 'categories/1742656502_67ded3f62554f.jpg';
-    AllProductsImage: string = 'https://admin.rimansan.net/assets/images/logo.svg';
+    AllProductsImage: string = 'https://admin.gorhom.net/assets/images/logo.svg';
 
     constructor(
         public router: Router,
         private shopService: ShopService,
         public translateService: TranslateService
-    ) {}
+    ) { }
 
     ngOnInit(): void {
         this.fetchdata();
@@ -56,7 +56,7 @@ export class ShopPageComponent implements OnInit {
         this.shopService.index().subscribe({
             next: (response) => {
                 this.data = Object.values(response)[0];
-                console.log('data',response);
+                console.log('data', response);
                 this.translateData();
             },
             error: (error) => {
