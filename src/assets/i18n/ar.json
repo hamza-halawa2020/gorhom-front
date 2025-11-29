@@ -749,5 +749,15 @@
   "STATUS_AWAITING_PAYMENT": "في انتظار الدفع",
   "STATUS_SHIPPED": "تم الشحن",
   "STATUS_DELIVERED": "تم التوصيل",
-  "UNKNOWN_STATUS": "حالة غير معروفة"
+  "UNKNOWN_STATUS": "حالة غير معروفة",
+  "STAY_CONNECTED": "تواصل معنا",
+  "POLICIES_SUPPORT": "السياسات والدعم",
+  "MENU": "قائمة",
+  "RETURNS_REFUNDS": "الإرجاع والاسترداد",
+  "NEW_CAIRO": "",
+  "SHIPPING_DELIVERY": "",
+  "NEWSLETTER_SIGNUP": "",
+  "SUBSCRIBE_NEWSLETTER_TEXT": "",
+  "shipping-delivery": "",
+  "OUR_BRANDS": "علاماتنا التجارية"
 }
