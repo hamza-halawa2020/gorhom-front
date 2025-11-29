@@ -94,7 +94,7 @@ export class MainSlider implements OnInit {
 
     fetchSliderData() {
         this.mainSliderService.index().subscribe({
-            next: (response) => {
+            next: (response:any) => {
                 this.sliderData = Object.values(response)[0];
             },
         });

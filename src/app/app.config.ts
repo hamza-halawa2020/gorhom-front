@@ -9,6 +9,7 @@ import {
     TranslateModule,
     TranslateLoader
 } from '@ngx-translate/core';
+import { provideAnimations } from '@angular/platform-browser/animations';
 import { HttpClient } from '@angular/common/http';
 import { TranslateHttpLoader } from '@ngx-translate/http-loader';
 
@@ -29,5 +30,6 @@ export const appConfig: ApplicationConfig = {
                 }
             })
         ),
+        provideAnimations(),
     ]
 };

@@ -78,25 +78,23 @@ Version      : 1.0
 * ----------------------------------------------------------------------------------------
 */
 
-@font-face {
+/* @font-face {
     font-family: "LyonArabic";
     font-family: "Poppins", sans-serif;
     src: url("/assets/fonts/LyonArabicTextRegular.otf") format("opentype");
     font-weight: normal;
     font-style: normal;
-}
+} */
 
 /* body, [dir="ltr"] {
     font-family: "Poppins", sans-serif;
 }
 
 [dir="rtl"] {
-    font-family: "LyonArabic", sans-serif;
 } */
 
 body {
-    font-family: "LyonArabic", "Poppins", sans-serif; /* LyonArabic للنصوص العربية، Poppins للأرقام */
-    font-variant-numeric: lining-nums; /* اختياري: لضمان عرض الأرقام بشكل لاتيني */
+    font-variant-numeric: lining-nums;
 
     color: #888;
     font-size: 16px;
@@ -115,13 +113,11 @@ h5,
 h6 {
     letter-spacing: 0px;
     margin: 0px;
-    /* font-family: "LyonArabic"; */
     color: #000;
     font-weight: 400;
 }
 
 a {
-    /* font-family: "LyonArabic"; */
     text-decoration: none;
     -webkit-transition: all 0.2s;
     -o-transition: all 0.2s;
@@ -1383,7 +1379,6 @@ p.section-title-white {
 
 body {
     color: #888;
-    /* font-family: "LyonArabic"; */
 
     font-size: 16px;
     font-weight: 500;
@@ -1404,13 +1399,11 @@ h5,
 h6 {
     letter-spacing: 0px;
     margin: 0px;
-    /* font-family: "LyonArabic"; */
 
     color: #000;
     font-weight: 400;
 }
 a {
-    /* font-family: "LyonArabic"; */
 
     text-decoration: none;
     -webkit-transition: all 0.2s;
@@ -1447,7 +1440,6 @@ strong {
     font-weight: 600;
 }
 span {
-    /* font-family: "LyonArabic"; */
 }
 .no-padding {
     padding: 0;
@@ -3790,7 +3782,6 @@ blockquote::before,
     font-size: 14px;
     margin-top: 8px;
     display: block;
-    /* font-family: "LyonArabic"; */
 }
 .owl-theme {
     -webkit-transition: 0.4s;
@@ -3959,7 +3950,6 @@ blockquote::before,
     /* margin: 0 5px; */
 }
 .sth_det u {
-    /* font-family: "LyonArabic"; */
 }
 /*END HOME PAGE TEAM DESIGN*/
 
@@ -4095,7 +4085,7 @@ blockquote::before,
 }
 .sth_det2 u {
     color: #000;
-    font-family: "LyonArabic", "Poppins", sans-serif;
+    font-family: "Poppins", sans-serif;
     font-variant-numeric: lining-nums;
 }
 /*END TEAM PAGE THREE CSS*/
@@ -5867,7 +5857,6 @@ blockquote::before,
     position: absolute;
     top: 13px;
     left: 13px;
-    /* font-family: "LyonArabic"; */
 }
 .product-grid .product-discount-label {
     background-color: #333;
