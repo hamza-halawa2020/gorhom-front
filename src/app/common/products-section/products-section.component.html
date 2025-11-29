@@ -56,8 +56,15 @@
     </div>
 </div>
 
+<!-- Explore & Shop Link -->
+<div class="text-center mt-5 mb-4">
+    <a routerLink="/products" class="explore-link">
+        {{ "EXPLORE_AND_SHOP" | translate }}
+    </a>
+</div>
+
 <div
-    class="products-section py-5"
+    class="products-section"
     [dir]="translate.currentLang === 'ar' ? 'rtl' : 'ltr'"
 >
     <div class="container">
@@ -178,9 +185,12 @@
                                 >
                                 <span
                                     class="original-price"
-                                    *ngIf="product?.priceBeforeDiscount !== product?.priceAfterDiscount">
-
+                                    *ngIf="
+                                        product?.priceBeforeDiscount !==
+                                        product?.priceAfterDiscount
+                                    "
                                 >
+                                    >
                                     {{ product.priceBeforeDiscount }} EGP
                                 </span>
                             </div>

@@ -49,7 +49,10 @@ export class ProductsSectionComponent implements OnInit {
     fetchSliderData(): void {
         this.productSliderService.index().subscribe({
             next: (response) => {
+                               
                 this.products = Object.values(response)[0];
+                console.log('this.products',this.products);
+                
                 this.setFilter('all');
                 this.cdr.detectChanges();
             },
