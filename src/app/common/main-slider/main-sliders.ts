@@ -11,7 +11,7 @@ export const MAIN_SLIDER_DATA = {
             id: 2,
             title: 'Slide Two',
             description: 'Second slide description',
-            image: 'slide2.jpg',
+            image: 'assets/images/slider/1.jpg',
             link: '/services'
         },
         {
