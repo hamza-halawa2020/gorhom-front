@@ -172,8 +172,30 @@ export class FeedbackComponent implements OnInit, OnDestroy {
     }
 
     getRelativeTime(dateString: string): string {
-        const date = new Date(dateString);
-        const locale = this.translate.currentLang === 'ar' ? ar : enUS;
-        return formatDistanceToNow(date, { addSuffix: true, locale });
+        if (!dateString) return '';
+
+        let date: Date;
+        // Handle numeric timestamps (seconds or milliseconds) and normal date strings
+        if (typeof dateString === 'number') {
+            date = new Date(dateString);
+        } else if (/^\d+$/.test(dateString)) {
+            // Numeric string: detect seconds (10 digits) vs milliseconds
+            if (dateString.length === 10) {
+                date = new Date(parseInt(dateString, 10) * 1000);
+            } else {
+                date = new Date(parseInt(dateString, 10));
+            }
+        } else {
+            date = new Date(dateString);
+        }
+
+        if (isNaN(date.getTime())) return '';
+
+        try {
+            const locale = this.translate.currentLang === 'ar' ? ar : enUS;
+            return formatDistanceToNow(date, { addSuffix: true, locale });
+        } catch (e) {
+            return '';
+        }
     }
 }
