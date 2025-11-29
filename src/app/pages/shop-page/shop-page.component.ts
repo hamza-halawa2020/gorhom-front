@@ -56,7 +56,6 @@ export class ShopPageComponent implements OnInit {
         this.shopService.index().subscribe({
             next: (response) => {
                 this.data = Object.values(response)[0];
-                console.log('data', response);
                 this.translateData();
             },
             error: (error) => {
