@@ -1,56 +1,38 @@
 <div class="">
     <div class="container text-center">
-        <div class="text-center mb-4">
+        <div class="text-center mt-5">
             <h2>{{ "FEEDBACK_TITLE" | translate }}</h2>
         </div>
         <div class="feedback-slides mx-auto">
             <owl-carousel-o [options]="currentOptions">
-                <ng-template
-                    carouselSlide
-                    *ngFor="let group of groupedSliderData"
-                >
+                <ng-template carouselSlide *ngFor="let group of groupedSliderData">
                     <div class="d-flex justify-content-center">
-                        <div
-                            class="col-lg-4 col-md-6 col-sm-12 mb-4"
-                            *ngFor="let slide of group"
-                        >
+                        <div class="col-lg-4 col-md-6 col-sm-12 mb-4" *ngFor="let slide of group">
                             <div class="single-feedback-item text-center p-3">
                                 <div class="rating">
-                                    <span
-                                        *ngFor="
+                                    <span *ngFor="
                                             let star of getStars(slide.rating);
                                             let i = index
-                                        "
-                                    >
-                                        <i
-                                            class="fa-star"
-                                            [ngClass]="star ? 'fas' : 'far'"
-                                        ></i>
+                                        ">
+                                        <i class="fa-star" [ngClass]="star ? 'fas' : 'far'"></i>
                                     </span>
                                 </div>
                                 <div class="info">
-                                    <img
-                                        src="{{
+                                    <img src="{{
                                             productImage + slide.product_image
-                                        }}"
-                                        class="rounded-circle"
-                                        alt="user-image"
-                                    />
+                                        }}" class="rounded-circle" alt="user-image" />
                                     <h3 class="fw-semibold">
                                         {{ slide.user || slide.client }}
                                     </h3>
                                     <span class="d-block review-text">{{
                                         slide.review
-                                    }}</span>
-                                    <p
-                                        class="fw-medium"
-                                        [title]="
+                                        }}</span>
+                                    <p class="fw-medium" [title]="
                                             slide.created_at
                                                 | date
                                                     : ('DATE_FORMAT'
                                                           | translate)
-                                        "
-                                    >
+                                        ">
                                         {{ getRelativeTime(slide.created_at) }}
                                     </p>
                                 </div>

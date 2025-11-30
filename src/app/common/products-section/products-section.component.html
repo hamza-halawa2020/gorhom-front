@@ -1,23 +1,10 @@
 <!-- Success Message as a Toast -->
-<div
-    *ngIf="successMessage"
-    class="toast-container position-fixed top-0"
-    [class.start-0]="translate.currentLang === 'ar'"
-    [class.end-0]="translate.currentLang !== 'ar'"
-    p-3
->
-    <div
-        class="toast show"
-        role="alert"
-        aria-live="assertive"
-        aria-atomic="true"
-    >
+<div *ngIf="successMessage" class="toast-container position-fixed top-0"
+    [class.start-0]="translate.currentLang === 'ar'" [class.end-0]="translate.currentLang !== 'ar'" p-3>
+    <div class="toast show" role="alert" aria-live="assertive" aria-atomic="true">
         <div class="toast-header">
-            <strong
-                [class.ms-auto]="translate.currentLang === 'ar'"
-                [class.me-auto]="translate.currentLang !== 'ar'"
-                class="text-success"
-            >
+            <strong [class.ms-auto]="translate.currentLang === 'ar'" [class.me-auto]="translate.currentLang !== 'ar'"
+                class="text-success">
                 {{ "SUCCESS" | translate }}
             </strong>
         </div>
@@ -28,25 +15,12 @@
 </div>
 
 <!-- Error Message as a Toast -->
-<div
-    *ngIf="errorMessage"
-    class="toast-container position-fixed top-0"
-    [class.start-0]="translate.currentLang === 'ar'"
-    [class.end-0]="translate.currentLang !== 'ar'"
-    p-3
->
-    <div
-        class="toast show"
-        role="alert"
-        aria-live="assertive"
-        aria-atomic="true"
-    >
+<div *ngIf="errorMessage" class="toast-container position-fixed top-0" [class.start-0]="translate.currentLang === 'ar'"
+    [class.end-0]="translate.currentLang !== 'ar'" p-3>
+    <div class="toast show" role="alert" aria-live="assertive" aria-atomic="true">
         <div class="toast-header">
-            <strong
-                [class.ms-auto]="translate.currentLang === 'ar'"
-                [class.me-auto]="translate.currentLang !== 'ar'"
-                class="text-danger"
-            >
+            <strong [class.ms-auto]="translate.currentLang === 'ar'" [class.me-auto]="translate.currentLang !== 'ar'"
+                class="text-danger">
                 {{ "ERROR" | translate }}
             </strong>
         </div>
@@ -57,48 +31,31 @@
 </div>
 
 <!-- Explore & Shop Link -->
-<div class="text-center mt-5 mb-4">
+<div class="text-center mt-5 mb-4 fw-semibold">
     <a routerLink="/products" class="explore-link">
         {{ "EXPLORE_AND_SHOP" | translate }}
     </a>
 </div>
 
-<div
-    class="products-section"
-    [dir]="translate.currentLang === 'ar' ? 'rtl' : 'ltr'"
->
+<div class="products-section" [dir]="translate.currentLang === 'ar' ? 'rtl' : 'ltr'">
     <div class="container">
         <!-- Section Filters -->
         <div class="filters mb-4 d-flex justify-content-center">
-            <button
-                class="filter-btn"
-                [ngClass]="{ active: activeFilter === 'all' }"
-                (click)="setFilter('all')"
-            >
+            <button class="filter-btn" [ngClass]="{ active: activeFilter === 'all' }" (click)="setFilter('all')">
                 <i class="fas fa-tags"></i> {{ "ALL" | translate }}
             </button>
-            <button
-                class="filter-btn"
-                [ngClass]="{ active: activeFilter === 'offers' }"
-                (click)="setFilter('offers')"
-            >
+            <button class="filter-btn" [ngClass]="{ active: activeFilter === 'offers' }" (click)="setFilter('offers')">
                 <i class="fas fa-rocket"></i> {{ "OUR_OFFERS" | translate }}
             </button>
-            <button
-                class="filter-btn"
-                [ngClass]="{ active: activeFilter === 'BEST_PRICE' }"
-                (click)="setFilter('BEST_PRICE')"
-            >
+            <button class="filter-btn" [ngClass]="{ active: activeFilter === 'BEST_PRICE' }"
+                (click)="setFilter('BEST_PRICE')">
                 <i class="fas fa-award"></i> {{ "BEST_PRICE" | translate }}
             </button>
         </div>
 
         <!-- Products Grid -->
         <div class="row g-4">
-            <div
-                class="col-xl-3 col-lg-4 col-md-6 col-6"
-                *ngFor="let product of filteredProducts"
-            >
+            <div class="col-xl-3 col-lg-4 col-md-6 col-6" *ngFor="let product of filteredProducts">
                 <div class="product-card">
                     <!-- Discount Badge -->
                     <div class="discount-badge" *ngIf="product.discount > 0">
@@ -106,70 +63,44 @@
                     </div>
 
                     <!-- Favorite Button -->
-                    <button
-                        *ngIf="isLoggedIn"
-                        class="favorite-btn"
-                        (click)="addToFavourite(product.id)"
-                    >
+                    <button *ngIf="isLoggedIn" class="favorite-btn" (click)="addToFavourite(product.id)">
                         <i class="far fa-heart"></i>
                     </button>
-                    <button
-                        class="favorite-btn"
-                        *ngIf="!isLoggedIn"
-                        (click)="addToClientFavourite(product)"
-                    >
+                    <button class="favorite-btn" *ngIf="!isLoggedIn" (click)="addToClientFavourite(product)">
                         <i class="far fa-heart"></i>
                     </button>
                     <!-- Product Image -->
-                    <div
-                        class="product-image"
-                        (mouseenter)="
+                    <div class="product-image" (mouseenter)="
                             onMouseEnter(product.id, product.productImages)
-                        "
-                        (mouseleave)="onMouseLeave(product.id)"
-                    >
+                        " (mouseleave)="onMouseLeave(product.id)">
                         <!-- Default Image -->
                         <a routerLink="/product/{{ product.id }}">
-                            <img
-                                class="default-image img-fluid"
+                            <img class="default-image img-fluid"
                                 [src]="product.productImages?.[0]?.image ? image + product.productImages[0].image : 'assets/images/logo.svg'"
-                                [alt]="product.title"
-                                (error)="onImageError($event)"
-                            />
+                                [alt]="product.title" (error)="onImageError($event)" />
                             <!-- Hover Image -->
-                            <img
-                                class="hover-image img-fluid"
+                            <img class="hover-image img-fluid"
                                 [src]="hoverImages[product.id] || (product.productImages?.[0]?.image ? image + product.productImages[0].image : 'assets/images/logo.svg')"
-                                [alt]="product.title"
-                                (error)="onImageError($event)"
-                            />
+                                [alt]="product.title" (error)="onImageError($event)" />
                         </a>
 
                         <!-- Hover Overlay -->
                         <div class="overlay">
                             <div class="overlay-content">
-                                <div
-                                    class="quantity-selector d-flex align-items-center"
-                                >
-                                    <button
-                                        class="btn add-to-cart-btn"
-                                        *ngIf="isLoggedIn"
-                                        (click)="addToCart(product.id)"
-                                    >
+                                <div class="quantity-selector d-flex align-items-center">
+                                    <button class="btn add-to-cart-btn" *ngIf="isLoggedIn"
+                                        (click)="addToCart(product.id)">
                                         <i class="fas fa-shopping-cart"></i>
                                         <span class="add-to-cart-text">{{
                                             "ADD_TO_CART" | translate
-                                        }}</span>
+                                            }}</span>
                                     </button>
-                                    <button
-                                        class="btn add-to-cart-btn"
-                                        *ngIf="!isLoggedIn"
-                                        (click)="addToClientCart(product)"
-                                    >
+                                    <button class="btn add-to-cart-btn" *ngIf="!isLoggedIn"
+                                        (click)="addToClientCart(product)">
                                         <i class="fas fa-shopping-cart"></i>
                                         <span class="add-to-cart-text">{{
                                             "ADD_TO_CART" | translate
-                                        }}</span>
+                                            }}</span>
                                     </button>
                                 </div>
                             </div>
@@ -180,22 +111,17 @@
                         <div class="product-info text-center mt-3">
                             <h3 class="product-title">{{ product.title }}</h3>
                             <div class="price">
-                                <span class="discounted-price"
-                                    >{{ product.priceAfterDiscount }} EGP</span
-                                >
-                                <span
-                                    class="original-price"
-                                    *ngIf="
-                                        product?.priceBeforeDiscount !==
-                                        product?.priceAfterDiscount
-                                    "
-                                >
-                                    >
-                                    {{ product.priceBeforeDiscount }} EGP
+                                <span class="discounted-price">{{ product.price_after_discount }} EGP</span>
+                                <span class="original-price" *ngIf="
+                                        product?.price_before_discount !==
+                                        product?.price_after_discount
+                                    ">
+
+                                    {{ product.price_before_discount }} EGP
                                 </span>
                             </div>
                             <div class="category mt-1">
-                                <small>{{ product.category }}</small>
+                                <small>{{ product.category.name }}</small>
                             </div>
                         </div>
                     </a>
@@ -207,7 +133,7 @@
         <div class="text-center mt-5">
             <a routerLink="/products" class="load-more-btn">{{
                 "LOAD_MORE" | translate
-            }}</a>
+                }}</a>
         </div>
     </div>
 </div>

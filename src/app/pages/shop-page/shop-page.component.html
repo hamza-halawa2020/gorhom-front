@@ -3,25 +3,13 @@
     <app-page-banner />
 
     <!-- Success Message as a Toast -->
-    <div
-        *ngIf="successMessage"
-        class="toast-container position-fixed top-0"
-        [class.start-0]="translateService.currentLang === 'ar'"
-        [class.end-0]="translateService.currentLang !== 'ar'"
-        style="z-index: 1050; padding: 1rem;"
-    >
-        <div
-            class="toast show"
-            role="alert"
-            aria-live="assertive"
-            aria-atomic="true"
-        >
+    <div *ngIf="successMessage" class="toast-container position-fixed top-0"
+        [class.start-0]="translateService.currentLang === 'ar'" [class.end-0]="translateService.currentLang !== 'ar'"
+        style="z-index: 1050; padding: 1rem;">
+        <div class="toast show" role="alert" aria-live="assertive" aria-atomic="true">
             <div class="toast-header">
-                <strong
-                    [class.ms-auto]="translateService.currentLang === 'ar'"
-                    [class.me-auto]="translateService.currentLang !== 'ar'"
-                    class="text-success"
-                >
+                <strong [class.ms-auto]="translateService.currentLang === 'ar'"
+                    [class.me-auto]="translateService.currentLang !== 'ar'" class="text-success">
                     {{ "SUCCESS" | translate }}
                 </strong>
             </div>
@@ -32,25 +20,13 @@
     </div>
 
     <!-- Error Message as a Toast -->
-    <div
-        *ngIf="errorMessage"
-        class="toast-container position-fixed top-0"
-        [class.start-0]="translateService.currentLang === 'ar'"
-        [class.end-0]="translateService.currentLang !== 'ar'"
-        style="z-index: 1050; padding: 1rem;"
-    >
-        <div
-            class="toast show"
-            role="alert"
-            aria-live="assertive"
-            aria-atomic="true"
-        >
+    <div *ngIf="errorMessage" class="toast-container position-fixed top-0"
+        [class.start-0]="translateService.currentLang === 'ar'" [class.end-0]="translateService.currentLang !== 'ar'"
+        style="z-index: 1050; padding: 1rem;">
+        <div class="toast show" role="alert" aria-live="assertive" aria-atomic="true">
             <div class="toast-header">
-                <strong
-                    [class.ms-auto]="translateService.currentLang === 'ar'"
-                    [class.me-auto]="translateService.currentLang !== 'ar'"
-                    class="text-danger"
-                >
+                <strong [class.ms-auto]="translateService.currentLang === 'ar'"
+                    [class.me-auto]="translateService.currentLang !== 'ar'" class="text-danger">
                     {{ "ERROR" | translate }}
                 </strong>
             </div>
@@ -60,26 +36,19 @@
         </div>
     </div>
 
-    <div
-        class="category-section py-5"
-        [dir]="translateService.currentLang === 'ar' ? 'rtl' : 'ltr'"
-    >
+    <div class="category-section py-5" [dir]="translateService.currentLang === 'ar' ? 'rtl' : 'ltr'">
         <div class="container">
             <!-- Section Title -->
-            <h2 class="text-center mb-4">
+            <h5 class="text-center mb-4">
                 {{ "EXPLORE_OUR_MAIN_CATEGORIES" | translate }}
-            </h2>
+            </h5>
 
             <!-- Category Grid -->
             <div class="row g-3" *ngIf="data && data.length > 0; else noData">
                 <div class="col-lg-4 col-md-6 col-6">
                     <a routerLink="/products/" class="category-card">
                         <div class="card position-relative overflow-hidden">
-                            <img
-                                src="{{AllProductsImage}}"
-                                class="card-img"
-                                alt="{{ 'All Products' | translate }}"
-                            />
+                            <img src="{{AllProductsImage}}" class="card-img" alt="{{ 'All Products' | translate }}" />
                             <div class="overlay"></div>
                             <div class="category-title">
                                 {{ "All Products" | translate }}
@@ -87,17 +56,11 @@
                         </div>
                     </a>
                 </div>
-                <div
-                    class="col-lg-4 col-md-6 col-6"
-                    *ngFor="let item of data"
-                >
+                <div class="col-lg-4 col-md-6 col-6" *ngFor="let item of data">
                     <a routerLink="/categories/{{ item.id }}" class="category-card">
                         <div class="card position-relative overflow-hidden">
-                            <img
-                                src="{{ image + item.image }}"
-                                class="card-img"
-                                alt="{{ item.translatedTitle || item.name }}"
-                            />
+                            <img src="{{ image + item.image }}" class="card-img"
+                                alt="{{ item.translatedTitle || item.name }}" />
                             <div class="overlay"></div>
                             <div class="category-title">
                                 {{ item.translatedTitle || item.name }}

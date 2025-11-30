@@ -1,28 +1,17 @@
-<div
-    class="category-section"
-    [dir]="translateService.currentLang === 'ar' ? 'rtl' : 'ltr'"
->
+<div class="category-section" [dir]="translateService.currentLang === 'ar' ? 'rtl' : 'ltr'">
     <div class="container">
         <!-- Section Title -->
-        <h4 class="text-center mb-4">
+        <h5 class="text-center mb-4">
             {{ "EXPLORE_OUR_MAIN_CATEGORIES" | translate }}
-        </h4>
+        </h5>
 
         <!-- Category Grid -->
         <div class="row g-3" *ngIf="data && data.length >= 4; else noData">
             <!-- Left Column: Hair Care (2x height of Skin Care) and Skin Care -->
             <div class="col-6 d-flex flex-column">
-                <a
-                    routerLink="/categories/{{ data[0].id }}"
-                    class="category-card flex-grow-2 mb-3"
-                >
-                    <div
-                        class="card position-relative overflow-hidden large-card"
-                    >
-                        <img
-                            src="{{ image + data[0].image }}"
-                            class="card-img"
-                        />
+                <a routerLink="/categories/{{ data[0].id }}" class="category-card flex-grow-2 mb-3">
+                    <div class="card position-relative overflow-hidden large-card">
+                        <img src="{{ image + data[0].image }}" class="card-img" />
                         <div class="overlay"></div>
                         <div class="category-title">
                             {{ data[0].translatedTitle || data[0].name }}
@@ -30,13 +19,8 @@
                     </div>
                 </a>
                 <a routerLink="/categories/{{data[3].id}}" class="category-card flex-grow-1">
-                    <div
-                        class="card position-relative overflow-hidden small-card"
-                    >
-                        <img
-                            src="{{ image + data[3].image }}"
-                            class="card-img"
-                        />
+                    <div class="card position-relative overflow-hidden small-card">
+                        <img src="{{ image + data[3].image }}" class="card-img" />
                         <div class="overlay"></div>
                         <div class="category-title">
                             {{ data[3].translatedTitle || data[3].name }}
@@ -48,13 +32,8 @@
             <!-- Right Column: Health & Support (1/2 height of Personal Care) and Personal Care -->
             <div class="col-6 d-flex flex-column">
                 <a routerLink="/categories/{{data[1].id}}" class="category-card flex-grow-1">
-                    <div
-                        class="card position-relative overflow-hidden small-card"
-                    >
-                        <img
-                            src="{{ image + data[1].image }}"
-                            class="card-img"
-                        />
+                    <div class="card position-relative overflow-hidden small-card">
+                        <img src="{{ image + data[1].image }}" class="card-img" />
                         <div class="overlay"></div>
                         <div class="category-title">
                             {{ data[1].translatedTitle || data[1].name }}
@@ -62,13 +41,8 @@
                     </div>
                 </a>
                 <a routerLink="/categories/{{data[2].id}}" class="category-card flex-grow-2">
-                    <div
-                        class="card position-relative overflow-hidden large-card"
-                    >
-                        <img
-                            src="{{ image + data[2].image }}"
-                            class="card-img"
-                        />
+                    <div class="card position-relative overflow-hidden large-card">
+                        <img src="{{ image + data[2].image }}" class="card-img" />
                         <div class="overlay"></div>
                         <div class="category-title">
                             {{ data[2].translatedTitle || data[2].name }}
@@ -84,6 +58,6 @@
             </div>
         </ng-template>
 
-        
+
     </div>
 </div>

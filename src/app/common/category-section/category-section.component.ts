@@ -19,7 +19,7 @@ export class CategorySectionComponent implements OnInit {
     constructor(
         public translateService: TranslateService,
         private categoryService: CategoryService
-    ) {}
+    ) { }
 
     fetchData() {
         this.categoryService.index().subscribe({

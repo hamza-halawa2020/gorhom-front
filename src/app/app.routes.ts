@@ -41,46 +41,13 @@ export const routes: Routes = [
     { path: 'terms-conditions', component: TermsConditionsPageComponent },
     { path: 'certifications', component: CertificationPageComponent },
     { path: 'contacts', component: ContactPageComponent },
-    {
-        path: 'forget-password',
-        component: ForgetpasswordPageComponent,
-        canActivate: [unAuthGuard],
-    },
-    {
-        path: 'password-reset',
-        component: ResetpasswordPageComponent,
-        canActivate: [unAuthGuard],
-    },
-    {
-        path: 'verify',
-        component: VerificationCodePageComponent,
-        canActivate: [unAuthGuard],
-    },
-    {
-        path: 'send-verify',
-        component: SendVerificationCodePageComponent,
-        canActivate: [unAuthGuard],
-    },
+ 
     {
         path: 'cart',
         component: CartPageWrapperComponent,
         resolve: { userType: CartResolver },
     },
-    {
-        path: 'login',
-        component: LoginPageComponent,
-        canActivate: [unAuthGuard],
-    },
-    {
-        path: 'profile',
-        component: ProfilePageComponent,
-        canActivate: [AuthGuard],
-    },
-    {
-        path: 'register',
-        component: RegisterPageComponent,
-        canActivate: [unAuthGuard],
-    },
+    
 
 
     { path: '**', component: ErrorPageComponent },

@@ -277,205 +277,33 @@
     }
 }
 
-/* Top bar styling */
-.bg-light {
-    background-color: #f8f9fa !important;
-}
+/* Language flag buttons */
+.language-flags {
+    display: inline-flex;
+    align-items: center; /* keep flag vertically centered with text */
 
-.top-bar {
-    flex-wrap: nowrap;
-    gap: 1rem;
-    font-size: clamp(0.8rem, 2vw, 1rem);
-    padding: clamp(5px, 1vw, 10px) 0;
-}
-
-.top-bar .dropdown {
-    font-size: inherit;
-}
-
-.top-bar .dropdown-toggle {
-    color: #333;
-    text-decoration: none;
-    white-space: nowrap;
-    font-size: inherit;
-}
-
-.top-bar .dropdown-toggle:hover {
-    color: #74d7e6;
-}
-
-.top-bar .dropdown-menu {
-    font-size: clamp(0.75rem, 1.8vw, 0.9rem);
-}
-
-/* Center language dropdown on small screens */
-@media (max-width: 767px) {
-    .top-bar {
+    .flag-btn {
+        border: none;
+        padding: 0;
+        display: inline-flex;
+        align-items: center;
         justify-content: center;
-        padding: 5px 0;
+        cursor: pointer;
+        background: transparent;
+        line-height: 1;
+        vertical-align: middle;
+
+        img {
+            display: block;
+            height: auto;
+            vertical-align: middle;
+            margin: 0;
+        }
     }
 
-    .top-bar .dropdown {
-        flex: 0 0 auto;
-    }
-}
-
-/* Navbar styling */
-.site-navigation {
-    background-color: #fff;
-    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
-}
-
-.site-navigation.sticky {
-    position: fixed;
-    top: 0;
-    width: 100%;
-    z-index: 1000;
-}
-
-.navbar-brand .logo-img {
-    height: clamp(30px, 4vw, 50px);
-    transition: height 0.3s ease;
-}
-
-.nav-link {
-    font-weight: 500;
-    color: #333;
-}
-
-.nav-link:hover {
-    color: #74d7e6;
-}
-
-.nav-link svg {
-    width: 1em;
-    height: 1em;
-    vertical-align: middle;
-    transition: all 0.3s ease;
-}
-
-.active-link a {
-    color: #74d7e6 !important;
-}
-
-.badge {
-    font-size: 0.7rem;
-}
-
-/* Right-side icons (cart, wishlist, profile) */
-.d-flex.align-items-center .nav-link svg {
-    width: 1.5em;
-    height: 1.2em;
-    vertical-align: middle;
-    transition: all 0.3s ease;
-}
-
-/* RTL adjustments */
-[dir="rtl"] {
-    .nav-link {
-        text-align: right;
-    }
-
-    .badge {
-        margin-right: 0;
-        margin-left: 5px;
-    }
-
-    .top-bar .list-inline {
-        flex-direction: row-reverse;
-    }
-}
-
-/* Custom Container for Navbar */
-.custom-container {
-    width: 100%;
-    max-width: 1700px;
-    margin: 0 auto;
-    padding: 0 30px;
-}
-
-/* Responsive adjustments for navbar */
-@media (max-width: 991px) {
-    .navbar-collapse {
-        background-color: #fff;
-        position: absolute;
-        top: 100%;
-        left: 0;
-        right: 0;
-        z-index: 999;
-        box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
-    }
-
-    .navbar-nav {
-        padding: 1rem;
-        text-align: center;
-    }
-}
-
-/* Ensure right-side icons are visible on small screens */
-@media (max-width: 767px) {
-    .custom-container {
-        padding: 0 15px;
-    }
-
-    .d-flex.align-items-center {
-        flex: 0 0 auto;
-    }
-}
-
-/* Bottom navigation styles */
-.bottom-nav {
-    display: flex;
-    justify-content: space-around;
-    align-items: center;
-    position: fixed;
-    bottom: 0;
-    left: 0;
-    right: 0;
-    background-color: #fff;
-    box-shadow: 0 -2px 4px rgba(0, 0, 0, 0.1);
-    padding: 10px 0;
-    z-index: 1000;
-}
-
-.bottom-nav-item {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    text-decoration: none;
-    color: #333;
-    font-size: 0.9rem;
-    position: relative;
-}
-
-.bottom-nav-item svg {
-    width: 25px;
-    height: 25px;
-    margin-bottom: 5px;
-}
-
-.bottom-nav-item:hover {
-    color: #74d7e6;
-}
-
-.bottom-nav-item .badge {
-    position: absolute;
-    top: 0;
-    font-size: 0.7rem;
-}
-
-.bottom-nav-item .bottom-nav-badge {
-    [dir="rtl"] & {
-        left: 50%;
-    }
-    [dir="ltr"] & {
-        right: 50%;
-    }
-}
-
-/* Hide bottom nav on larger screens */
-@media (min-width: 992px) {
-    .bottom-nav {
-        display: none;
+    .flag-btn.active {
+        outline: 2px solid #74d7e6;
+        border-radius: 4px;
+        padding: 2px;
     }
 }

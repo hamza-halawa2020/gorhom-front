@@ -4,7 +4,7 @@ export const MAIN_SLIDER_DATA = {
             id: 1,
             title: 'Slide One',
             description: 'First slide description',
-            image: 'slide1.jpg',
+            image: 'assets/images/slider/1.jpg',
             link: '/about'
         },
         {
@@ -18,7 +18,7 @@ export const MAIN_SLIDER_DATA = {
             id: 3,
             title: 'Slide Three',
             description: 'Third slide description',
-            image: 'slide3.jpg',
+            image: 'assets/images/slider/1.jpg',
             link: '/contact'
         }
     ],
