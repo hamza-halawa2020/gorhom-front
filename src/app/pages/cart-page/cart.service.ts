@@ -1,26 +1,20 @@
 import { Injectable } from '@angular/core';
-import { HttpClient, HttpHeaders } from '@angular/common/http';
+import { HttpClient } from '@angular/common/http';
 import { environment } from '../../../environments/environment.development';
-import { CookieService } from 'ngx-cookie-service';
-import { BehaviorSubject } from 'rxjs';
-import { tap } from 'rxjs/operators';
+import { BehaviorSubject, of } from 'rxjs';
+
 @Injectable({
     providedIn: 'root',
 })
 export class CartService {
+
+
     private apiUrl = environment.backEndUrl;
-    private data = '/carts';
 
-    private cartSubject = new BehaviorSubject<any[]>([]);
-
+    private cartSubject = new BehaviorSubject<any[]>(this.getCartFromLocalStorage());
     cart$ = this.cartSubject.asObservable();
 
-    constructor(
-        private http: HttpClient,
-        private cookieService: CookieService
-    ) {
-        this.loadInitialCartData();
-    }
+    constructor(private http: HttpClient) { }
 
     allCountries() {
         return this.http.get(`${this.apiUrl}/countries`);
@@ -36,84 +30,90 @@ export class CartService {
         return this.http.post(`${this.apiUrl}/showCoupon`, payload);
     }
 
-    private getHeaders() {
-        const token = this.cookieService.get('token');
-        return new HttpHeaders({
-            Authorization: `Bearer ${token}`,
-        });
-    }
-
-    updateQuantity(item: any) {
-        return this.http.put(`${this.apiUrl}${this.data}/${item.id}`, item, {
-            headers: this.getHeaders(),
-        });
-    }
-
-    index() {
-        return this.http.get(`${this.apiUrl}${this.data}`, {
-            headers: this.getHeaders(),
-        });
-    }
-
-    private loadInitialCartData() {
+    private getCartFromLocalStorage(): any[] {
         const cart = localStorage.getItem('cart');
-        if (cart) {
-            this.cartSubject.next(JSON.parse(cart));
-        } else {
-            this.index().subscribe({
-                next: (response: any) => {
-                    this.cartSubject.next(response.data);
-                    localStorage.setItem('cart', JSON.stringify(response.data));
-                },
-                error: (error) => {
-                    console.error('Failed to load cart data:', error);
-                },
-            });
-        }
+        return cart ? JSON.parse(cart) : [];
     }
 
-    addToCart(id: any) {
-        return this.http.post(`${this.apiUrl}${this.data}`, id).pipe(
-            tap((response: any) => {
-                const currentCart = this.cartSubject.value;
-                const updatedCart = [...currentCart, response.data];
-                this.cartSubject.next(updatedCart);
-                localStorage.setItem('cart', JSON.stringify(updatedCart));
-            })
+    private updateCart(updatedCart: any[]) {
+        this.cartSubject.next(updatedCart);
+        localStorage.setItem('cart', JSON.stringify(updatedCart));
+    }
+
+    addToCart(product: any) {
+        const currentCart = this.cartSubject.getValue();
+
+        const existingItem = currentCart.find(
+            (item) => item.product_id === product.id
         );
+
+        if (existingItem) {
+            this.updateQuantity(product.id, 1);
+        } else {
+            const price = product.price_after_discount || product.price || 0;
+            const newItem = {
+                id: Date.now(),
+                product_id: product.id,
+                quantity: 1,
+                product: product,
+                total_price: price * 1,
+            };
+            const updatedCart = [...currentCart, newItem];
+            this.updateCart(updatedCart);
+        }
+
+        this.refreshCart();
+        return of({ success: true, message: 'Product added to cart successfully.' });
     }
 
+    updateQuantity(productId: number, change: number) {
+        let cart = this.getCartFromLocalStorage();
+        cart = cart.map((item) => {
+            if (item.product_id === productId) {
+                const newQuantity = Math.max(1, item.quantity + change);
+                const price = item.product?.price_after_discount || item.product?.price || 0;
+                return {
+                    ...item,
+                    quantity: newQuantity,
+                    total_price: price * newQuantity,
+                };
+            }
+            return item;
+        });
+        this.updateCart(cart);
+        return of({ success: true });
+    }
+
+    setQuantity(productId: number, quantity: number) {
+        let cart = this.getCartFromLocalStorage();
+        cart = cart.map((item) => {
+            if (item.product_id === productId) {
+                const newQuantity = Math.max(1, quantity);
+                const price = item.product?.price_after_discount || item.product?.price || 0;
+                return {
+                    ...item,
+                    quantity: newQuantity,
+                    total_price: price * newQuantity,
+                };
+            }
+            return item;
+        });
+        this.updateCart(cart);
+        return of({ success: true });
+    }
 
     delete(id: any) {
-        return this.http
-            .delete(`${this.apiUrl}${this.data}/${id}`, {
-                headers: this.getHeaders(),
-            })
-            .pipe(
-                tap(() => {
-                    const currentCart = this.cartSubject.value;
-                    const updatedCart = currentCart.filter(
-                        (item) => item.id !== id
-                    );
-                    this.cartSubject.next(updatedCart);
-                    localStorage.setItem('cart', JSON.stringify(updatedCart));
-                    this.refreshCart();
-                })
-            );
+        let cart = this.getCartFromLocalStorage();
+        cart = cart.filter((item) => item.id !== id);
+        this.updateCart(cart);
+        this.refreshCart();
+        return of({ success: true, message: 'Product removed from cart successfully.' });
     }
 
     clearCart() {
-        return this.http
-            .delete(`${this.apiUrl}/cart_clear`, {
-                headers: this.getHeaders(),
-            })
-            .pipe(
-                tap(() => {
-                    this.cartSubject.next([]);
-                    localStorage.setItem('cart', JSON.stringify([]));
-                    this.refreshCart();
-                })
-            );
+        this.updateCart([]);
+        this.refreshCart();
+        return of({ success: true, message: 'Cart cleared successfully.' });
     }
 
     refreshCart() {

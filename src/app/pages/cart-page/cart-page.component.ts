@@ -95,13 +95,10 @@ export class CartPageComponent implements OnInit {
     }
 
     fetchdata() {
-        this.cartService.index().subscribe({
-            next: (response) => {
-                this.data = Object.values(response)[0] as any[];
+        this.cartService.cart$.subscribe({
+            next: (cartData) => {
+                this.data = cartData;
                 this.translateData();
-            },
-            error: (error) => {
-                this.handleError(error);
             },
         });
     }
@@ -206,14 +203,9 @@ export class CartPageComponent implements OnInit {
     updateQuantity(cart: any, quantity: number) {
         if (quantity < 1) return;
 
-        const payload = { id: cart.id, quantity: quantity };
-
-        this.cartService.updateQuantity(payload).subscribe({
+        this.cartService.setQuantity(cart.product_id, quantity).subscribe({
             next: () => {
                 this.fetchdata();
-            },
-            error: (error) => {
-                this.handleError(error);
             },
         });
     }

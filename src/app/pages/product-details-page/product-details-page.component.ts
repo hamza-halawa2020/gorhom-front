@@ -405,51 +405,34 @@ export class ProductDetailsPageComponent implements OnInit, OnDestroy {
     }
 
     addToCart(product_id: any): void {
-        const payload = { product_id };
-        this.cartService.addToCart(payload).subscribe({
-            next: (response) => {
-                this.successMessage = this.translateService.instant(
-                    'Product added to cart successfully!'
-                );
-                setTimeout(() => (this.successMessage = ''), 1000);
-            },
-            error: (error) => {
-                if (error.error?.errors) {
-                    this.errorMessage = Object.values(error.error.errors)
-                        .flat()
-                        .join(' | ');
-                } else {
-                    this.errorMessage =
-                        error.error?.message ||
-                        this.translateService.instant('UNEXPECTED_ERROR');
-                }
-                setTimeout(() => (this.errorMessage = ''), 3000);
-            },
-        });
+        const product = this.data;
+        
+        if (!product) {
+            this.errorMessage = this.translateService.instant('PRODUCT_NOT_FOUND');
+            setTimeout(() => { this.errorMessage = ''; }, 1000);
+            return;
+        }
+
+        const cart = JSON.parse(localStorage.getItem('cart') || '[]');
+        const exists = cart.some((item: any) => item && item.product_id === product.id);
+        
+        if (exists) {
+            this.errorMessage = this.translateService.instant('PRODUCT_ALREADY_IN_CART');
+            setTimeout(() => { this.errorMessage = ''; }, 1000);
+        } else {
+            this.cartService.addToCart(product).subscribe({
+                next: (response) => {
+                    this.successMessage = this.translateService.instant(
+                        'Product added to cart successfully!'
+                    );
+                    setTimeout(() => (this.successMessage = ''), 1000);
+                },
+            });
+        }
     }
 
     addToFavourite(product_id: any): void {
         const payload = { product_id };
-        // this.favouriteService.add(payload).subscribe({
-        //     next: (response) => {
-        //         this.successMessage = this.translateService.instant(
-        //             'Product added to WishList successfully!'
-        //         );
-        //         setTimeout(() => (this.successMessage = ''), 1000);
-        //     },
-        //     error: (error) => {
-        //         if (error.error?.errors) {
-        //             this.errorMessage = Object.values(error.error.errors)
-        //                 .flat()
-        //                 .join(' | ');
-        //         } else {
-        //             this.errorMessage =
-        //                 error.error?.message ||
-        //                 this.translateService.instant('UNEXPECTED_ERROR');
-        //         }
-        //         setTimeout(() => (this.errorMessage = ''), 3000);
-        //     },
-        // });
     }
 
     addReview(reviewText: string, rating: number): void {
