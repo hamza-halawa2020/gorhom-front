@@ -38,7 +38,7 @@ import { TranslateModule, TranslateService } from '@ngx-translate/core';
 export class CategoryPageComponent implements OnInit {
     data: any[] = [];
     originalData: any[] = [];
-    image = environment.imgUrl + 'products/';
+    image = environment.imgUrl;
     isLoggedIn: boolean = false;
     successMessage: string = '';
     errorMessage: string = '';

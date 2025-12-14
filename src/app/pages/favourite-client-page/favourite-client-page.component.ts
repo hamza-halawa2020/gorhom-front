@@ -32,7 +32,7 @@ import { TranslateService,TranslateModule } from '@ngx-translate/core';
 })
 export class FavouriteClientPageComponent implements OnInit {
     favItems: any[] = [];
-    image = environment.imgUrl + 'products/';
+    image = environment.imgUrl;
     successMessage: string = '';
     errorMessage: string = '';
 

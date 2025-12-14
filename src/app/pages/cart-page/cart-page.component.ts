@@ -40,7 +40,7 @@ export class CartPageComponent implements OnInit {
     filteredCities: any[] = []; // Array of filtered cities
     selectedCountry: string = ''; // ID of selected country
     selectedCity: string = ''; // ID of selected city
-    image = environment.imgUrl + 'products/';
+    image = environment.imgUrl;
     successMessage: string = '';
     errorMessage: string = '';
 

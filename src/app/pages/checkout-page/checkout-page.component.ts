@@ -36,7 +36,7 @@ import { TranslateModule, TranslateService } from '@ngx-translate/core';
 })
 export class CheckoutPageComponent implements OnInit {
     products: any;
-    image = environment.imgUrl + 'products/';
+    image = environment.imgUrl;
     checkoutData: any;
     totalPriceData: any;
     successMessage: string = '';

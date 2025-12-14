@@ -33,11 +33,11 @@ import { TranslateModule, TranslateService } from '@ngx-translate/core';
 })
 export class ShopPageComponent implements OnInit {
     data: any;
-    image = environment.imgUrl + 'categories/';
+    image = environment.imgUrl;
     successMessage: string = '';
     errorMessage: string = '';
     // AllProductsImage: string =environment.imgUrl + 'categories/1742656502_67ded3f62554f.jpg';
-    AllProductsImage: string = 'https://admin.gorhom.net/assets/images/logo.svg';
+    AllProductsImage: string = 'https://admin.gorhom.com/assets/images/logo.svg';
 
     constructor(
         public router: Router,

@@ -14,7 +14,7 @@ import { environment } from '../../../environments/environment.development';
 })
 export class CategorySectionComponent implements OnInit {
     data: any[] = [];
-    image = environment.imgUrl + 'categories/';
+    image = environment.imgUrl;
 
     constructor(
         public translateService: TranslateService,

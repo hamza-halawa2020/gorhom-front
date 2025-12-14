@@ -70,18 +70,13 @@
                         <i class="far fa-heart"></i>
                     </button>
                     <!-- Product Image -->
-                    <div class="product-image" (mouseenter)="
-                            onMouseEnter(product.id, product.productImages)
-                        " (mouseleave)="onMouseLeave(product.id)">
+                    <div class="product-image">
                         <!-- Default Image -->
                         <a routerLink="/product/{{ product.id }}">
                             <img class="default-image img-fluid"
-                                [src]="product.productImages?.[0]?.image ? image + product.productImages[0].image : 'assets/images/logo.svg'"
-                                [alt]="product.title" (error)="onImageError($event)" />
-                            <!-- Hover Image -->
-                            <img class="hover-image img-fluid"
-                                [src]="hoverImages[product.id] || (product.productImages?.[0]?.image ? image + product.productImages[0].image : 'assets/images/logo.svg')"
-                                [alt]="product.title" (error)="onImageError($event)" />
+                                [src]="product.image ? image + product.image : 'assets/images/logo.svg'"
+                                [alt]="product.title"/>
+                       
                         </a>
 
                         <!-- Hover Overlay -->

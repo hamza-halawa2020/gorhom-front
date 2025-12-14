@@ -25,7 +25,7 @@ import { TranslateModule,TranslateService } from '@ngx-translate/core';
 })
 export class ProductSliderComponent implements OnInit {
     sliderData: any;
-    image = environment.imgUrl + 'products/';
+    image = environment.imgUrl;
     currentOptions: OwlOptions;
    
     ProductSliderSlides: OwlOptions = {

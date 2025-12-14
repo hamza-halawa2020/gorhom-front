@@ -34,7 +34,7 @@ export class PaymentStatusPageComponent implements OnInit {
     order: any = [];
     orderNumber: string = '';
     paymobOrderId: string = '';
-    image = environment.imgUrl + 'products/';
+    image = environment.imgUrl;
 
     constructor(
         private route: ActivatedRoute,

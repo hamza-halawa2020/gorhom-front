@@ -13,7 +13,7 @@ import { RouterLink } from '@angular/router';
     styleUrl: './orders.component.scss',
 })
 export class OrderComponent implements OnInit {
-    image = environment.imgUrl + 'products/';
+    image = environment.imgUrl;
     orders: any[] = [];
     expandedOrderId: number | null = null;
     isLoading: boolean = true;

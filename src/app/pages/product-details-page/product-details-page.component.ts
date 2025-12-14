@@ -55,9 +55,9 @@ export class ProductDetailsPageComponent implements OnInit, OnDestroy {
     successMessage: string = '';
     errorMessage: string = '';
     id: any;
-    image = environment.imgUrl + 'products/';
-    instructorImage = environment.imgUrl + 'instructors/';
-    socialImage = environment.imgUrl + 'socials/';
+    image = environment.imgUrl ;
+    instructorImage = environment.imgUrl;
+    socialImage = environment.imgUrl;
     selectedImage: string = '';
     currentIndex: number = 0;
     modalSelectedImage: string = '';

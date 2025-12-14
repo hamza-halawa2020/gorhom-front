@@ -24,7 +24,7 @@ import { TranslateModule, TranslateService } from '@ngx-translate/core';
 })
 export class BrandsComponent {
     sliderData: any[] = [];
-    image = environment.imgUrl + 'categories/';
+    image = environment.imgUrl ;
     currentOptions: OwlOptions;
     successMessage: string = '';
     errorMessage: string = '';

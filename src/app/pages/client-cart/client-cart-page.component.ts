@@ -41,7 +41,7 @@ export class ClientCartPageComponent implements OnInit {
     filteredCities: any[] = []; // Array of filtered cities
     selectedCountry: string = ''; // ID of selected country
     selectedCity: string = ''; // ID of selected city
-    image = environment.imgUrl + 'products/';
+    image = environment.imgUrl;
     successMessage: string = '';
     errorMessage: string = '';
     totalPrice: number = 0; // Total price calculated client-side

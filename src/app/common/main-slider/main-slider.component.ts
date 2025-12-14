@@ -28,7 +28,7 @@ import { TranslateService } from '@ngx-translate/core';
 })
 export class MainSlider implements OnInit {
     sliderData: any;
-    // image = environment.imgUrl + 'main-sliders/';
+    // image = environment.imgUrl;
     image = '';
 
     // Reference to the OwlCarousel component

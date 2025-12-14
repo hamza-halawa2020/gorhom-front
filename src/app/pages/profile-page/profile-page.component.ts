@@ -29,7 +29,7 @@ import { enUS } from 'date-fns/locale'; // Import English locale
     styleUrl: './profile-page.component.scss',
 })
 export class ProfilePageComponent implements OnInit {
-    image = environment.imgUrl + 'users/';
+    image = environment.imgUrl;
     data: any;
     activeSection: string = 'data';
     showImageModal: boolean = false;
