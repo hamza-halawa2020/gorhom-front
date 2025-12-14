@@ -457,6 +457,7 @@
   "CHECK_ALL_POSTS": "تحقق من جميع منشوراتنا",
   "EXPLORE_ALL_POSTS": "استكشف جميع المنشورات",
   "BY": "بواسطة",
+  "ALL_RIGHTS_RESERVED": "All Rights Reserved",
   "COMMENTS": "التعليقات",
   "READ_MORE": "اقرأ المزيد",
   "OUR_COURSES": "دوراتنا",
@@ -760,5 +761,6 @@
   "NEWSLETTER_SIGNUP": "",
   "SUBSCRIBE_NEWSLETTER_TEXT": "",
   "shipping-delivery": "",
-  "OUR_BRANDS": "علاماتنا التجارية"
+  "OUR_BRANDS": "علاماتنا التجارية",
+  "EXPLORE_OUR_MAIN_CATEGORIES": "Explore Our Main Categories"
 }
