@@ -53,11 +53,9 @@ export class CategoryPageComponent implements OnInit {
         private cartService: CartService,
         private cartClientService: ClientCartService,
         private favClientService: FavouriteClientService,
-        private loginService: LoginService,
         private route: ActivatedRoute,
         public translateService: TranslateService
     ) {
-        this.isLoggedIn = !!loginService.isLoggedIn();
         this.checkMobile();
         window.addEventListener('resize', () => this.checkMobile());
     }
@@ -128,10 +126,10 @@ export class CategoryPageComponent implements OnInit {
                 sortedData.sort((a, b) => (b.title || '').localeCompare(a.title || ''));
                 break;
             case 'price_low_to_high':
-                sortedData.sort((a, b) => (a.priceAfterDiscount || 0) - (b.priceAfterDiscount || 0));
+                sortedData.sort((a, b) => (a.price_after_discount || 0) - (b.price_after_discount || 0));
                 break;
             case 'price_high_to_low':
-                sortedData.sort((a, b) => (b.priceAfterDiscount || 0) - (a.priceAfterDiscount || 0));
+                sortedData.sort((a, b) => (b.price_after_discount || 0) - (a.price_after_discount || 0));
                 break;
             case 'date_old_to_new':
                 sortedData.sort(

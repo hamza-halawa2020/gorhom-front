@@ -9,10 +9,8 @@ import { NavbarComponent } from '../../common/navbar/navbar.component';
 import { environment } from '../../../environments/environment.development';
 import { CommonModule, NgClass, NgIf } from '@angular/common';
 import { ProductService } from './product.service';
-import { CartService } from '../cart-page/cart.service';
 import { ClientCartService } from '../client-cart/client-cart.service';
 import { FavouriteClientService } from '../favourite-client-page/favourite-client.service';
-import { LoginService } from '../login-page/login.service';
 import { TranslateModule, TranslateService } from '@ngx-translate/core';
 
 @Component({
@@ -49,7 +47,6 @@ export class ProductPageComponent implements OnInit {
     constructor(
         public router: Router,
         private productService: ProductService,
-        private cartService: CartService,
         private cartClientService: ClientCartService,
         private favClientService: FavouriteClientService,
         public translateService: TranslateService
@@ -123,10 +120,10 @@ export class ProductPageComponent implements OnInit {
                 sortedData.sort((a, b) => (b.title || '').localeCompare(a.title || ''));
                 break;
             case 'price_low_to_high':
-                sortedData.sort((a, b) => (a.priceAfterDiscount || 0) - (b.priceAfterDiscount || 0));
+                sortedData.sort((a, b) => (a.price_after_discount || 0) - (b.price_after_discount || 0));
                 break;
             case 'price_high_to_low':
-                sortedData.sort((a, b) => (b.priceAfterDiscount || 0) - (a.priceAfterDiscount || 0));
+                sortedData.sort((a, b) => (b.price_after_discount || 0) - (a.price_after_discount || 0));
                 break;
             case 'date_old_to_new':
                 sortedData.sort((a, b) => new Date(a.created_at || 0).getTime() - new Date(b.created_at || 0).getTime());
