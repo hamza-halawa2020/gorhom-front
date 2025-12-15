@@ -1,6 +1,6 @@
 <div [dir]="translateService.currentLang === 'ar' ? 'rtl' : 'ltr'">
     <app-navbar />
-    <app-page-banner />
+    <app-product-details-page-banner />
 
     <!-- Success/Error Messages -->
     <div
@@ -96,7 +96,7 @@
                                     alt="Selected Image"
                                 />
                                 <button
-                                    *ngIf="modalCurrentIndex < details?.files.length - 1"
+                                    *ngIf="details?.files?.length > 0 && modalCurrentIndex < details.files.length - 1"
                                     class="btn btn-light position-absolute end-0 top-50 translate-middle-y"
                                     (click)="nextModalImage()"
                                     [title]="'NEXT_IMAGE' | translate"
@@ -119,7 +119,7 @@
                             <div
                                 class="thumbnail"
                                 *ngFor="
-                                    let related of details?.files;
+                                    let related of details?.files || [];
                                     let i = index
                                 "
                                 [class.active]="i === currentIndex"
@@ -165,7 +165,7 @@
                                     "
                                 ></div>
                                 <button
-                                    *ngIf="currentIndex < details?.files.length - 1"
+                                    *ngIf="details?.files?.length > 0 && currentIndex < details.files.length - 1"
                                     class="btn btn-light position-absolute end-0 top-50 translate-middle-y custom-btn"
                                     (click)="
                                         nextImage(); $event.stopPropagation()
@@ -277,19 +277,17 @@
                 <div class="client-review p-4">
                     <div class="review-comments">
                         <h6 class="review-title">
-                            {{ "REVIEWS" | translate }} ({{
-                                details?.productReviews.length
-                            }})
+                            {{ "REVIEWS" | translate }} ({{details?.reviews?.length || 0}})
                         </h6>
                         <ul class="review-contents">
-                            <li *ngFor="let review of details?.productReviews">
+                            <li *ngFor="let review of details?.reviews">
                                 <div class="cont">
                                     <h6 class="subtitle">
-                                        {{ review?.user || review?.client }}
+                                        {{ review?.name || '' }}
                                     </h6>
                                     <div class="ratings cl-theme">
                                         <rating
-                                            [(ngModel)]="review.rating"
+                                            [(ngModel)]="review.rate"
                                             [max]="5"
                                             [readonly]="true"
                                             style="
@@ -354,22 +352,6 @@
                                     name="name"
                                     [placeholder]="'FULL_NAME' | translate"
                                     [(ngModel)]="name"
-                                />
-                            </div>
-                            <div class="col-md-4 col-12">
-                                <input
-                                    type="email"
-                                    name="email"
-                                    [placeholder]="'EMAIL_ADDRESS' | translate"
-                                    [(ngModel)]="email"
-                                />
-                            </div>
-                            <div class="col-md-4 col-12">
-                                <input
-                                    type="text"
-                                    name="phone"
-                                    [placeholder]="'PHONE_NUMBER' | translate"
-                                    [(ngModel)]="phone"
                                 />
                             </div>
                             <div class="col-md-4 col-12">
@@ -441,7 +423,7 @@
                                         [src]="image + (related.files?.[0]?.path || 'fallback-image.jpg')"
                                         class="bg-image max-height"
                                         alt="Product Image"
-                                        (load)="onImageLoad(image + related.files[0].path)"
+                                        (load)="onImageLoad(image + (related.files?.[0]?.path || 'fallback-image.jpg'))"
                                         (error)="onImageError($event)"
                                     />
                                     <span

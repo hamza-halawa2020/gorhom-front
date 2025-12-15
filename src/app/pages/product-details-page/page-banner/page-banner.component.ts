@@ -3,7 +3,7 @@ import { RouterLink } from '@angular/router';
 import { TranslateModule } from '@ngx-translate/core';
 
 @Component({
-    selector: 'app-page-banner:not(1)',
+    selector: 'app-product-details-page-banner',
     standalone: true,
     imports: [RouterLink,TranslateModule],
     templateUrl: './page-banner.component.html',

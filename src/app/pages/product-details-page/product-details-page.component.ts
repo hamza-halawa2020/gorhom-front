@@ -49,8 +49,7 @@ export class ProductDetailsPageComponent implements OnInit, OnDestroy {
     phone: string = '';
     newReview: string = '';
     newRate: number = 0;
-    details: any;
-    data: any;
+    details: any = null;
     isLoggedIn: boolean = false;
     successMessage: string = '';
     errorMessage: string = '';
@@ -211,15 +210,18 @@ export class ProductDetailsPageComponent implements OnInit, OnDestroy {
             this.productService.show(this.id).subscribe((data) => {
                 this.details = Object.values(data)[0];
                 console.log('Details:', this.details);
-                // console.log('Related Products:', this.details?.relatedProducts);
-                // console.log(
-                //     'Related Products Full Structure:',
-                //     JSON.stringify(this.details?.relatedProducts, null, 2)
-                // );
                 this.translateData();
                 if (this.details?.files?.length > 0) {
                     this.selectedImage = this.image + this.details.files[0].path;
                     console.log('this.selectedImage',this.selectedImage);
+                    this.modalSelectedImage = this.selectedImage;
+                } else if (this.details?.image) {
+                    // Fallback to main product image if no files array
+                    this.selectedImage = this.image + this.details.image;
+                    this.modalSelectedImage = this.selectedImage;
+                } else {
+                    // Ultimate fallback
+                    this.selectedImage = 'assets/images/fallback-image.jpg';
                     this.modalSelectedImage = this.selectedImage;
                 }
                 this.cdr.detectChanges();
@@ -254,7 +256,7 @@ export class ProductDetailsPageComponent implements OnInit, OnDestroy {
     }
 
     prevImage(): void {
-        if (this.currentIndex > 0) {
+        if (this.details?.files?.length > 0 && this.currentIndex > 0) {
             this.currentIndex--;
             this.selectedImage =
                 this.image +
@@ -265,21 +267,23 @@ export class ProductDetailsPageComponent implements OnInit, OnDestroy {
     }
 
     nextImage(): void {
-        if (this.currentIndex < this.details?.files.length - 1) {
-            this.currentIndex++;
-            this.selectedImage =
-                this.image +
-                this.details.files[this.currentIndex].path;
-        } else {
-            this.currentIndex = 0;
-            this.selectedImage =
-                this.image +
-                this.details.files[this.currentIndex].path;
+        if (this.details?.files?.length > 0) {
+            if (this.currentIndex < this.details.files.length - 1) {
+                this.currentIndex++;
+                this.selectedImage =
+                    this.image +
+                    this.details.files[this.currentIndex].path;
+            } else {
+                this.currentIndex = 0;
+                this.selectedImage =
+                    this.image +
+                    this.details.files[this.currentIndex].path;
+            }
         }
     }
 
     prevModalImage(): void {
-        if (this.modalCurrentIndex > 0) {
+        if (this.details?.files?.length > 0 && this.modalCurrentIndex > 0) {
             this.modalCurrentIndex--;
             this.modalSelectedImage =
                 this.image +
@@ -288,7 +292,7 @@ export class ProductDetailsPageComponent implements OnInit, OnDestroy {
     }
 
     nextModalImage(): void {
-        if (this.modalCurrentIndex < this.details?.files.length - 1) {
+        if (this.details?.files?.length > 0 && this.modalCurrentIndex < this.details.files.length - 1) {
             this.modalCurrentIndex++;
             this.modalSelectedImage =
                 this.image +
@@ -405,7 +409,7 @@ export class ProductDetailsPageComponent implements OnInit, OnDestroy {
     }
 
     addToCart(product_id: any): void {
-        const product = this.data;
+        const product = this.details;
         
         if (!product) {
             this.errorMessage = this.translateService.instant('PRODUCT_NOT_FOUND');
@@ -453,7 +457,9 @@ export class ProductDetailsPageComponent implements OnInit, OnDestroy {
         this.productService.addReview(reviewData).subscribe({
             next: (response) => {
                 this.getDetails();
-                this.details.productReviews.unshift(response);
+                if (this.details.reviews) {
+                    this.details.reviews.unshift(response);
+                }
                 this.successMessage = this.translateService.instant(
                     'Review added successfully but it is under review!'
                 );
@@ -497,7 +503,9 @@ export class ProductDetailsPageComponent implements OnInit, OnDestroy {
         this.productService.addClientReview(reviewData).subscribe({
             next: (response) => {
                 this.getDetails();
-                this.details.productReviews.unshift(response);
+                if (this.details.reviews) {
+                    this.details.reviews.unshift(response);
+                }
                 this.successMessage = this.translateService.instant(
                     'Review added successfully but it is under review!'
                 );
@@ -552,6 +560,6 @@ export class ProductDetailsPageComponent implements OnInit, OnDestroy {
             (event.target as HTMLImageElement).src
         );
         (event.target as HTMLImageElement).src =
-            this.image + 'fallback-image.jpg';
+            'assets/images/fallback-image.jpg';
     }
 }
