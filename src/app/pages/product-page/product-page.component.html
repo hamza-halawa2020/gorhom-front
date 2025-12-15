@@ -364,10 +364,10 @@
                                         </a>
                                     </h3>
                                     <div class="price">
-                                        {{ product.priceAfterDiscount }} {{ "EGP" | translate }}
+                                        {{ product.price_after_discount }} {{ "EGP" | translate }}
                                         <span 
-                                        *ngIf="product?.priceBeforeDiscount !== product?.priceAfterDiscount">
-                                            {{ product.priceBeforeDiscount }} {{ "EGP" | translate }}
+                                        *ngIf="product?.price_before_discount !== product?.price_after_discount">
+                                            {{ product.price_before_discount }} {{ "EGP" | translate }}
                                         </span>
                                     </div>
                                     <a

@@ -52,10 +52,8 @@ export class ProductPageComponent implements OnInit {
         private cartService: CartService,
         private cartClientService: ClientCartService,
         private favClientService: FavouriteClientService,
-        private loginService: LoginService,
         public translateService: TranslateService
     ) {
-        this.isLoggedIn = !!loginService.isLoggedIn();
         this.checkMobile();
         // console.log('Initial isMobile:', this.isMobile, 'gridColumns:', this.gridColumns);
         window.addEventListener('resize', () => this.checkMobile());
@@ -163,28 +161,7 @@ export class ProductPageComponent implements OnInit {
     }
 
     addToCart(product_id: any) {
-        const product = this.data.find(p => p.id === product_id);
-        
-        if (!product) {
-            this.errorMessage = this.translateService.instant('PRODUCT_NOT_FOUND');
-            setTimeout(() => { this.errorMessage = ''; }, 1000);
-            return;
-        }
-
-        const cart = JSON.parse(localStorage.getItem('cart') || '[]');
-        const exists = cart.some((item: any) => item && item.product_id === product.id);
-        
-        if (exists) {
-            this.errorMessage = this.translateService.instant('PRODUCT_ALREADY_IN_CART');
-            setTimeout(() => { this.errorMessage = ''; }, 1000);
-        } else {
-            this.cartService.addToCart(product).subscribe({
-                next: (response) => {
-                    this.successMessage = this.translateService.instant('PRODUCT_ADDED_TO_CART');
-                    setTimeout(() => { this.successMessage = ''; }, 1000);
-                },
-            });
-        }
+      
     }
 
     addToFavourite(product_id: any) {
@@ -212,12 +189,13 @@ export class ProductPageComponent implements OnInit {
     fetchdata() {
         this.productService.index().subscribe({
             next: (response) => {
-                this.originalData = Object.values(response)[0] || [];
+                this.originalData = Object.values(response)[0] || [];               
                 this.originalData = this.originalData.map(product => ({
                     ...product,
                     productImages: product.productImages || []
                 }));
                 this.data = [...this.originalData];
+
                 this.translateData();
             },
             error: (error) => {
