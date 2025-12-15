@@ -64,6 +64,15 @@ export class ProductDetailsPageComponent implements OnInit, OnDestroy {
     peopleViewing: number = 22;
     private viewingInterval: any;
     private autoSlideInterval: any;
+    allImages: { path: string; isMainImage: boolean }[] = []; // Array to hold all images including main image
+
+    get hasImages(): boolean {
+        return this.allImages && this.allImages.length > 0;
+    }
+
+    get totalImages(): number {
+        return this.allImages ? this.allImages.length : 0;
+    }
 
     // Related products carousel options
     relatedProductsOptions: OwlOptions;
@@ -165,6 +174,7 @@ export class ProductDetailsPageComponent implements OnInit, OnDestroy {
         this.startViewingUpdate();
         this.startAutoSlide();
         this.productUrl = window.location.href;
+        this.setupKeyboardNavigation();
     }
 
     ngOnDestroy(): void {
@@ -209,24 +219,47 @@ export class ProductDetailsPageComponent implements OnInit, OnDestroy {
             this.id = +params['id'];
             this.productService.show(this.id).subscribe((data) => {
                 this.details = Object.values(data)[0];
-                console.log('Details:', this.details);
                 this.translateData();
-                if (this.details?.files?.length > 0) {
-                    this.selectedImage = this.image + this.details.files[0].path;
-                    console.log('this.selectedImage',this.selectedImage);
-                    this.modalSelectedImage = this.selectedImage;
-                } else if (this.details?.image) {
-                    // Fallback to main product image if no files array
-                    this.selectedImage = this.image + this.details.image;
-                    this.modalSelectedImage = this.selectedImage;
-                } else {
-                    // Ultimate fallback
-                    this.selectedImage = 'assets/images/fallback-image.jpg';
-                    this.modalSelectedImage = this.selectedImage;
-                }
+                this.setupImageGallery();
                 this.cdr.detectChanges();
             });
         });
+    }
+
+    setupImageGallery(): void {
+        this.allImages = [];
+        
+        // Add main product image first if it exists
+        if (this.details?.image) {
+            this.allImages.push({
+                path: this.details.image,
+                isMainImage: true
+            });
+        }
+        
+        // Add additional images from files array
+        if (this.details?.files?.length > 0) {
+            this.details.files.forEach((file: any) => {
+                this.allImages.push({
+                    path: file.path,
+                    isMainImage: false
+                });
+            });
+        }
+        
+        // Set the first image as selected
+        if (this.allImages.length > 0) {
+            this.selectedImage = this.image + this.allImages[0].path;
+            this.modalSelectedImage = this.selectedImage;
+            this.currentIndex = 0;
+            this.modalCurrentIndex = 0;
+        } else {
+            // Ultimate fallback
+            this.selectedImage = 'assets/images/fallback-image.jpg';
+            this.modalSelectedImage = this.selectedImage;
+        }
+        
+ 
     }
 
     translateData(): void {
@@ -256,47 +289,36 @@ export class ProductDetailsPageComponent implements OnInit, OnDestroy {
     }
 
     prevImage(): void {
-        if (this.details?.files?.length > 0 && this.currentIndex > 0) {
+        if (this.hasImages && this.currentIndex > 0) {
             this.currentIndex--;
-            this.selectedImage =
-                this.image +
-                this.details.files[this.currentIndex].path;
+            this.selectedImage = this.image + this.allImages[this.currentIndex].path;
             this.stopAutoSlide();
             setTimeout(() => this.restartAutoSlide(), 10000);
         }
     }
 
     nextImage(): void {
-        if (this.details?.files?.length > 0) {
-            if (this.currentIndex < this.details.files.length - 1) {
+        if (this.hasImages) {
+            if (this.currentIndex < this.totalImages - 1) {
                 this.currentIndex++;
-                this.selectedImage =
-                    this.image +
-                    this.details.files[this.currentIndex].path;
             } else {
                 this.currentIndex = 0;
-                this.selectedImage =
-                    this.image +
-                    this.details.files[this.currentIndex].path;
             }
+            this.selectedImage = this.image + this.allImages[this.currentIndex].path;
         }
     }
 
     prevModalImage(): void {
-        if (this.details?.files?.length > 0 && this.modalCurrentIndex > 0) {
+        if (this.hasImages && this.modalCurrentIndex > 0) {
             this.modalCurrentIndex--;
-            this.modalSelectedImage =
-                this.image +
-                this.details.files[this.modalCurrentIndex].path;
+            this.modalSelectedImage = this.image + this.allImages[this.modalCurrentIndex].path;
         }
     }
 
     nextModalImage(): void {
-        if (this.details?.files?.length > 0 && this.modalCurrentIndex < this.details.files.length - 1) {
+        if (this.hasImages && this.modalCurrentIndex < this.totalImages - 1) {
             this.modalCurrentIndex++;
-            this.modalSelectedImage =
-                this.image +
-                this.details.files[this.modalCurrentIndex].path;
+            this.modalSelectedImage = this.image + this.allImages[this.modalCurrentIndex].path;
         }
     }
 
@@ -305,6 +327,36 @@ export class ProductDetailsPageComponent implements OnInit, OnDestroy {
         this.modalCurrentIndex = this.currentIndex;
         let modal = new bootstrap.Modal(document.getElementById('imageModal'));
         modal.show();
+    }
+
+    selectModalImage(index: number): void {
+        this.modalCurrentIndex = index;
+        this.modalSelectedImage = this.image + this.allImages[index].path;
+    }
+
+    setupKeyboardNavigation(): void {
+        document.addEventListener('keydown', (event) => {
+            const modal = document.getElementById('imageModal');
+            if (modal && modal.classList.contains('show')) {
+                switch (event.key) {
+                    case 'ArrowLeft':
+                        event.preventDefault();
+                        this.prevModalImage();
+                        break;
+                    case 'ArrowRight':
+                        event.preventDefault();
+                        this.nextModalImage();
+                        break;
+                    case 'Escape':
+                        event.preventDefault();
+                        const modalInstance = bootstrap.Modal.getInstance(modal);
+                        if (modalInstance) {
+                            modalInstance.hide();
+                        }
+                        break;
+                }
+            }
+        });
     }
 
     onMouseMove(event: MouseEvent): void {
@@ -551,7 +603,6 @@ export class ProductDetailsPageComponent implements OnInit, OnDestroy {
     }
 
     onImageLoad(imageUrl: string): void {
-        // console.log('Image loaded:', imageUrl);
     }
 
     onImageError(event: Event): void {
