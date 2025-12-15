@@ -32,7 +32,7 @@ import { BreakpointObserver, Breakpoints } from '@angular/cdk/layout';
 export class FeedbackComponent implements OnInit, OnDestroy {
     sliderData: any[] = [];
     groupedSliderData: any[][] = [];
-    productImage = environment.imgUrl + 'products/';
+    productImage = environment.imgUrl;
     currentOptions: OwlOptions;
     private destroy$ = new Subject<void>();
     private itemsPerSlide: number = 3; // Default: 3 items for large screens
@@ -123,6 +123,7 @@ export class FeedbackComponent implements OnInit, OnDestroy {
         this.feedBackService.index().subscribe({
             next: (response) => {
                 this.sliderData = Object.values(response)[0];
+                console.log(' this.sliderData', this.sliderData);
                 this.groupSliderData();
             },
             error: (error) => {},

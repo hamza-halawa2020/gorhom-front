@@ -11,7 +11,7 @@
                             <div class="single-feedback-item text-center p-3">
                                 <div class="rating">
                                     <span *ngFor="
-                                            let star of getStars(slide.rating);
+                                            let star of getStars(slide.rate);
                                             let i = index
                                         ">
                                         <i class="fa-star" [ngClass]="star ? 'fas' : 'far'"></i>
@@ -19,10 +19,10 @@
                                 </div>
                                 <div class="info">
                                     <img src="{{
-                                            productImage + slide.product_image
+                                            productImage + slide.product.image
                                         }}" class="rounded-circle" alt="user-image" />
                                     <h3 class="fw-semibold">
-                                        {{ slide.user || slide.client }}
+                                        {{ slide.name || ''}}
                                     </h3>
                                     <span class="d-block review-text">{{
                                         slide.review
