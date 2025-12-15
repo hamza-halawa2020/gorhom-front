@@ -123,7 +123,6 @@ export class FeedbackComponent implements OnInit, OnDestroy {
         this.feedBackService.index().subscribe({
             next: (response) => {
                 this.sliderData = Object.values(response)[0];
-                console.log(' this.sliderData', this.sliderData);
                 this.groupSliderData();
             },
             error: (error) => {},

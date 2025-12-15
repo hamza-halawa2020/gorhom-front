@@ -217,7 +217,6 @@ export class CategoryPageComponent implements OnInit {
     fetchdata() {
         this.categoryService.index().subscribe({
             next: (response) => {
-                console.log('Category Service Response:', response);
                 this.originalData = Object.values(response)[0] || [];
                 this.originalData = this.originalData.map((product) => ({
                     ...product,

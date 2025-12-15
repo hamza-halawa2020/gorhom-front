@@ -29,7 +29,6 @@ export class CategorySectionComponent implements OnInit {
                     : (Object.values(response)[0] as any[]);
                 this.data = this.getRandomCategories(categories);
                 this.getRandomCategories(categories);
-                // console.log(this.data);
                 this.translateData();
             },
         });
@@ -48,7 +47,6 @@ export class CategorySectionComponent implements OnInit {
                     this.translateService.instant(category.name) ||
                     category.name;
             } else {
-                // console.warn('Category name is missing or empty:', category);
                 category.translatedTitle = 'UNKNOWN_CATEGORY';
             }
         });

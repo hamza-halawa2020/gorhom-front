@@ -45,7 +45,6 @@ export class ProductsSectionComponent implements OnInit {
         this.productSliderService.index().subscribe({
             next: (response) => {
                 this.products = Object.values(response)[0];
-                console.log(this.products, 'dsfdsfds');
 
                 this.setFilter('all');
                 this.cdr.detectChanges();
