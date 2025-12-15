@@ -210,16 +210,16 @@ export class ProductDetailsPageComponent implements OnInit, OnDestroy {
             this.id = +params['id'];
             this.productService.show(this.id).subscribe((data) => {
                 this.details = Object.values(data)[0];
-                // console.log('Details:', this.details);
+                console.log('Details:', this.details);
                 // console.log('Related Products:', this.details?.relatedProducts);
                 // console.log(
                 //     'Related Products Full Structure:',
                 //     JSON.stringify(this.details?.relatedProducts, null, 2)
                 // );
                 this.translateData();
-                if (this.details?.productImages?.length > 0) {
-                    this.selectedImage =
-                        this.image + this.details.productImages[0].image;
+                if (this.details?.files?.length > 0) {
+                    this.selectedImage = this.image + this.details.files[0].path;
+                    console.log('this.selectedImage',this.selectedImage);
                     this.modalSelectedImage = this.selectedImage;
                 }
                 this.cdr.detectChanges();
@@ -258,23 +258,23 @@ export class ProductDetailsPageComponent implements OnInit, OnDestroy {
             this.currentIndex--;
             this.selectedImage =
                 this.image +
-                this.details.productImages[this.currentIndex].image;
+                this.details.files[this.currentIndex].path;
             this.stopAutoSlide();
             setTimeout(() => this.restartAutoSlide(), 10000);
         }
     }
 
     nextImage(): void {
-        if (this.currentIndex < this.details?.productImages.length - 1) {
+        if (this.currentIndex < this.details?.files.length - 1) {
             this.currentIndex++;
             this.selectedImage =
                 this.image +
-                this.details.productImages[this.currentIndex].image;
+                this.details.files[this.currentIndex].path;
         } else {
             this.currentIndex = 0;
             this.selectedImage =
                 this.image +
-                this.details.productImages[this.currentIndex].image;
+                this.details.files[this.currentIndex].path;
         }
     }
 
@@ -283,16 +283,16 @@ export class ProductDetailsPageComponent implements OnInit, OnDestroy {
             this.modalCurrentIndex--;
             this.modalSelectedImage =
                 this.image +
-                this.details.productImages[this.modalCurrentIndex].image;
+                this.details.files[this.modalCurrentIndex].path;
         }
     }
 
     nextModalImage(): void {
-        if (this.modalCurrentIndex < this.details?.productImages.length - 1) {
+        if (this.modalCurrentIndex < this.details?.files.length - 1) {
             this.modalCurrentIndex++;
             this.modalSelectedImage =
                 this.image +
-                this.details.productImages[this.modalCurrentIndex].image;
+                this.details.files[this.modalCurrentIndex].path;
         }
     }
 

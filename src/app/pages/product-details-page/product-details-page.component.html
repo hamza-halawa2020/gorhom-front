@@ -96,10 +96,7 @@
                                     alt="Selected Image"
                                 />
                                 <button
-                                    *ngIf="
-                                        modalCurrentIndex <
-                                        details?.productImages.length - 1
-                                    "
+                                    *ngIf="modalCurrentIndex < details?.files.length - 1"
                                     class="btn btn-light position-absolute end-0 top-50 translate-middle-y"
                                     (click)="nextModalImage()"
                                     [title]="'NEXT_IMAGE' | translate"
@@ -122,14 +119,14 @@
                             <div
                                 class="thumbnail"
                                 *ngFor="
-                                    let related of details?.productImages;
+                                    let related of details?.files;
                                     let i = index
                                 "
                                 [class.active]="i === currentIndex"
-                                (click)="selectImage(image + related?.image, i)"
+                                (click)="selectImage(image + related?.path, i)"
                             >
                                 <img
-                                    [src]="image + related?.image"
+                                    [src]="image + related?.path"
                                     alt="Thumbnail"
                                     class="thumbnail-img"
                                 />
@@ -168,10 +165,7 @@
                                     "
                                 ></div>
                                 <button
-                                    *ngIf="
-                                        currentIndex <
-                                        details?.productImages.length - 1
-                                    "
+                                    *ngIf="currentIndex < details?.files.length - 1"
                                     class="btn btn-light position-absolute end-0 top-50 translate-middle-y custom-btn"
                                     (click)="
                                         nextImage(); $event.stopPropagation()
@@ -196,12 +190,12 @@
                         <div class="my-1">
                             <div class="pd_price">
                                 <span class="new"
-                                    >{{ details?.priceAfterDiscount }}
+                                    >{{ details?.price_after_discount }}
                                     {{ "EGP" | translate }}</span
                                 >
                            
-                                <span class="old" *ngIf="details?.priceBeforeDiscount !== details?.priceAfterDiscount">
-                                ({{ details?.priceBeforeDiscount }} {{ 'EGP' | translate }})
+                                <span class="old" *ngIf="details?.price_before_discount !== details?.price_after_discount">
+                                ({{ details?.price_before_discount }} {{ 'EGP' | translate }})
                                 </span>
 
                             </div>
@@ -444,16 +438,10 @@
                             <div class="event-slide position-relative">
                                 <div class="event-img">
                                     <img
-                                        [src]="image + (related.productImages?.[0]?.image || 'fallback-image.jpg')"
+                                        [src]="image + (related.files?.[0]?.path || 'fallback-image.jpg')"
                                         class="bg-image max-height"
                                         alt="Product Image"
-                                        (load)="
-                                            onImageLoad(
-                                                image +
-                                                    related.productImages[0]
-                                                        .image
-                                            )
-                                        "
+                                        (load)="onImageLoad(image + related.files[0].path)"
                                         (error)="onImageError($event)"
                                     />
                                     <span
@@ -473,11 +461,11 @@
                                         }}
                                     </h3>
                                     <div class="price">
-                                        {{ related.priceAfterDiscount }}
+                                        {{ related.price_after_discount }}
                                         {{ "EGP" | translate }}
                                         <span
-                                             *ngIf="related?.priceBeforeDiscount !== related?.priceAfterDiscount"
-                                            >{{ related.priceBeforeDiscount }}
+                                             *ngIf="related?.price_before_discount !== related?.price_after_discount"
+                                            >{{ related.price_before_discount }}
                                             {{ "EGP" | translate }}</span
                                         >
                                     </div>
