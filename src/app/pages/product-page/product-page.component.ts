@@ -9,10 +9,9 @@ import { NavbarComponent } from '../../common/navbar/navbar.component';
 import { environment } from '../../../environments/environment.development';
 import { CommonModule, NgClass, NgIf } from '@angular/common';
 import { ProductService } from './product.service';
-import { ClientCartService } from '../client-cart/client-cart.service';
-import { FavouriteClientService } from '../favourite-client-page/favourite-client.service';
 import { TranslateModule, TranslateService } from '@ngx-translate/core';
 import { FavoritesService } from '../../services/favorites.service';
+import { CartService } from '../cart-page/cart.service';
 
 @Component({
     selector: 'app-product-page',
@@ -48,8 +47,7 @@ export class ProductPageComponent implements OnInit {
     constructor(
         public router: Router,
         private productService: ProductService,
-        private cartClientService: ClientCartService,
-        private favClientService: FavouriteClientService,
+        private cartService: CartService,
         public translateService: TranslateService,
         private favoritesService: FavoritesService
     ) {
@@ -136,25 +134,26 @@ export class ProductPageComponent implements OnInit {
     }
 
     addToClientCart(product: any) {
-        const client_cart = this.cartClientService.cartSubject.value;
-        if (!client_cart || !Array.isArray(client_cart)) {
-            this.errorMessage = this.translateService.instant('CART_DATA_NOT_AVAILABLE');
-            return;
-        }
-        const exists = client_cart.some((item) => item && item.product_id === product.id);
-        if (exists) {
-            this.errorMessage = this.translateService.instant('PRODUCT_ALREADY_IN_CART');
-            setTimeout(() => { this.errorMessage = ''; }, 1000);
-        } else {
-            const productToAdd = { ...product, quantity: 1 };
-            this.cartClientService.addToClientCart(productToAdd);
-            this.successMessage = this.translateService.instant('PRODUCT_ADDED_TO_CART');
-            setTimeout(() => { this.successMessage = ''; }, 1000);
-        }
+        this.addToCart(product.id);
     }
 
     addToCart(product_id: any) {
+        const product = this.data.find(p => p.id === product_id);
+        if (!product) {
+            this.errorMessage = this.translateService.instant('PRODUCT_NOT_FOUND');
+            setTimeout(() => { this.errorMessage = ''; }, 1000);
+            return;
+        }
 
+        const success = this.cartService.addToCart(product);
+        if (this.cartService.isInCart(product.id)) { // Assuming basic success check
+            this.successMessage = this.translateService.instant('PRODUCT_ADDED_TO_CART');
+        } else {
+            // Handle potential duplicate item message if service returns info, 
+            // but current simple service just adds/increments.
+            this.successMessage = this.translateService.instant('PRODUCT_ADDED_TO_CART');
+        }
+        setTimeout(() => { this.successMessage = ''; }, 1000);
     }
 
     addToFavourite(product_id: any) {
@@ -199,6 +198,10 @@ export class ProductPageComponent implements OnInit {
 
     isProductInFavorites(productId: number): boolean {
         return this.favoritesService.isInFavorites(productId);
+    }
+
+    isProductInCart(productId: number): boolean {
+        return this.cartService.isInCart(productId);
     }
 
     fetchdata() {

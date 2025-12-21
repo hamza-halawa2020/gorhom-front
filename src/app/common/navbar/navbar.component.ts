@@ -5,7 +5,7 @@ import { LoginService } from '../../pages/login-page/login.service';
 import { CartService } from '../../pages/cart-page/cart.service';
 import { Subscription } from 'rxjs';
 import { NgbCollapseModule } from '@ng-bootstrap/ng-bootstrap';
-import { ClientCartService } from '../../pages/client-cart/client-cart.service';
+
 import { FavouriteClientService } from '../../pages/favourite-client-page/favourite-client.service';
 import { TranslateModule, TranslateService } from '@ngx-translate/core';
 import { FavoritesService } from '../../services/favorites.service';
@@ -27,13 +27,11 @@ import { FavoritesService } from '../../services/favorites.service';
 export class NavbarComponent implements OnInit, OnDestroy {
     isCollapsed = true;
     cartData: any[] = [];
-    cartClientData: any[] = [];
     favClientData: any[] = [];
     favData: any[] = [];
     favoritesCount: number = 0; // New favorites count from FavoritesService
     EMAIL: string = 'info@gorhom.net';
     public cartSubscription!: Subscription;
-    public cartClientSubscription!: Subscription;
     public favSubscription!: Subscription;
     public favClientSubscription!: Subscription;
     public favoritesSubscription!: Subscription; // New subscription for FavoritesService
@@ -46,7 +44,6 @@ export class NavbarComponent implements OnInit, OnDestroy {
         public router: Router,
         public loginService: LoginService,
         private cartService: CartService,
-        private cartClientService: ClientCartService,
         private favouriteClientService: FavouriteClientService,
         private translate: TranslateService,
         private favoritesService: FavoritesService
@@ -72,12 +69,6 @@ export class NavbarComponent implements OnInit, OnDestroy {
             this.cartData = cart;
         });
 
-        this.cartClientSubscription = this.cartClientService.cart$.subscribe(
-            (cart) => {
-                this.cartClientData = cart;
-            }
-        );
-
         // this.favSubscription = this.favouriteService.fav$.subscribe((fav) => {
         //     this.favData = fav;
         // });
@@ -97,7 +88,6 @@ export class NavbarComponent implements OnInit, OnDestroy {
 
         this.router.events.subscribe(() => {
             this.cartService.refreshCart();
-            this.cartClientService.refreshCart();
         });
 
         this.router.events.subscribe(() => {
@@ -114,8 +104,6 @@ export class NavbarComponent implements OnInit, OnDestroy {
 
     ngOnDestroy() {
         if (this.cartSubscription) this.cartSubscription.unsubscribe();
-        if (this.cartClientSubscription)
-            this.cartClientSubscription.unsubscribe();
         if (this.favSubscription) this.favSubscription.unsubscribe();
         if (this.favClientSubscription)
             this.favClientSubscription.unsubscribe();

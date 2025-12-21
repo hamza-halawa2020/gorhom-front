@@ -168,23 +168,12 @@
                             <span>{{ peopleViewing }}
                                 {{ "PEOPLE_VIEWING" | translate }}</span>
                         </div>
-                        <div class="action-buttons" *ngIf="isLoggedIn">
+                        <div class="action-buttons" *ngIf="details">
                             <a class="btn animated-cart-btn acc_btn" (click)="addToCart(details.id)"
-                                [title]="'ADD_TO_CART' | translate">
-                                <i class="fa fa-shopping-cart me-2"></i>
-                                {{ "ADD_TO_CART" | translate }}
-                            </a>
-                            <a (click)="toggleFavorite()" class="btn btn-default acc_btn btn_icn"
-                                [class.favorite-active]="isFavorite"
-                                [title]="isFavorite ? ('REMOVE_FROM_WISHLIST' | translate) : ('ADD_TO_WISHLIST' | translate)">
-                                <i class="fa" [class.fa-heart]="isFavorite" [class.fa-heart-o]="!isFavorite"></i>
-                            </a>
-                        </div>
-                        <div class="action-buttons" *ngIf="!isLoggedIn">
-                            <a class="btn animated-cart-btn acc_btn" (click)="addToClientCart(details)"
-                                [title]="'ADD_TO_CART' | translate">
-                                <i class="fa fa-shopping-cart me-2"></i>
-                                {{ "ADD_TO_CART" | translate }}
+                                [title]="isProductInCart(details.id) ? ('ALREADY_IN_CART' | translate) : ('ADD_TO_CART' | translate)">
+                                <i class="fa me-2" [class.fa-check]="isProductInCart(details.id)"
+                                    [class.fa-shopping-cart]="!isProductInCart(details.id)"></i>
+                                {{ (isProductInCart(details.id) ? "ALREADY_IN_CART" : "ADD_TO_CART") | translate }}
                             </a>
                             <a (click)="toggleFavorite()" class="btn btn-default acc_btn btn_icn"
                                 [class.favorite-active]="isFavorite"
@@ -316,7 +305,7 @@
                                     <ul class="social">
                                         <li>
                                             <a style="cursor: pointer" (click)="addRelatedToFavorite(related, $event)"
-                                                [attr.data-tip]="isRelatedProductInFavorites(related.id) ? ('REMOVE_FROM_WISHLIST' | translate) : ('ADD_TO_WISHLIST' | translate)">
+                                                [attr.title]="isRelatedProductInFavorites(related.id) ? ('REMOVE_FROM_WISHLIST' | translate) : ('ADD_TO_WISHLIST' | translate)">
                                                 <i class="fa" [class.fa-heart]="isRelatedProductInFavorites(related.id)"
                                                     [class.fa-heart-o]="!isRelatedProductInFavorites(related.id)"
                                                     [style.color]="isRelatedProductInFavorites(related.id) ? '#e74c3c' : ''"></i>
@@ -324,8 +313,8 @@
                                         </li>
                                         <li>
                                             <a style="cursor: pointer" (click)="addRelatedToCart(related, $event)"
-                                                [attr.data-tip]="'ADD_TO_CART' | translate">
-                                                <i class="fa-solid fa-cart-plus"></i>
+                                                [attr.title]="isRelatedProductInCart(related.id) ? ('ALREADY_IN_CART' | translate) : ('ADD_TO_CART' | translate)">
+                                                <i class="fa-solid fa-shopping-cart"></i>
                                             </a>
                                         </li>
                                     </ul>

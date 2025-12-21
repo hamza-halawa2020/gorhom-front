@@ -13,7 +13,6 @@ import { FormsModule } from '@angular/forms';
 import { ProductService } from './product.service';
 import { LoginService } from '../login-page/login.service';
 import { CartService } from '../cart-page/cart.service';
-import { ClientCartService } from '../client-cart/client-cart.service';
 import { FavouriteClientService } from '../favourite-client-page/favourite-client.service';
 import { TranslateModule, TranslateService } from '@ngx-translate/core';
 import { CarouselModule, OwlOptions } from 'ngx-owl-carousel-o';
@@ -152,7 +151,6 @@ export class ProductDetailsPageComponent implements OnInit, OnDestroy {
         private productService: ProductService,
         private cartService: CartService,
         private favClientService: FavouriteClientService,
-        private cartClientService: ClientCartService,
         private loginService: LoginService,
         private cdr: ChangeDetectorRef,
         public translateService: TranslateService,
@@ -473,35 +471,11 @@ export class ProductDetailsPageComponent implements OnInit, OnDestroy {
     }
 
     addToClientCart(product: any): void {
-        const client_cart = this.cartClientService.cartSubject.value;
-
-        if (!client_cart || !Array.isArray(client_cart)) {
-            this.errorMessage =
-                this.translateService.instant('UNEXPECTED_ERROR');
-            return;
-        }
-
-        const exists = client_cart.some(
-            (item) => item && item.product_id === product.id
-        );
-
-        if (exists) {
-            this.errorMessage = this.translateService.instant(
-                'Product is already in the cart.'
-            );
-            setTimeout(() => (this.errorMessage = ''), 1000);
-        } else {
-            const productToAdd = { ...product, quantity: 1 };
-            this.cartClientService.addToClientCart(productToAdd);
-            this.successMessage = this.translateService.instant(
-                'Product added to cart successfully!'
-            );
-            setTimeout(() => (this.successMessage = ''), 1000);
-        }
+        this.addToCart(product.id, product);
     }
 
-    addToCart(product_id: any): void {
-        const product = this.details;
+    addToCart(product_id: any, productObj?: any): void {
+        const product = productObj || this.details;
 
         if (!product) {
             this.errorMessage = this.translateService.instant('PRODUCT_NOT_FOUND');
@@ -509,22 +483,17 @@ export class ProductDetailsPageComponent implements OnInit, OnDestroy {
             return;
         }
 
-        const cart = JSON.parse(localStorage.getItem('cart') || '[]');
-        const exists = cart.some((item: any) => item && item.product_id === product.id);
-
-        if (exists) {
-            this.errorMessage = this.translateService.instant('PRODUCT_ALREADY_IN_CART');
-            setTimeout(() => { this.errorMessage = ''; }, 1000);
+        const success = this.cartService.addToCart(product);
+        if (this.cartService.isInCart(product.id)) {
+            this.successMessage = this.translateService.instant(
+                'Product added to cart successfully!'
+            );
         } else {
-            this.cartService.addToCart(product).subscribe({
-                next: (response) => {
-                    this.successMessage = this.translateService.instant(
-                        'Product added to cart successfully!'
-                    );
-                    setTimeout(() => (this.successMessage = ''), 1000);
-                },
-            });
+            this.successMessage = this.translateService.instant(
+                'Product added to cart successfully!'
+            );
         }
+        setTimeout(() => (this.successMessage = ''), 1000);
     }
 
     addToFavourite(product_id: any): void {
@@ -627,31 +596,24 @@ export class ProductDetailsPageComponent implements OnInit, OnDestroy {
             (event.target as HTMLImageElement).src
         );
         (event.target as HTMLImageElement).src =
-            'assets/images/fallback-image.jpg';
+            'assets/images/logo.svg';
     }
 
     addRelatedToCart(product: any, event: Event): void {
         event.preventDefault();
         event.stopPropagation();
 
-        if (this.isLoggedIn) {
-            const cart = JSON.parse(localStorage.getItem('cart') || '[]');
-            const exists = cart.some((item: any) => item && item.product_id === product.id);
+        this.cartService.addToCart(product);
+        this.successMessage = this.translateService.instant('Product added to cart successfully!');
+        setTimeout(() => { this.successMessage = ''; }, 1000);
+    }
 
-            if (exists) {
-                this.errorMessage = this.translateService.instant('PRODUCT_ALREADY_IN_CART');
-                setTimeout(() => { this.errorMessage = ''; }, 1000);
-            } else {
-                this.cartService.addToCart(product).subscribe({
-                    next: (response) => {
-                        this.successMessage = this.translateService.instant('Product added to cart successfully!');
-                        setTimeout(() => { this.successMessage = ''; }, 1000);
-                    },
-                });
-            }
-        } else {
-            this.addToClientCart(product);
-        }
+    isRelatedProductInCart(productId: number): boolean {
+        return this.cartService.isInCart(productId);
+    }
+
+    isProductInCart(productId: number): boolean {
+        return this.cartService.isInCart(productId);
     }
 
     addRelatedToFavorite(product: any, event: Event): void {

@@ -50,7 +50,7 @@ export class CartPageComponent implements OnInit {
         private checkoutService: CheckoutService,
         private cdr: ChangeDetectorRef,
         public translateService: TranslateService // Injected as public for template access
-    ) {}
+    ) { }
 
     ngOnInit(): void {
         this.fetchdata();
@@ -203,11 +203,8 @@ export class CartPageComponent implements OnInit {
     updateQuantity(cart: any, quantity: number) {
         if (quantity < 1) return;
 
-        this.cartService.setQuantity(cart.product_id, quantity).subscribe({
-            next: () => {
-                this.fetchdata();
-            },
-        });
+        this.cartService.updateQuantity(cart.product_id, quantity - cart.quantity);
+        this.fetchdata();
     }
 
     deleteCartItem(id: number) {
@@ -233,24 +230,18 @@ export class CartPageComponent implements OnInit {
             cancelButtonText: cancel,
         }).then((result: any) => {
             if (result.isConfirmed) {
-                this.cartService.delete(id).subscribe({
-                    next: () => {
-                        this.data = this.data.filter(
-                            (item: any) => item.id !== id
-                        );
-                        Swal.fire({
-                            title: removed,
-                            text: productRemovedSuccess,
-                            icon: 'success',
-                            timer: 1500,
-                            showConfirmButton: false,
-                        });
-                        this.cdr.detectChanges();
-                    },
-                    error: (error) => {
-                        this.handleError(error);
-                    },
+                this.cartService.removeFromCart(id);
+                this.data = this.data.filter(
+                    (item: any) => item.id !== id
+                );
+                Swal.fire({
+                    title: removed,
+                    text: productRemovedSuccess,
+                    icon: 'success',
+                    timer: 1500,
+                    showConfirmButton: false,
                 });
+                this.cdr.detectChanges();
             }
         });
         // }
@@ -338,26 +329,19 @@ export class CartPageComponent implements OnInit {
             cancelButtonText: cancel,
         }).then((result: any) => {
             if (result.isConfirmed) {
-                this.cartService.clearCart().subscribe({
-                    next: () => {
-                        this.fetchdata();
-                        localStorage.removeItem('checkoutData');
-                        localStorage.removeItem('totalPriceData');
-                        localStorage.removeItem('appliedCoupon');
-                        localStorage.setItem('cart', JSON.stringify([]));
-                        Swal.fire({
-                            title: cleared,
-                            text: cartClearedSuccess,
-                            icon: 'success',
-                            timer: 1500,
-                            showConfirmButton: false,
-                        });
-                        this.cdr.detectChanges();
-                    },
-                    error: (error) => {
-                        this.handleError(error);
-                    },
+                this.cartService.clearCart();
+                this.fetchdata();
+                localStorage.removeItem('checkoutData');
+                localStorage.removeItem('totalPriceData');
+                localStorage.removeItem('appliedCoupon');
+                Swal.fire({
+                    title: cleared,
+                    text: cartClearedSuccess,
+                    icon: 'success',
+                    timer: 1500,
+                    showConfirmButton: false,
                 });
+                this.cdr.detectChanges();
             }
         });
     }

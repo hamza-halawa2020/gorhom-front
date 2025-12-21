@@ -10,7 +10,6 @@ import { environment } from '../../../environments/environment.development';
 import { CommonModule, NgClass, NgIf } from '@angular/common';
 import { CategoryService } from './category.service';
 import { CartService } from '../cart-page/cart.service';
-import { ClientCartService } from '../client-cart/client-cart.service';
 import { FavouriteClientService } from '../favourite-client-page/favourite-client.service';
 import { LoginService } from '../login-page/login.service';
 import { TranslateModule, TranslateService } from '@ngx-translate/core';
@@ -52,8 +51,6 @@ export class CategoryPageComponent implements OnInit {
         public router: Router,
         private categoryService: CategoryService,
         private cartService: CartService,
-        private cartClientService: ClientCartService,
-        private favClientService: FavouriteClientService,
         private route: ActivatedRoute,
         public translateService: TranslateService,
         private favoritesService: FavoritesService
@@ -152,21 +149,7 @@ export class CategoryPageComponent implements OnInit {
     }
 
     addToClientCart(category: any) {
-        const client_cart = this.cartClientService.cartSubject.value;
-        if (!client_cart || !Array.isArray(client_cart)) {
-            this.errorMessage = this.translateService.instant('CART_DATA_NOT_AVAILABLE');
-            return;
-        }
-        const exists = client_cart.some((item) => item && item.category_id === category.id);
-        if (exists) {
-            this.errorMessage = this.translateService.instant('PRODUCT_ALREADY_IN_CART');
-            setTimeout(() => { this.errorMessage = ''; }, 1000);
-        } else {
-            const categoryToAdd = { ...category, quantity: 1 };
-            this.cartClientService.addToClientCart(categoryToAdd);
-            this.successMessage = this.translateService.instant('PRODUCT_ADDED_TO_CART');
-            setTimeout(() => { this.successMessage = ''; }, 1000);
-        }
+        this.addToCart(category.id);
     }
 
     addToCart(product_id: any) {
@@ -178,20 +161,13 @@ export class CategoryPageComponent implements OnInit {
             return;
         }
 
-        const cart = JSON.parse(localStorage.getItem('cart') || '[]');
-        const exists = cart.some((item: any) => item && item.product_id === product.id);
-
-        if (exists) {
-            this.errorMessage = this.translateService.instant('PRODUCT_ALREADY_IN_CART');
-            setTimeout(() => { this.errorMessage = ''; }, 1000);
+        const success = this.cartService.addToCart(product);
+        if (this.cartService.isInCart(product.id)) {
+            this.successMessage = this.translateService.instant('PRODUCT_ADDED_TO_CART');
         } else {
-            this.cartService.addToCart(product).subscribe({
-                next: (response) => {
-                    this.successMessage = this.translateService.instant('PRODUCT_ADDED_TO_CART');
-                    setTimeout(() => { this.successMessage = ''; }, 1000);
-                },
-            });
+            this.successMessage = this.translateService.instant('PRODUCT_ADDED_TO_CART');
         }
+        setTimeout(() => { this.successMessage = ''; }, 1000);
     }
 
     addToFavourite(category_id: any) {
@@ -236,6 +212,10 @@ export class CategoryPageComponent implements OnInit {
 
     isProductInFavorites(productId: number): boolean {
         return this.favoritesService.isInFavorites(productId);
+    }
+
+    isProductInCart(productId: number): boolean {
+        return this.cartService.isInCart(productId);
     }
 
     fetchdata() {

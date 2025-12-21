@@ -7,7 +7,6 @@ import { CommonModule, NgClass, NgIf } from '@angular/common';
 import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
 import { ActivatedRoute } from '@angular/router';
 import { CartService } from '../cart-page/cart.service';
-import { ClientCartService } from '../client-cart/client-cart.service';
 import { TranslateService, TranslateModule } from '@ngx-translate/core';
 import { PaymentStatusService } from './payment.service';
 import { environment } from '../../../environments/environment';
@@ -38,11 +37,10 @@ export class PaymentStatusPageComponent implements OnInit {
 
     constructor(
         private route: ActivatedRoute,
-        private cartClientService: ClientCartService,
         private cartService: CartService,
         public translateService: TranslateService,
-        private paymentStatusService: PaymentStatusService 
-    ) {}
+        private paymentStatusService: PaymentStatusService
+    ) { }
 
     ngOnInit() {
         this.route.queryParams.subscribe((params) => {
@@ -51,22 +49,23 @@ export class PaymentStatusPageComponent implements OnInit {
             this.orderNumber = params['orderNumber'] || '';
 
             if (this.paymobOrderId) {
-                this.paymentStatusService.getPaymentById(this.paymobOrderId).subscribe({next: (response: any) => {
-                            if (response.data && response.data.order) {
-                                this.orderNumber = response.data.order.order_number;
-                                this.paymentStatusService.trackOrder(this.orderNumber).subscribe({next: (orderResponse: any) => {this.order = orderResponse.data || null;}});
-                            }
-                        }});
-            }else if (this.orderNumber) {
-                this.paymentStatusService.trackOrder(this.orderNumber).subscribe({next: (orderResponse: any) => {this.order = orderResponse.data || null;}});
+                this.paymentStatusService.getPaymentById(this.paymobOrderId).subscribe({
+                    next: (response: any) => {
+                        if (response.data && response.data.order) {
+                            this.orderNumber = response.data.order.order_number;
+                            this.paymentStatusService.trackOrder(this.orderNumber).subscribe({ next: (orderResponse: any) => { this.order = orderResponse.data || null; } });
+                        }
+                    }
+                });
+            } else if (this.orderNumber) {
+                this.paymentStatusService.trackOrder(this.orderNumber).subscribe({ next: (orderResponse: any) => { this.order = orderResponse.data || null; } });
             }
 
             if (this.success) {
                 localStorage.removeItem('checkoutData');
                 localStorage.removeItem('totalPriceData');
                 localStorage.removeItem('appliedCoupon');
-                this.cartService.clearCart().subscribe({next: () => {}});
-                this.cartClientService.clearCart();
+                this.cartService.clearCart();
             }
 
         });

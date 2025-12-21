@@ -7,14 +7,13 @@ import { BehaviorSubject, of } from 'rxjs';
     providedIn: 'root',
 })
 export class CartService {
-
-
     private apiUrl = environment.backEndUrl;
+    private cartSubject = new BehaviorSubject<any[]>([]);
+    public cart$ = this.cartSubject.asObservable();
 
-    private cartSubject = new BehaviorSubject<any[]>(this.getCartFromLocalStorage());
-    cart$ = this.cartSubject.asObservable();
-
-    constructor(private http: HttpClient) { }
+    constructor(private http: HttpClient) {
+        this.loadCartFromStorage();
+    }
 
     allCountries() {
         return this.http.get(`${this.apiUrl}/countries`);
@@ -25,49 +24,58 @@ export class CartService {
     allCities() {
         return this.http.get(`${this.apiUrl}/cities`);
     }
-
     showCoupon(payload: { code: string }) {
         return this.http.post(`${this.apiUrl}/showCoupon`, payload);
     }
 
-    private getCartFromLocalStorage(): any[] {
-        const cart = localStorage.getItem('cart');
-        return cart ? JSON.parse(cart) : [];
+    // --- Core Cart Logic ---
+
+    private loadCartFromStorage(): void {
+        try {
+            const cart = localStorage.getItem('cart');
+            const cartArray = cart ? JSON.parse(cart) : [];
+            this.cartSubject.next(cartArray);
+        } catch (error) {
+            console.error('Error loading cart from localStorage:', error);
+            this.cartSubject.next([]);
+        }
     }
 
-    private updateCart(updatedCart: any[]) {
-        this.cartSubject.next(updatedCart);
-        localStorage.setItem('cart', JSON.stringify(updatedCart));
+    private saveCartToStorage(cart: any[]): void {
+        try {
+            localStorage.setItem('cart', JSON.stringify(cart));
+            this.cartSubject.next(cart);
+        } catch (error) {
+            console.error('Error saving cart to localStorage:', error);
+        }
     }
 
-    addToCart(product: any) {
-        const currentCart = this.cartSubject.getValue();
+    getCart(): any[] {
+        return this.cartSubject.value;
+    }
 
-        const existingItem = currentCart.find(
-            (item) => item.product_id === product.id
-        );
+    addToCart(product: any): void {
+        const currentCart = this.getCart();
+        const existingItem = currentCart.find((item) => item.product_id === product.id);
 
         if (existingItem) {
             this.updateQuantity(product.id, 1);
         } else {
             const price = product.price_after_discount || product.price || 0;
             const newItem = {
-                id: Date.now(),
+                id: Date.now(), // Unique ID for the cart item (optional, but good for tracking)
                 product_id: product.id,
                 quantity: 1,
                 product: product,
                 total_price: price * 1,
             };
             const updatedCart = [...currentCart, newItem];
-            this.updateCart(updatedCart);
+            this.saveCartToStorage(updatedCart);
         }
-
-        this.refreshCart();
-        return of({ success: true, message: 'Product added to cart successfully.' });
     }
 
-    updateQuantity(productId: number, change: number) {
-        let cart = this.getCartFromLocalStorage();
+    updateQuantity(productId: number, change: number): void {
+        let cart = this.getCart();
         cart = cart.map((item) => {
             if (item.product_id === productId) {
                 const newQuantity = Math.max(1, item.quantity + change);
@@ -80,12 +88,11 @@ export class CartService {
             }
             return item;
         });
-        this.updateCart(cart);
-        return of({ success: true });
+        this.saveCartToStorage(cart);
     }
 
-    setQuantity(productId: number, quantity: number) {
-        let cart = this.getCartFromLocalStorage();
+    setQuantity(productId: number, quantity: number): void {
+        let cart = this.getCart();
         cart = cart.map((item) => {
             if (item.product_id === productId) {
                 const newQuantity = Math.max(1, quantity);
@@ -98,28 +105,36 @@ export class CartService {
             }
             return item;
         });
-        this.updateCart(cart);
-        return of({ success: true });
+        this.saveCartToStorage(cart);
     }
 
-    delete(id: any) {
-        let cart = this.getCartFromLocalStorage();
+    removeFromCart(productId: number): void {
+        let cart = this.getCart();
+        cart = cart.filter((item) => item.product_id !== productId);
+        this.saveCartToStorage(cart);
+    }
+
+    delete(id: any) { // Kept for compatibility if used elsewhere using the item.id
+        let cart = this.getCart();
         cart = cart.filter((item) => item.id !== id);
-        this.updateCart(cart);
-        this.refreshCart();
+        this.saveCartToStorage(cart);
+        // Return observable for compatibility if needed, though void is preferred for local ops
         return of({ success: true, message: 'Product removed from cart successfully.' });
     }
 
-    clearCart() {
-        this.updateCart([]);
-        this.refreshCart();
-        return of({ success: true, message: 'Cart cleared successfully.' });
+    clearCart(): void {
+        this.saveCartToStorage([]);
     }
 
-    refreshCart() {
-        const cart = localStorage.getItem('cart');
-        if (cart) {
-            this.cartSubject.next(JSON.parse(cart));
-        }
+    refreshCart(): void {
+        this.loadCartFromStorage();
+    }
+
+    isInCart(productId: number): boolean {
+        return this.getCart().some((item) => item.product_id === productId);
+    }
+
+    getCartCount(): number {
+        return this.getCart().length;
     }
 }

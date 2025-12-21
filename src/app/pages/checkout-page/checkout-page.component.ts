@@ -11,7 +11,7 @@ import { CommonModule, NgClass, NgIf } from '@angular/common';
 import { CheckoutService } from './checkout.service';
 import { CartService } from '../cart-page/cart.service';
 import { LoginService } from '../login-page/login.service';
-import { ClientCartService } from '../client-cart/client-cart.service';
+
 import { TranslateModule, TranslateService } from '@ngx-translate/core';
 
 @Component({
@@ -48,7 +48,6 @@ export class CheckoutPageComponent implements OnInit {
         public router: Router,
         private checkoutService: CheckoutService,
         private cartService: CartService,
-        private clientCartService: ClientCartService,
         private loginService: LoginService,
         public translateService: TranslateService
     ) {
@@ -85,9 +84,9 @@ export class CheckoutPageComponent implements OnInit {
         return product
             ? { title: product.title, image: product.productImages[0].image }
             : {
-                  title: this.translateService.instant('Unknown'),
-                  image: 'default.png',
-              };
+                title: this.translateService.instant('Unknown'),
+                image: 'default.png',
+            };
     }
 
     updatePaymentMethod(method: string) {
@@ -132,9 +131,10 @@ export class CheckoutPageComponent implements OnInit {
                             localStorage.removeItem('appliedCoupon');
                             this.checkoutData = null;
                             this.totalPriceData = null;
-                            this.cartService.clearCart().subscribe();
+                            this.totalPriceData = null;
+                            this.cartService.clearCart();
                             this.isLoading = false; // Hide loader
-                            this.router.navigate(['/payment-status'], {queryParams: {success: true,orderNumber: orderResponse.data.order_number},});
+                            this.router.navigate(['/payment-status'], { queryParams: { success: true, orderNumber: orderResponse.data.order_number }, });
                         },
                         error: (error) => {
                             this.handleError(error);
@@ -216,9 +216,10 @@ export class CheckoutPageComponent implements OnInit {
                                 localStorage.removeItem('appliedCoupon');
                                 this.checkoutData = null;
                                 this.totalPriceData = null;
-                                this.clientCartService.clearCart();
+                                this.totalPriceData = null;
+                                this.cartService.clearCart();
                                 this.isLoading = false; // Hide loader
-                                this.router.navigate(['/payment-status'], {queryParams: {success: true,orderNumber: orderResponse.data.order_number},});
+                                this.router.navigate(['/payment-status'], { queryParams: { success: true, orderNumber: orderResponse.data.order_number }, });
                             },
                             error: (error) => {
                                 this.handleError(error);

@@ -10,7 +10,6 @@ import { FormsModule } from '@angular/forms';
 import Swal from 'sweetalert2';
 import { ChangeDetectorRef } from '@angular/core';
 import { TranslateModule, TranslateService } from '@ngx-translate/core';
-import { ClientCartService } from './client-cart.service'; // Use ClientCartService
 import { CartService } from '../cart-page/cart.service';
 
 @Component({
@@ -29,7 +28,7 @@ import { CartService } from '../cart-page/cart.service';
     ],
     templateUrl: './client-cart-page.component.html',
     styleUrl: './client-cart-page.component.scss',
-    providers: [ClientCartService, CartService], // Add both services
+    providers: [CartService],
 })
 export class ClientCartPageComponent implements OnInit {
     data: any[] = []; // Array of cart items
@@ -54,11 +53,10 @@ export class ClientCartPageComponent implements OnInit {
 
     constructor(
         public router: Router,
-        private clientCartService: ClientCartService, // Use ClientCartService
-        private cartService: CartService, // Still needed for countries, cities, shipments
+        private cartService: CartService,
         private cdr: ChangeDetectorRef,
-        public translateService: TranslateService // Injected as public for template access
-    ) {}
+        public translateService: TranslateService
+    ) { }
 
     ngOnInit(): void {
         this.fetchCartData(); // Fetch cart items from ClientCartService
@@ -121,9 +119,13 @@ export class ClientCartPageComponent implements OnInit {
             ) || 0
         );
     }
+    onImageError(event: any) {
+        event.target.src = 'assets/images/logo.svg';
+    }
+
     fetchCartData() {
-        this.clientCartService.client_cart$.subscribe((client_cart) => {
-            this.cartItems = client_cart || [];
+        this.cartService.cart$.subscribe((cart) => {
+            this.cartItems = cart || [];
             this.calculateTotal();
             this.translateData();
         });
@@ -189,7 +191,7 @@ export class ClientCartPageComponent implements OnInit {
     }
 
     changeQuantity(productId: number, change: number) {
-        this.clientCartService.updateQuantity(productId, change);
+        this.cartService.updateQuantity(productId, change);
         this.calculateTotal();
     }
 
@@ -223,8 +225,8 @@ export class ClientCartPageComponent implements OnInit {
         }).then((result: any) => {
             if (result.isConfirmed) {
                 try {
-                    this.clientCartService.removeFromCart(productId);
-                    this.clientCartService.refreshCart();
+                    this.cartService.removeFromCart(productId);
+                    this.cartService.refreshCart();
 
                     Swal.fire({
                         title: removed,
@@ -287,8 +289,8 @@ export class ClientCartPageComponent implements OnInit {
         }).then((result: any) => {
             if (result.isConfirmed) {
                 try {
-                    this.clientCartService.clearCart();
-                    this.clientCartService.refreshCart();
+                    this.cartService.clearCart();
+                    this.cartService.refreshCart();
 
                     localStorage.removeItem('checkoutData');
                     localStorage.removeItem('totalPriceData');

@@ -141,7 +141,7 @@
                                     <ul class="social" *ngIf="isLoggedIn">
                                         <li>
                                             <a style="cursor: pointer" (click)="addToFavourite(product.id)"
-                                                [attr.data-tip]="isProductInFavorites(product.id) ? ('REMOVE_FROM_WISHLIST' | translate) : ('ADD_TO_WISHLIST' | translate)">
+                                                [attr.title]="isProductInFavorites(product.id) ? ('REMOVE_FROM_WISHLIST' | translate) : ('ADD_TO_WISHLIST' | translate)">
                                                 <i class="fa" [class.fa-heart]="isProductInFavorites(product.id)"
                                                     [class.fa-heart-o]="!isProductInFavorites(product.id)"
                                                     [style.color]="isProductInFavorites(product.id) ? '#e74c3c' : ''"></i>
@@ -149,15 +149,15 @@
                                         </li>
                                         <li>
                                             <a style="cursor: pointer" (click)="addToCart(product.id)"
-                                                [attr.data-tip]="'ADD_TO_CART' | translate">
-                                                <i class="fa-solid fa-cart-plus"></i>
+                                                [attr.title]="isProductInCart(product.id) ? ('ALREADY_IN_CART' | translate) : ('ADD_TO_CART' | translate)">
+                                                <i class="fa-solid fa-shopping-cart"></i>
                                             </a>
                                         </li>
                                     </ul>
                                     <ul class="social" *ngIf="!isLoggedIn">
                                         <li>
                                             <a style="cursor: pointer" (click)="addToClientFavourite(product)"
-                                                [attr.data-tip]="isProductInFavorites(product.id) ? ('REMOVE_FROM_WISHLIST' | translate) : ('ADD_TO_WISHLIST' | translate)">
+                                                [attr.title]="isProductInFavorites(product.id) ? ('REMOVE_FROM_WISHLIST' | translate) : ('ADD_TO_WISHLIST' | translate)">
                                                 <i class="fa" [class.fa-heart]="isProductInFavorites(product.id)"
                                                     [class.fa-heart-o]="!isProductInFavorites(product.id)"
                                                     [style.color]="isProductInFavorites(product.id) ? '#e74c3c' : ''"></i>
@@ -165,8 +165,8 @@
                                         </li>
                                         <li>
                                             <a style="cursor: pointer" (click)="addToClientCart(product)"
-                                                [attr.data-tip]="'ADD_TO_CART' | translate">
-                                                <i class="fa-solid fa-cart-plus"></i>
+                                                [attr.title]="isProductInCart(product.id) ? ('ALREADY_IN_CART' | translate) : ('ADD_TO_CART' | translate)">
+                                                <i class="fa-solid fa-shopping-cart"></i>
                                             </a>
                                         </li>
                                     </ul>

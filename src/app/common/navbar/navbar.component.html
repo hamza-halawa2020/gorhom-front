@@ -126,9 +126,7 @@
                                 ? 'start-0'
                                 : 'start-100'
                         ">
-                        {{
-                        isLoggedIn ? cartData.length : cartClientData.length
-                        }}
+                        {{ cartData.length }}
                     </span>
                 </a>
             </div>
@@ -163,7 +161,7 @@
             </svg>
             <span>{{ "CART" | translate }}</span>
             <span class="badge rounded-pill bg-dark bottom-nav-badge">
-                {{ isLoggedIn ? cartData.length : cartClientData.length }}
+                {{ cartData.length }}
             </span>
         </a>
         <div class="bottom-nav-item"></div>

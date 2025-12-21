@@ -92,7 +92,7 @@ export class ProductsSectionComponent implements OnInit {
     }
 
     addToClientCart(product: any) {
-
+        this.addToCart(product.id);
     }
 
     addToCart(product_id: any) {
@@ -104,24 +104,14 @@ export class ProductsSectionComponent implements OnInit {
             return;
         }
 
-        const cart = JSON.parse(localStorage.getItem('cart') || '[]');
-        const exists = cart.some((item: any) => item && item.product_id === product.id);
+        const success = this.cartService.addToCart(product);
 
-        if (exists) {
-            this.errorMessage = this.translate.instant('PRODUCT_ALREADY_IN_CART');
-            setTimeout(() => { this.errorMessage = ''; }, 1000);
+        if (this.cartService.isInCart(product.id)) {
+            this.successMessage = this.translate.instant('PRODUCT_ADDED_TO_CART');
         } else {
-            this.cartService.addToCart(product).subscribe({
-                next: (response) => {
-                    this.successMessage = this.translate.instant(
-                        'PRODUCT_ADDED_TO_CART'
-                    );
-                    setTimeout(() => {
-                        this.successMessage = '';
-                    }, 1000);
-                },
-            });
+            this.successMessage = this.translate.instant('PRODUCT_ADDED_TO_CART');
         }
+        setTimeout(() => { this.successMessage = ''; }, 1000);
     }
 
     addToFavourite(product_id: any) {
@@ -166,5 +156,9 @@ export class ProductsSectionComponent implements OnInit {
 
     isProductInFavorites(productId: number): boolean {
         return this.favoritesService.isInFavorites(productId);
+    }
+
+    isProductInCart(productId: number): boolean {
+        return this.cartService.isInCart(productId);
     }
 }

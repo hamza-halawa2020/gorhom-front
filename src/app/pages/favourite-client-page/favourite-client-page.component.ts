@@ -8,9 +8,9 @@ import { NavbarComponent } from '../../common/navbar/navbar.component';
 import { environment } from '../../../environments/environment.development';
 import { CommonModule, NgClass, NgIf } from '@angular/common';
 import Swal from 'sweetalert2';
+
 import { FavouriteClientService } from './favourite-client.service';
-import { ClientCartService } from '../client-cart/client-cart.service';
-import { TranslateService,TranslateModule } from '@ngx-translate/core';
+import { TranslateService, TranslateModule } from '@ngx-translate/core';
 
 @Component({
     selector: 'app-favourite-client-page',
@@ -39,9 +39,8 @@ export class FavouriteClientPageComponent implements OnInit {
     constructor(
         public router: Router,
         private clientFavService: FavouriteClientService,
-        private clientCartService: ClientCartService,
         public translateService: TranslateService // Injected for translation
-    ) {}
+    ) { }
 
     ngOnInit(): void {
         this.fetchFavData();
