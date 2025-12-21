@@ -90,7 +90,7 @@
                                         <a routerLink="/product/{{
                                                 cart.product.id
                                             }}">
-                                            <img [src]="cart.product?.productImages?.length ? (image + cart.product.productImages[0].image) : 'assets/images/fallback-image.jpg'"
+                                            <img [src]="cart.product?.productImages?.length ? (image + cart.product.productImages[0].image) : 'assets/images/logo.svg'"
                                                 alt="#" (error)="onImageError($event)" />
                                         </a>
                                     </td>
