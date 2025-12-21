@@ -17,6 +17,7 @@ import { ClientCartService } from '../client-cart/client-cart.service';
 import { FavouriteClientService } from '../favourite-client-page/favourite-client.service';
 import { TranslateModule, TranslateService } from '@ngx-translate/core';
 import { CarouselModule, OwlOptions } from 'ngx-owl-carousel-o';
+import { FavoritesService } from '../../services/favorites.service';
 
 declare var bootstrap: any;
 
@@ -65,6 +66,7 @@ export class ProductDetailsPageComponent implements OnInit, OnDestroy {
     private viewingInterval: any;
     private autoSlideInterval: any;
     allImages: { path: string; isMainImage: boolean }[] = []; // Array to hold all images including main image
+    isFavorite: boolean = false; // Track if current product is in favorites
 
     get hasImages(): boolean {
         return this.allImages && this.allImages.length > 0;
@@ -153,7 +155,8 @@ export class ProductDetailsPageComponent implements OnInit, OnDestroy {
         private cartClientService: ClientCartService,
         private loginService: LoginService,
         private cdr: ChangeDetectorRef,
-        public translateService: TranslateService
+        public translateService: TranslateService,
+        private favoritesService: FavoritesService
     ) {
         this.isLoggedIn = !!loginService.isLoggedIn();
         this.relatedProductsOptions =
@@ -221,6 +224,7 @@ export class ProductDetailsPageComponent implements OnInit, OnDestroy {
                 this.details = Object.values(data)[0];
                 this.translateData();
                 this.setupImageGallery();
+                this.checkIfFavorite(); // Check if product is already in favorites
                 this.cdr.detectChanges();
             });
         });
@@ -359,6 +363,44 @@ export class ProductDetailsPageComponent implements OnInit, OnDestroy {
         });
     }
 
+
+
+    checkIfFavorite(): void {
+        if (this.details?.id) {
+            this.isFavorite = this.favoritesService.isInFavorites(this.details.id);
+        }
+    }
+
+    toggleFavorite(): void {
+        if (!this.details) {
+            this.errorMessage = this.translateService.instant('PRODUCT_NOT_FOUND');
+            setTimeout(() => { this.errorMessage = ''; }, 2000);
+            return;
+        }
+
+        const wasInFavorites = this.isFavorite;
+        const success = this.favoritesService.toggleFavorite(this.details);
+        
+        if (success) {
+            this.isFavorite = !wasInFavorites;
+            
+            if (this.isFavorite) {
+                this.successMessage = this.translateService.instant('Product added to favorites!');
+            } else {
+                this.successMessage = this.translateService.instant('Product removed from favorites!');
+            }
+            
+            setTimeout(() => { this.successMessage = ''; }, 2000);
+        } else {
+            this.errorMessage = this.translateService.instant('Error updating favorites');
+            setTimeout(() => { this.errorMessage = ''; }, 2000);
+        }
+    }
+
+    getFavoritesCount(): number {
+        return this.favoritesService.getFavoritesCount();
+    }
+
     onMouseMove(event: MouseEvent): void {
         const img = event.target as HTMLImageElement;
         const rect = img.getBoundingClientRect();
@@ -488,7 +530,7 @@ export class ProductDetailsPageComponent implements OnInit, OnDestroy {
     }
 
     addToFavourite(product_id: any): void {
-        const payload = { product_id };
+        this.toggleFavorite();
     }
 
     addReview(reviewText: string, rating: number): void {
@@ -575,31 +617,7 @@ export class ProductDetailsPageComponent implements OnInit, OnDestroy {
     }
 
     addToClientFavourite(product: any): void {
-        const client_fav = this.favClientService.favSubject.value;
-
-        if (!client_fav || !Array.isArray(client_fav)) {
-            this.errorMessage =
-                this.translateService.instant('UNEXPECTED_ERROR');
-            return;
-        }
-
-        const exists = client_fav.some(
-            (item) => item && item.product_id === product.id
-        );
-
-        if (exists) {
-            this.errorMessage = this.translateService.instant(
-                'Product is already in the fav!'
-            );
-            setTimeout(() => (this.errorMessage = ''), 1000);
-        } else {
-            const productToAdd = { ...product, quantity: 1 };
-            this.favClientService.addToClientFav(productToAdd);
-            this.successMessage = this.translateService.instant(
-                'Product added to fav successfully!'
-            );
-            setTimeout(() => (this.successMessage = ''), 1000);
-        }
+        this.toggleFavorite();
     }
 
     onImageLoad(imageUrl: string): void {

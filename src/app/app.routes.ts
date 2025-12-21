@@ -16,6 +16,7 @@ import { ShopPageComponent } from './pages/shop-page/shop-page.component';
 import { CategoryPageComponent } from './pages/category-page/category-page.component';
 import { ReturnsRefundsPageComponent } from './pages/returns-refunds/returns-refunds-page.component';
 import { ShippingDeliveryPageComponent } from './pages/shipping-delivery/shipping-delivery-page.component';
+import { FavoritesPageComponent } from './pages/favorites-page/favorites-page.component';
 
 export const routes: Routes = [
     { path: '', component: HomeDemoOneComponent },
@@ -32,6 +33,7 @@ export const routes: Routes = [
     { path: 'terms-conditions', component: TermsConditionsPageComponent },
     { path: 'certifications', component: CertificationPageComponent },
     { path: 'contacts', component: ContactPageComponent },
+    { path: 'wishlist', component: FavoritesPageComponent },
  
     {
         path: 'cart',

@@ -1,0 +1,138 @@
+<div [dir]="translateService.currentLang === 'ar' ? 'rtl' : 'ltr'">
+    <app-navbar />
+
+    <!-- Page Banner -->
+    <div class="page-banner-area">
+        <div class="container">
+            <div class="page-banner-content">
+                <h2>{{ "WISHLIST" | translate }}</h2>
+                <ul>
+                    <li>
+                        <a routerLink="/">{{ "HOME" | translate }}</a>
+                    </li>
+                    <li>{{ "WISHLIST" | translate }}</li>
+                </ul>
+            </div>
+        </div>
+    </div>
+
+    <!-- Favorites Content -->
+    <div class="favorites-area section-padding">
+        <div class="container">
+            <!-- Header with count and clear button -->
+            <div class="favorites-header d-flex justify-content-between align-items-center mb-4">
+                <h3 class="favorites-title">
+                    {{ "MY_FAVORITES" | translate }} 
+                    <span class="badge bg-primary ms-2">{{ favorites.length }}</span>
+                </h3>
+                <button 
+                    *ngIf="favorites.length > 0"
+                    class="btn btn-outline-danger"
+                    (click)="clearAllFavorites()"
+                >
+                    <i class="fa fa-trash me-2"></i>
+                    {{ "CLEAR_ALL" | translate }}
+                </button>
+            </div>
+
+            <!-- Empty State -->
+            <div *ngIf="favorites.length === 0" class="empty-favorites text-center py-5">
+                <div class="empty-icon mb-4">
+                    <i class="fa fa-heart-o" style="font-size: 4rem; color: #ddd;"></i>
+                </div>
+                <h4 class="mb-3">{{ "NO_FAVORITES_YET" | translate }}</h4>
+                <p class="text-muted mb-4">{{ "START_ADDING_FAVORITES_MESSAGE" | translate }}</p>
+                <a routerLink="/shop" class="btn btn-primary">
+                    <i class="fa fa-shopping-bag me-2"></i>
+                    {{ "START_SHOPPING" | translate }}
+                </a>
+            </div>
+
+            <!-- Favorites Grid -->
+            <div *ngIf="favorites.length > 0" class="row">
+                <div 
+                    *ngFor="let product of favorites; trackBy: trackByProductId" 
+                    class="col-lg-3 col-md-4 col-sm-6 col-12 mb-4"
+                >
+                    <div class="favorite-item">
+                        <div class="product-card h-100">
+                            <!-- Product Image -->
+                            <div class="product-image">
+                                <a [routerLink]="['/product-details', product.id]">
+                                    <img 
+                                        [src]="getProductImage(product)"
+                                        [alt]="product.translatedName || product.title"
+                                        class="img-fluid"
+                                        (error)="onImageError($event)"
+                                    />
+                                </a>
+                                
+                                <!-- Discount Badge -->
+                                <span 
+                                    *ngIf="product.discount && +product.discount > 0" 
+                                    class="discount-badge"
+                                >
+                                    -{{ product.discount }}%
+                                </span>
+
+                                <!-- Remove Button -->
+                                <button 
+                                    class="remove-btn"
+                                    (click)="removeFromFavorites(product.id)"
+                                    [title]="'REMOVE_FROM_WISHLIST' | translate"
+                                >
+                                    <i class="fa fa-times"></i>
+                                </button>
+                            </div>
+
+                            <!-- Product Info -->
+                            <div class="product-info">
+                                <h5 class="product-title">
+                                    <a [routerLink]="['/product-details', product.id]">
+                                        {{ product.translatedName || product.title }}
+                                    </a>
+                                </h5>
+                                
+                                <div class="product-category" *ngIf="product.category">
+                                    <small class="text-muted">{{ product.category.name }}</small>
+                                </div>
+
+                                <div class="product-price">
+                                    <span class="current-price">
+                                        {{ product.price_after_discount | currency:'USD':'symbol':'1.2-2' }}
+                                    </span>
+                                    <span 
+                                        *ngIf="product.price_before_discount && product.price_before_discount !== product.price_after_discount" 
+                                        class="original-price"
+                                    >
+                                        {{ product.price_before_discount | currency:'USD':'symbol':'1.2-2' }}
+                                    </span>
+                                </div>
+
+                                <div class="product-actions mt-3">
+                                    <a 
+                                        [routerLink]="['/product-details', product.id]"
+                                        class="btn btn-primary btn-sm flex-fill me-2"
+                                    >
+                                        <i class="fa fa-eye me-1"></i>
+                                        {{ "VIEW_DETAILS" | translate }}
+                                    </a>
+                                    <button 
+                                        class="btn btn-outline-danger btn-sm"
+                                        (click)="removeFromFavorites(product.id)"
+                                        [title]="'REMOVE_FROM_WISHLIST' | translate"
+                                    >
+                                        <i class="fa fa-heart"></i>
+                                    </button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <app-back-to-top />
+    <app-footer />
+</div>

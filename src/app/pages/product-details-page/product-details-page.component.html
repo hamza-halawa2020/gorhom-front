@@ -258,11 +258,12 @@
                                 {{ "ADD_TO_CART" | translate }}
                             </a>
                             <a
-                                (click)="addToFavourite(details.id)"
+                                (click)="toggleFavorite()"
                                 class="btn btn-default acc_btn btn_icn"
-                                [title]="'ADD_TO_WISHLIST' | translate"
+                                [class.favorite-active]="isFavorite"
+                                [title]="isFavorite ? ('REMOVE_FROM_WISHLIST' | translate) : ('ADD_TO_WISHLIST' | translate)"
                             >
-                                <i class="fa fa-heart"></i>
+                                <i class="fa" [class.fa-heart]="isFavorite" [class.fa-heart-o]="!isFavorite"></i>
                             </a>
                         </div>
                         <div class="action-buttons" *ngIf="!isLoggedIn">
@@ -275,11 +276,12 @@
                                 {{ "ADD_TO_CART" | translate }}
                             </a>
                             <a
-                                (click)="addToClientFavourite(details)"
+                                (click)="toggleFavorite()"
                                 class="btn btn-default acc_btn btn_icn"
-                                [title]="'ADD_TO_WISHLIST' | translate"
+                                [class.favorite-active]="isFavorite"
+                                [title]="isFavorite ? ('REMOVE_FROM_WISHLIST' | translate) : ('ADD_TO_WISHLIST' | translate)"
                             >
-                                <i class="fa fa-heart"></i>
+                                <i class="fa" [class.fa-heart]="isFavorite" [class.fa-heart-o]="!isFavorite"></i>
                             </a>
                         </div>
                         <div class="social-share mt-3">
