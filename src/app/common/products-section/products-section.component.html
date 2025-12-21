@@ -63,11 +63,17 @@
                     </div>
 
                     <!-- Favorite Button -->
-                    <button *ngIf="isLoggedIn" class="favorite-btn" (click)="addToFavourite(product.id)">
-                        <i class="far fa-heart"></i>
+                    <button *ngIf="isLoggedIn" class="favorite-btn" (click)="addToFavourite(product.id)"
+                        [attr.title]="isProductInFavorites(product.id) ? ('REMOVE_FROM_WISHLIST' | translate) : ('ADD_TO_WISHLIST' | translate)">
+                        <i class="fa" [class.fa-heart]="isProductInFavorites(product.id)"
+                            [class.fa-heart-o]="!isProductInFavorites(product.id)"
+                            [style.color]="isProductInFavorites(product.id) ? '#e74c3c' : ''"></i>
                     </button>
-                    <button class="favorite-btn" *ngIf="!isLoggedIn" (click)="addToClientFavourite(product)">
-                        <i class="far fa-heart"></i>
+                    <button class="favorite-btn" *ngIf="!isLoggedIn" (click)="addToClientFavourite(product)"
+                        [attr.title]="isProductInFavorites(product.id) ? ('REMOVE_FROM_WISHLIST' | translate) : ('ADD_TO_WISHLIST' | translate)">
+                        <i class="fa" [class.fa-heart]="isProductInFavorites(product.id)"
+                            [class.fa-heart-o]="!isProductInFavorites(product.id)"
+                            [style.color]="isProductInFavorites(product.id) ? '#e74c3c' : ''"></i>
                     </button>
                     <!-- Product Image -->
                     <div class="product-image">
@@ -75,8 +81,8 @@
                         <a routerLink="/product/{{ product.id }}">
                             <img class="default-image img-fluid"
                                 [src]="product.image ? image + product.image : 'assets/images/logo.svg'"
-                                [alt]="product.title"/>
-                       
+                                [alt]="product.title" />
+
                         </a>
 
                         <!-- Hover Overlay -->

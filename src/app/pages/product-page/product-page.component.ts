@@ -12,6 +12,7 @@ import { ProductService } from './product.service';
 import { ClientCartService } from '../client-cart/client-cart.service';
 import { FavouriteClientService } from '../favourite-client-page/favourite-client.service';
 import { TranslateModule, TranslateService } from '@ngx-translate/core';
+import { FavoritesService } from '../../services/favorites.service';
 
 @Component({
     selector: 'app-product-page',
@@ -49,7 +50,8 @@ export class ProductPageComponent implements OnInit {
         private productService: ProductService,
         private cartClientService: ClientCartService,
         private favClientService: FavouriteClientService,
-        public translateService: TranslateService
+        public translateService: TranslateService,
+        private favoritesService: FavoritesService
     ) {
         this.checkMobile();
         window.addEventListener('resize', () => this.checkMobile());
@@ -99,8 +101,8 @@ export class ProductPageComponent implements OnInit {
                 break;
         }
 
-        document.body.classList.remove('grid-columns-1', 'grid-columns-2', 'grid-columns-3', 
-                                     'grid-columns-4', 'grid-columns-6');
+        document.body.classList.remove('grid-columns-1', 'grid-columns-2', 'grid-columns-3',
+            'grid-columns-4', 'grid-columns-6');
         document.body.classList.add(`grid-columns-${columns}`);
     }
 
@@ -152,35 +154,57 @@ export class ProductPageComponent implements OnInit {
     }
 
     addToCart(product_id: any) {
-      
+
     }
 
     addToFavourite(product_id: any) {
-        const payload = { product_id };
+        // Find the product in the data array
+        const product = this.data.find(p => p.id === product_id);
+        if (!product) {
+            this.errorMessage = this.translateService.instant('PRODUCT_NOT_FOUND');
+            setTimeout(() => { this.errorMessage = ''; }, 1000);
+            return;
+        }
+
+        const success = this.favoritesService.toggleFavorite(product);
+        if (success) {
+            const isInFavorites = this.favoritesService.isInFavorites(product_id);
+            if (isInFavorites) {
+                this.successMessage = this.translateService.instant('Product added to favorites!');
+            } else {
+                this.successMessage = this.translateService.instant('Product removed from favorites!');
+            }
+            setTimeout(() => { this.successMessage = ''; }, 1000);
+        } else {
+            this.errorMessage = this.translateService.instant('Error updating favorites');
+            setTimeout(() => { this.errorMessage = ''; }, 1000);
+        }
     }
 
     addToClientFavourite(product: any) {
-        const client_fav = this.favClientService.favSubject.value;
-        if (!client_fav || !Array.isArray(client_fav)) {
-            this.errorMessage = this.translateService.instant('FAV_DATA_NOT_AVAILABLE');
-            return;
-        }
-        const exists = client_fav.some((item) => item && item.product_id === product.id);
-        if (exists) {
-            this.errorMessage = this.translateService.instant('PRODUCT_ALREADY_IN_FAV');
-            setTimeout(() => { this.errorMessage = ''; }, 1000);
-        } else {
-            const productToAdd = { ...product, quantity: 1 };
-            this.favClientService.addToClientFav(productToAdd);
-            this.successMessage = this.translateService.instant('PRODUCT_ADDED_TO_FAV');
+        const success = this.favoritesService.toggleFavorite(product);
+        if (success) {
+            const isInFavorites = this.favoritesService.isInFavorites(product.id);
+            if (isInFavorites) {
+                this.successMessage = this.translateService.instant('Product added to favorites!');
+            } else {
+                this.successMessage = this.translateService.instant('Product removed from favorites!');
+            }
             setTimeout(() => { this.successMessage = ''; }, 1000);
+        } else {
+            this.errorMessage = this.translateService.instant('Error updating favorites');
+            setTimeout(() => { this.errorMessage = ''; }, 1000);
         }
+    }
+
+    isProductInFavorites(productId: number): boolean {
+        return this.favoritesService.isInFavorites(productId);
     }
 
     fetchdata() {
         this.productService.index().subscribe({
             next: (response) => {
-                this.originalData = Object.values(response)[0] || [];               
+                this.originalData = Object.values(response)[0] || [];
                 this.originalData = this.originalData.map(product => ({
                     ...product,
                     productImages: product.productImages || []

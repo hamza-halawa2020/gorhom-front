@@ -10,213 +10,72 @@
                     <!-- Grid View Options -->
                     <div class="grid-view-options">
                         <!-- 1 Column (Mobile Only) -->
-                        <button
-                            class="btn btn-outline-secondary d-block d-md-none"
-                            [ngClass]="{ active: gridColumns === 1 }"
-                            (click)="setGridColumns(1)"
-                            title="1 Column"
-                        >
+                        <button class="btn btn-outline-secondary d-block d-md-none"
+                            [ngClass]="{ active: gridColumns === 1 }" (click)="setGridColumns(1)" title="1 Column">
                             <span class="custom-grid-icon grid-1">
-                                <svg
-                                    width="15"
-                                    height="24"
-                                    viewBox="0 0 24 24"
-                                    fill="none"
-                                    xmlns="http://www.w3.org/2000/svg"
-                                >
+                                <svg width="15" height="24" viewBox="0 0 24 24" fill="none"
+                                    xmlns="http://www.w3.org/2000/svg">
                                     <rect width="24" height="24" fill="white" />
-                                    <rect
-                                        x="1"
-                                        y="3"
-                                        width="22"
-                                        height="18"
-                                        fill="#09244B"
-                                    />
+                                    <rect x="1" y="3" width="22" height="18" fill="#09244B" />
                                 </svg>
                             </span>
                         </button>
 
                         <!-- 2 Columns -->
-                        <button
-                            class="btn btn-outline-secondary"
-                            [ngClass]="{ active: gridColumns === 2 }"
-                            (click)="setGridColumns(2)"
-                            title="2 Columns"
-                        >
+                        <button class="btn btn-outline-secondary" [ngClass]="{ active: gridColumns === 2 }"
+                            (click)="setGridColumns(2)" title="2 Columns">
                             <span class="custom-grid-icon">
-                                <svg
-                                    width="20"
-                                    height="24"
-                                    viewBox="-3 0 24 24"
-                                    fill="none"
-                                    xmlns="http://www.w3.org/2000/svg"
-                                >
+                                <svg width="20" height="24" viewBox="-3 0 24 24" fill="none"
+                                    xmlns="http://www.w3.org/2000/svg">
                                     <rect width="24" height="24" fill="white" />
-                                    <rect
-                                        x="1"
-                                        y="3"
-                                        width="7"
-                                        height="18"
-                                        fill="#09244B"
-                                    />
-                                    <rect
-                                        x="10"
-                                        y="3"
-                                        width="7"
-                                        height="18"
-                                        fill="#09244B"
-                                    />
+                                    <rect x="1" y="3" width="7" height="18" fill="#09244B" />
+                                    <rect x="10" y="3" width="7" height="18" fill="#09244B" />
                                 </svg>
                             </span>
                         </button>
 
                         <!-- 3 Columns -->
-                        <button
-                            class="btn btn-outline-secondary"
-                            [ngClass]="{ active: gridColumns === 3 }"
-                            (click)="setGridColumns(3)"
-                            title="3 Columns"
-                        >
+                        <button class="btn btn-outline-secondary" [ngClass]="{ active: gridColumns === 3 }"
+                            (click)="setGridColumns(3)" title="3 Columns">
                             <span class="custom-grid-icon">
-                                <svg
-                                    width="30"
-                                    height="24"
-                                    viewBox="3 0 24 24"
-                                    fill="none"
-                                    xmlns="http://www.w3.org/2000/svg"
-                                >
+                                <svg width="30" height="24" viewBox="3 0 24 24" fill="none"
+                                    xmlns="http://www.w3.org/2000/svg">
                                     <rect width="24" height="24" fill="white" />
-                                    <rect
-                                        x="1"
-                                        y="3"
-                                        width="7"
-                                        height="18"
-                                        fill="#09244B"
-                                    />
-                                    <rect
-                                        x="10"
-                                        y="3"
-                                        width="7"
-                                        height="18"
-                                        fill="#09244B"
-                                    />
-                                    <rect
-                                        x="20"
-                                        y="3"
-                                        width="7"
-                                        height="18"
-                                        fill="#09244B"
-                                    />
+                                    <rect x="1" y="3" width="7" height="18" fill="#09244B" />
+                                    <rect x="10" y="3" width="7" height="18" fill="#09244B" />
+                                    <rect x="20" y="3" width="7" height="18" fill="#09244B" />
                                 </svg>
                             </span>
                         </button>
 
                         <!-- 4 Columns (Hidden on Mobile) -->
-                        <button
-                            class="btn btn-outline-secondary d-none d-md-inline-block"
-                            [ngClass]="{ active: gridColumns === 4 }"
-                            (click)="setGridColumns(4)"
-                            title="4 Columns"
-                        >
+                        <button class="btn btn-outline-secondary d-none d-md-inline-block"
+                            [ngClass]="{ active: gridColumns === 4 }" (click)="setGridColumns(4)" title="4 Columns">
                             <span class="custom-grid-icon">
-                                <svg
-                                    width="40"
-                                    height="24"
-                                    viewBox="7 0 24 24"
-                                    fill="none"
-                                    xmlns="http://www.w3.org/2000/svg"
-                                >
+                                <svg width="40" height="24" viewBox="7 0 24 24" fill="none"
+                                    xmlns="http://www.w3.org/2000/svg">
                                     <rect width="24" height="24" fill="white" />
-                                    <rect
-                                        x="1"
-                                        y="3"
-                                        width="7"
-                                        height="18"
-                                        fill="#09244B"
-                                    />
-                                    <rect
-                                        x="10"
-                                        y="3"
-                                        width="7"
-                                        height="18"
-                                        fill="#09244B"
-                                    />
-                                    <rect
-                                        x="20"
-                                        y="3"
-                                        width="7"
-                                        height="18"
-                                        fill="#09244B"
-                                    />
-                                    <rect
-                                        x="30"
-                                        y="3"
-                                        width="7"
-                                        height="18"
-                                        fill="#09244B"
-                                    />
+                                    <rect x="1" y="3" width="7" height="18" fill="#09244B" />
+                                    <rect x="10" y="3" width="7" height="18" fill="#09244B" />
+                                    <rect x="20" y="3" width="7" height="18" fill="#09244B" />
+                                    <rect x="30" y="3" width="7" height="18" fill="#09244B" />
                                 </svg>
                             </span>
                         </button>
 
                         <!-- 6 Columns (Hidden on Mobile) -->
-                        <button
-                            class="btn btn-outline-secondary d-none d-md-inline-block"
-                            [ngClass]="{ active: gridColumns === 6 }"
-                            (click)="setGridColumns(6)"
-                            title="6 Columns"
-                        >
+                        <button class="btn btn-outline-secondary d-none d-md-inline-block"
+                            [ngClass]="{ active: gridColumns === 6 }" (click)="setGridColumns(6)" title="6 Columns">
                             <span class="custom-grid-icon">
-                                <svg
-                                    width="60"
-                                    height="24"
-                                    viewBox="17 0 24 24"
-                                    fill="none"
-                                    xmlns="http://www.w3.org/2000/svg"
-                                >
+                                <svg width="60" height="24" viewBox="17 0 24 24" fill="none"
+                                    xmlns="http://www.w3.org/2000/svg">
                                     <rect width="24" height="24" fill="white" />
-                                    <rect
-                                        x="1"
-                                        y="3"
-                                        width="7"
-                                        height="18"
-                                        fill="#09244B"
-                                    />
-                                    <rect
-                                        x="10"
-                                        y="3"
-                                        width="7"
-                                        height="18"
-                                        fill="#09244B"
-                                    />
-                                    <rect
-                                        x="20"
-                                        y="3"
-                                        width="7"
-                                        height="18"
-                                        fill="#09244B"
-                                    />
-                                    <rect
-                                        x="30"
-                                        y="3"
-                                        width="7"
-                                        height="18"
-                                        fill="#09244B"
-                                    />
-                                    <rect
-                                        x="40"
-                                        y="3"
-                                        width="7"
-                                        height="18"
-                                        fill="#09244B"
-                                    />
-                                    <rect
-                                        x="50"
-                                        y="3"
-                                        width="7"
-                                        height="18"
-                                        fill="#09244B"
-                                    />
+                                    <rect x="1" y="3" width="7" height="18" fill="#09244B" />
+                                    <rect x="10" y="3" width="7" height="18" fill="#09244B" />
+                                    <rect x="20" y="3" width="7" height="18" fill="#09244B" />
+                                    <rect x="30" y="3" width="7" height="18" fill="#09244B" />
+                                    <rect x="40" y="3" width="7" height="18" fill="#09244B" />
+                                    <rect x="50" y="3" width="7" height="18" fill="#09244B" />
                                 </svg>
                             </span>
                         </button>
@@ -225,11 +84,8 @@
                     <!-- Sorting Filter -->
                     <div class="w-25">
                         <label for="sortSelect">{{ "SORT_BY" | translate }}</label>
-                        <select
-                            class="form-control"
-                            id="sortSelect"
-                            (change)="sortCategorys($any($event.target).value)"
-                        >
+                        <select class="form-control" id="sortSelect"
+                            (change)="sortCategorys($any($event.target).value)">
                             <option value="a_to_z">{{ "ALPHA_A_TO_Z" | translate }}</option>
                             <option value="z_to_a">{{ "ALPHA_Z_TO_A" | translate }}</option>
                             <option value="price_low_to_high">{{ "PRICE_LOW_TO_HIGH" | translate }}</option>
@@ -241,25 +97,13 @@
                 </div>
             </div>
             <!-- Success Message as a Toast -->
-            <div
-                *ngIf="successMessage"
-                class="toast-container position-fixed top-0"
+            <div *ngIf="successMessage" class="toast-container position-fixed top-0"
                 [class.start-0]="translateService.currentLang === 'ar'"
-                [class.end-0]="translateService.currentLang !== 'ar'"
-                p-3
-            >
-                <div
-                    class="toast show"
-                    role="alert"
-                    aria-live="assertive"
-                    aria-atomic="true"
-                >
+                [class.end-0]="translateService.currentLang !== 'ar'" p-3>
+                <div class="toast show" role="alert" aria-live="assertive" aria-atomic="true">
                     <div class="toast-header">
-                        <strong
-                            [class.ms-auto]="translateService.currentLang === 'ar'"
-                            [class.me-auto]="translateService.currentLang !== 'ar'"
-                            class="text-success"
-                        >
+                        <strong [class.ms-auto]="translateService.currentLang === 'ar'"
+                            [class.me-auto]="translateService.currentLang !== 'ar'" class="text-success">
                             {{ "SUCCESS" | translate }}
                         </strong>
                     </div>
@@ -270,25 +114,13 @@
             </div>
 
             <!-- Error Message as a Toast -->
-            <div
-                *ngIf="errorMessage"
-                class="toast-container position-fixed top-0"
+            <div *ngIf="errorMessage" class="toast-container position-fixed top-0"
                 [class.start-0]="translateService.currentLang === 'ar'"
-                [class.end-0]="translateService.currentLang !== 'ar'"
-                p-3
-            >
-                <div
-                    class="toast show"
-                    role="alert"
-                    aria-live="assertive"
-                    aria-atomic="true"
-                >
+                [class.end-0]="translateService.currentLang !== 'ar'" p-3>
+                <div class="toast show" role="alert" aria-live="assertive" aria-atomic="true">
                     <div class="toast-header">
-                        <strong
-                            [class.ms-auto]="translateService.currentLang === 'ar'"
-                            [class.me-auto]="translateService.currentLang !== 'ar'"
-                            class="text-danger"
-                        >
+                        <strong [class.ms-auto]="translateService.currentLang === 'ar'"
+                            [class.me-auto]="translateService.currentLang !== 'ar'" class="text-danger">
                             {{ "ERROR" | translate }}
                         </strong>
                     </div>
@@ -305,56 +137,42 @@
                             <div class="product-grid">
                                 <div class="product-image">
                                     <a routerLink="/product/{{ product.id }}">
-                                        <img
-                                            class="pic-1 imageClass"
-                                            src="{{ image + product.image }}"
-                                            alt="product image"
-                                        />
+                                        <img class="pic-1 imageClass" src="{{ image + product.image }}"
+                                            alt="product image" />
                                     </a>
                                     <ul class="social" *ngIf="isLoggedIn">
                                         <li>
-                                            <a
-                                                style="cursor: pointer"
-                                                (click)="addToFavourite(product.id)"
-                                                [attr.data-tip]="'ADD_TO_WISHLIST' | translate"
-                                            >
-                                                <i class="fa-regular fa-heart"></i>
+                                            <a style="cursor: pointer" (click)="addToFavourite(product.id)"
+                                                [attr.data-tip]="isProductInFavorites(product.id) ? ('REMOVE_FROM_WISHLIST' | translate) : ('ADD_TO_WISHLIST' | translate)">
+                                                <i class="fa" [class.fa-heart]="isProductInFavorites(product.id)"
+                                                    [class.fa-heart-o]="!isProductInFavorites(product.id)"
+                                                    [style.color]="isProductInFavorites(product.id) ? '#e74c3c' : ''"></i>
                                             </a>
                                         </li>
                                         <li>
-                                            <a
-                                                style="cursor: pointer"
-                                                (click)="addToCart(product.id)"
-                                                [attr.data-tip]="'ADD_TO_CART' | translate"
-                                            >
+                                            <a style="cursor: pointer" (click)="addToCart(product.id)"
+                                                [attr.data-tip]="'ADD_TO_CART' | translate">
                                                 <i class="fa-solid fa-cart-plus"></i>
                                             </a>
                                         </li>
                                     </ul>
                                     <ul class="social" *ngIf="!isLoggedIn">
                                         <li>
-                                            <a
-                                                style="cursor: pointer"
-                                                (click)="addToClientFavourite(product)"
-                                                [attr.data-tip]="'ADD_TO_WISHLIST' | translate"
-                                            >
-                                                <i class="fa-regular fa-heart"></i>
+                                            <a style="cursor: pointer" (click)="addToClientFavourite(product)"
+                                                [attr.data-tip]="isProductInFavorites(product.id) ? ('REMOVE_FROM_WISHLIST' | translate) : ('ADD_TO_WISHLIST' | translate)">
+                                                <i class="fa" [class.fa-heart]="isProductInFavorites(product.id)"
+                                                    [class.fa-heart-o]="!isProductInFavorites(product.id)"
+                                                    [style.color]="isProductInFavorites(product.id) ? '#e74c3c' : ''"></i>
                                             </a>
                                         </li>
                                         <li>
-                                            <a
-                                                style="cursor: pointer"
-                                                (click)="addToClientCart(product)"
-                                                [attr.data-tip]="'ADD_TO_CART' | translate"
-                                            >
+                                            <a style="cursor: pointer" (click)="addToClientCart(product)"
+                                                [attr.data-tip]="'ADD_TO_CART' | translate">
                                                 <i class="fa-solid fa-cart-plus"></i>
                                             </a>
                                         </li>
                                     </ul>
-                                    <span
-                                        class="product-new-label"
-                                        *ngIf="product.discount"
-                                    >
+                                    <span class="product-new-label" *ngIf="product.discount">
                                         {{ "DISCOUNT" | translate }}: {{ product.discount }} {{ "EGP" | translate }}
                                     </span>
                                 </div>
@@ -366,26 +184,17 @@
                                     </h3>
                                     <div class="price">
                                         {{ product.price_after_discount }} {{ "EGP" | translate }}
-                                        <span
-                                        *ngIf="product?.price_before_discount !== product?.price_after_discount">
-                                        
+                                        <span *ngIf="product?.price_before_discount !== product?.price_after_discount">
+
                                             {{ product.price_before_discount }} {{ "EGP" | translate }}
                                         </span>
                                     </div>
-                                    <a
-                                        *ngIf="isLoggedIn"
-                                        class="add-to-cart"
-                                        style="cursor: pointer"
-                                        (click)="addToCart(product.id)"
-                                    >
+                                    <a *ngIf="isLoggedIn" class="add-to-cart" style="cursor: pointer"
+                                        (click)="addToCart(product.id)">
                                         {{ "ADD_TO_CART" | translate }}
                                     </a>
-                                    <a
-                                        *ngIf="!isLoggedIn"
-                                        class="add-to-cart"
-                                        style="cursor: pointer"
-                                        (click)="addToClientCart(product)"
-                                    >
+                                    <a *ngIf="!isLoggedIn" class="add-to-cart" style="cursor: pointer"
+                                        (click)="addToClientCart(product)">
                                         {{ "ADD_TO_CART" | translate }}
                                     </a>
                                 </div>

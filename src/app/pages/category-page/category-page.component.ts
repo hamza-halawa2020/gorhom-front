@@ -14,6 +14,7 @@ import { ClientCartService } from '../client-cart/client-cart.service';
 import { FavouriteClientService } from '../favourite-client-page/favourite-client.service';
 import { LoginService } from '../login-page/login.service';
 import { TranslateModule, TranslateService } from '@ngx-translate/core';
+import { FavoritesService } from '../../services/favorites.service';
 
 @Component({
     selector: 'app-category-page',
@@ -54,7 +55,8 @@ export class CategoryPageComponent implements OnInit {
         private cartClientService: ClientCartService,
         private favClientService: FavouriteClientService,
         private route: ActivatedRoute,
-        public translateService: TranslateService
+        public translateService: TranslateService,
+        private favoritesService: FavoritesService
     ) {
         this.checkMobile();
         window.addEventListener('resize', () => this.checkMobile());
@@ -62,7 +64,7 @@ export class CategoryPageComponent implements OnInit {
 
     ngOnInit(): void {
         this.categoryId = this.route.snapshot.paramMap.get('id');
-       
+
         this.fetchdata();
         this.translateService.onLangChange.subscribe(() => {
             this.translateData();
@@ -169,7 +171,7 @@ export class CategoryPageComponent implements OnInit {
 
     addToCart(product_id: any) {
         const product = this.data.find(p => p.id === product_id);
-        
+
         if (!product) {
             this.errorMessage = this.translateService.instant('PRODUCT_NOT_FOUND');
             setTimeout(() => { this.errorMessage = ''; }, 1000);
@@ -178,7 +180,7 @@ export class CategoryPageComponent implements OnInit {
 
         const cart = JSON.parse(localStorage.getItem('cart') || '[]');
         const exists = cart.some((item: any) => item && item.product_id === product.id);
-        
+
         if (exists) {
             this.errorMessage = this.translateService.instant('PRODUCT_ALREADY_IN_CART');
             setTimeout(() => { this.errorMessage = ''; }, 1000);
@@ -193,25 +195,47 @@ export class CategoryPageComponent implements OnInit {
     }
 
     addToFavourite(category_id: any) {
-        const payload = { category_id };
+        // Find the product in the data array
+        const product = this.data.find(p => p.id === category_id);
+        if (!product) {
+            this.errorMessage = this.translateService.instant('PRODUCT_NOT_FOUND');
+            setTimeout(() => { this.errorMessage = ''; }, 1000);
+            return;
+        }
+
+        const success = this.favoritesService.toggleFavorite(product);
+        if (success) {
+            const isInFavorites = this.favoritesService.isInFavorites(category_id);
+            if (isInFavorites) {
+                this.successMessage = this.translateService.instant('Product added to favorites!');
+            } else {
+                this.successMessage = this.translateService.instant('Product removed from favorites!');
+            }
+            setTimeout(() => { this.successMessage = ''; }, 1000);
+        } else {
+            this.errorMessage = this.translateService.instant('Error updating favorites');
+            setTimeout(() => { this.errorMessage = ''; }, 1000);
+        }
     }
 
     addToClientFavourite(category: any) {
-        const client_fav = this.favClientService.favSubject.value;
-        if (!client_fav || !Array.isArray(client_fav)) {
-            this.errorMessage = this.translateService.instant('FAV_DATA_NOT_AVAILABLE');
-            return;
-        }
-        const exists = client_fav.some((item) => item && item.category_id === category.id);
-        if (exists) {
-            this.errorMessage = this.translateService.instant('PRODUCT_ALREADY_IN_FAV');
-            setTimeout(() => { this.errorMessage = ''; }, 1000);
-        } else {
-            const categoryToAdd = { ...category, quantity: 1 };
-            this.favClientService.addToClientFav(categoryToAdd);
-            this.successMessage = this.translateService.instant('PRODUCT_ADDED_TO_FAV');
+        const success = this.favoritesService.toggleFavorite(category);
+        if (success) {
+            const isInFavorites = this.favoritesService.isInFavorites(category.id);
+            if (isInFavorites) {
+                this.successMessage = this.translateService.instant('Product added to favorites!');
+            } else {
+                this.successMessage = this.translateService.instant('Product removed from favorites!');
+            }
             setTimeout(() => { this.successMessage = ''; }, 1000);
+        } else {
+            this.errorMessage = this.translateService.instant('Error updating favorites');
+            setTimeout(() => { this.errorMessage = ''; }, 1000);
         }
+    }
+
+    isProductInFavorites(productId: number): boolean {
+        return this.favoritesService.isInFavorites(productId);
     }
 
     fetchdata() {

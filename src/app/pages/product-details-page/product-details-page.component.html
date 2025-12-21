@@ -3,25 +3,13 @@
     <app-product-details-page-banner />
 
     <!-- Success/Error Messages -->
-    <div
-        *ngIf="successMessage"
-        class="toast-container position-fixed top-0"
-        [class.start-0]="translateService.currentLang === 'ar'"
-        [class.end-0]="translateService.currentLang !== 'ar'"
-        p-3
-    >
-        <div
-            class="toast show"
-            role="alert"
-            aria-live="assertive"
-            aria-atomic="true"
-        >
+    <div *ngIf="successMessage" class="toast-container position-fixed top-0"
+        [class.start-0]="translateService.currentLang === 'ar'" [class.end-0]="translateService.currentLang !== 'ar'"
+        p-3>
+        <div class="toast show" role="alert" aria-live="assertive" aria-atomic="true">
             <div class="toast-header">
-                <strong
-                    [class.ms-auto]="translateService.currentLang === 'ar'"
-                    [class.me-auto]="translateService.currentLang !== 'ar'"
-                    class="text-success"
-                >
+                <strong [class.ms-auto]="translateService.currentLang === 'ar'"
+                    [class.me-auto]="translateService.currentLang !== 'ar'" class="text-success">
                     {{ "SUCCESS" | translate }}
                 </strong>
             </div>
@@ -31,25 +19,13 @@
         </div>
     </div>
 
-    <div
-        *ngIf="errorMessage"
-        class="toast-container position-fixed top-0"
-        [class.start-0]="translateService.currentLang === 'ar'"
-        [class.end-0]="translateService.currentLang !== 'ar'"
-        p-3
-    >
-        <div
-            class="toast show"
-            role="alert"
-            aria-live="assertive"
-            aria-atomic="true"
-        >
+    <div *ngIf="errorMessage" class="toast-container position-fixed top-0"
+        [class.start-0]="translateService.currentLang === 'ar'" [class.end-0]="translateService.currentLang !== 'ar'"
+        p-3>
+        <div class="toast show" role="alert" aria-live="assertive" aria-atomic="true">
             <div class="toast-header">
-                <strong
-                    [class.ms-auto]="translateService.currentLang === 'ar'"
-                    [class.me-auto]="translateService.currentLang !== 'ar'"
-                    class="text-danger"
-                >
+                <strong [class.ms-auto]="translateService.currentLang === 'ar'"
+                    [class.me-auto]="translateService.currentLang !== 'ar'" class="text-danger">
                     {{ "ERROR" | translate }}
                 </strong>
             </div>
@@ -63,62 +39,44 @@
     <div class="prdct_dtls_page_area section-padding">
         <div class="container">
             <div class="row">
-                <div
-                    class="modal fade image-modal"
-                    id="imageModal"
-                    tabindex="-1"
-                    aria-hidden="true"
-                >
+                <div class="modal fade image-modal" id="imageModal" tabindex="-1" aria-hidden="true">
                     <div class="modal-dialog modal-dialog-centered modal-fullscreen-md-down">
                         <div class="modal-content bg-transparent border-0">
                             <!-- Close Button -->
-                            <button
-                                type="button"
-                                class="btn-close btn-close-white position-absolute top-0 end-0 m-3"
-                                data-bs-dismiss="modal"
-                                [attr.aria-label]="'CLOSE' | translate"
-                                style="z-index: 1060; font-size: 1.5rem;"
-                            ></button>
-                            
+                            <button type="button" class="btn-close btn-close-white position-absolute top-0 end-0 m-3"
+                                data-bs-dismiss="modal" [attr.aria-label]="'CLOSE' | translate"
+                                style="z-index: 1060; font-size: 1.5rem;"></button>
+
                             <!-- Image Counter -->
-                            <div class="position-absolute top-0 start-50 translate-middle-x mt-3 text-white bg-dark bg-opacity-75 px-3 py-1 rounded-pill" 
-                                 style="z-index: 1060; font-size: 0.9rem;">
+                            <div class="position-absolute top-0 start-50 translate-middle-x mt-3 text-white bg-dark bg-opacity-75 px-3 py-1 rounded-pill"
+                                style="z-index: 1060; font-size: 0.9rem;">
                                 {{ modalCurrentIndex + 1 }} / {{ totalImages }}
                             </div>
 
-                            <div class="modal-body p-0 d-flex align-items-center justify-content-center position-relative" 
-                                 style="min-height: 80vh; max-height: 90vh;">
-                                
+                            <div class="modal-body p-0 d-flex align-items-center justify-content-center position-relative"
+                                style="min-height: 80vh; max-height: 90vh;">
+
                                 <!-- Previous Button -->
-                                <button
-                                    *ngIf="hasImages && modalCurrentIndex > 0"
+                                <button *ngIf="hasImages && modalCurrentIndex > 0"
                                     class="btn btn-dark btn-lg position-absolute start-0 top-50 translate-middle-y ms-3 rounded"
-                                    (click)="prevModalImage()"
-                                    [title]="'PREVIOUS_IMAGE' | translate"
-                                    style="z-index: 1050; width: 50px; height: 50px; opacity: 0.8;"
-                                >
+                                    (click)="prevModalImage()" [title]="'PREVIOUS_IMAGE' | translate"
+                                    style="z-index: 1050; width: 50px; height: 50px; opacity: 0.8;">
                                     <i class="fa fa-chevron-left"></i>
                                 </button>
 
                                 <!-- Main Image -->
-                                <div class="image-container w-100 h-100 d-flex align-items-center justify-content-center">
-                                    <img
-                                        [src]="modalSelectedImage"
-                                        class="modal-image"
-                                        alt="Selected Image"
+                                <div
+                                    class="image-container w-100 h-100 d-flex align-items-center justify-content-center">
+                                    <img [src]="modalSelectedImage" class="modal-image" alt="Selected Image"
                                         style="max-width: 95%; max-height: 95%; object-fit: contain; border-radius: 8px; box-shadow: 0 4px 20px rgba(0,0,0,0.3);"
-                                        (error)="onImageError($event)"
-                                    />
+                                        (error)="onImageError($event)" />
                                 </div>
 
                                 <!-- Next Button -->
-                                <button
-                                    *ngIf="hasImages && modalCurrentIndex < totalImages - 1"
+                                <button *ngIf="hasImages && modalCurrentIndex < totalImages - 1"
                                     class="btn btn-dark btn-lg position-absolute end-0 top-50 translate-middle-y me-3 rounded"
-                                    (click)="nextModalImage()"
-                                    [title]="'NEXT_IMAGE' | translate"
-                                    style="z-index: 1050; width: 50px; height: 50px; opacity: 0.8;"
-                                >
+                                    (click)="nextModalImage()" [title]="'NEXT_IMAGE' | translate"
+                                    style="z-index: 1050; width: 50px; height: 50px; opacity: 0.8;">
                                     <i class="fa fa-chevron-right"></i>
                                 </button>
                             </div>
@@ -127,21 +85,13 @@
                             <div class="modal-footer bg-dark bg-opacity-75 border-0 p-2" *ngIf="totalImages > 1">
                                 <div class="d-flex justify-content-center align-items-center w-100 overflow-auto">
                                     <div class="d-flex gap-2 px-2">
-                                        <div
-                                            *ngFor="let img of allImages; let i = index"
-                                            class="modal-thumbnail"
-                                            [class.active]="i === modalCurrentIndex"
-                                            (click)="selectModalImage(i)"
-                                            style="cursor: pointer; flex-shrink: 0;"
-                                        >
-                                            <img
-                                                [src]="image + img.path"
-                                                alt="Thumbnail {{ i + 1 }}"
-                                                class="rounded"
+                                        <div *ngFor="let img of allImages; let i = index" class="modal-thumbnail"
+                                            [class.active]="i === modalCurrentIndex" (click)="selectModalImage(i)"
+                                            style="cursor: pointer; flex-shrink: 0;">
+                                            <img [src]="image + img.path" alt="Thumbnail {{ i + 1 }}" class="rounded"
                                                 style="width: 60px; height: 60px; object-fit: cover; border: 2px solid transparent; transition: all 0.3s ease;"
                                                 [style.border-color]="i === modalCurrentIndex ? '#007bff' : 'transparent'"
-                                                (error)="onImageError($event)"
-                                            />
+                                                (error)="onImageError($event)" />
                                         </div>
                                     </div>
                                 </div>
@@ -154,66 +104,39 @@
                 <div class="col-md-6 col-xs-12">
                     <div class="product-image-gallery">
                         <div class="thumbnails">
-                            <div
-                                class="thumbnail"
-                                *ngFor="
+                            <div class="thumbnail" *ngFor="
                                     let related of allImages || [];
                                     let i = index
-                                "
-                                [class.active]="i === currentIndex"
-                                (click)="selectImage(image + related?.path, i)"
-                            >
-                                <img
-                                    [src]="image + related?.path"
-                                    alt="Thumbnail"
-                                    class="thumbnail-img"
-                                />
+                                " [class.active]="i === currentIndex" (click)="selectImage(image + related?.path, i)">
+                                <img [src]="image + related?.path" alt="Thumbnail" class="thumbnail-img" />
                             </div>
                         </div>
 
                         <div class="main-image-wrapper">
                             <div class="zoom-container" (click)="openModal()">
-                                <button
-                                    *ngIf="hasImages && currentIndex > 0"
+                                <button *ngIf="hasImages && currentIndex > 0"
                                     class="btn btn-light position-absolute start-0 top-50 translate-middle-y custom-btn"
                                     (click)="
                                         prevImage(); $event.stopPropagation()
-                                    "
-                                    [title]="'PREVIOUS_IMAGE' | translate"
-                                >
+                                    " [title]="'PREVIOUS_IMAGE' | translate">
                                     <i class="fa fa-chevron-left"></i>
                                 </button>
-                                <img
-                                    [src]="selectedImage"
-                                    class="main-image"
-                                    alt="Product Image"
-                                    (mousemove)="onMouseMove($event)"
-                                    (mouseleave)="onMouseLeave()"
-                                />
-                                <div
-                                    class="zoom-lens"
-                                    *ngIf="showZoom"
-                                    [style.left.px]="zoomPosition.x"
-                                    [style.top.px]="zoomPosition.y"
-                                    [style.background-image]="
+                                <img [src]="selectedImage" class="main-image" alt="Product Image"
+                                    (mousemove)="onMouseMove($event)" (mouseleave)="onMouseLeave()" />
+                                <div class="zoom-lens" *ngIf="showZoom" [style.left.px]="zoomPosition.x"
+                                    [style.top.px]="zoomPosition.y" [style.background-image]="
                                         'url(' + selectedImage + ')'
-                                    "
-                                    [style.background-position]="
+                                    " [style.background-position]="
                                         zoomBackgroundPosition
-                                    "
-                                ></div>
-                                <button
-                                    *ngIf="hasImages && currentIndex < totalImages - 1"
+                                    "></div>
+                                <button *ngIf="hasImages && currentIndex < totalImages - 1"
                                     class="btn btn-light position-absolute end-0 top-50 translate-middle-y custom-btn"
                                     (click)="
                                         nextImage(); $event.stopPropagation()
-                                    "
-                                    [title]="'NEXT_IMAGE' | translate"
-                                    style="
+                                    " [title]="'NEXT_IMAGE' | translate" style="
                                         top: 50%;
                                         transform: translateY(-50%);
-                                    "
-                                >
+                                    ">
                                     <i class="fa fa-chevron-right"></i>
                                 </button>
                             </div>
@@ -227,13 +150,12 @@
                         <a class="pd_title">{{ details?.translatedName }}</a>
                         <div class="my-1">
                             <div class="pd_price">
-                                <span class="new"
-                                    >{{ details?.price_after_discount }}
-                                    {{ "EGP" | translate }}</span
-                                >
-                           
-                                <span class="old" *ngIf="details?.price_before_discount !== details?.price_after_discount">
-                                ({{ details?.price_before_discount }} {{ 'EGP' | translate }})
+                                <span class="new">{{ details?.price_after_discount }}
+                                    {{ "EGP" | translate }}</span>
+
+                                <span class="old"
+                                    *ngIf="details?.price_before_discount !== details?.price_after_discount">
+                                    ({{ details?.price_before_discount }} {{ 'EGP' | translate }})
                                 </span>
 
                             </div>
@@ -243,68 +165,44 @@
                         </div>
                         <div class="people-viewing my-2">
                             <i class="fa fa-eye me-1"></i>
-                            <span
-                                >{{ peopleViewing }}
-                                {{ "PEOPLE_VIEWING" | translate }}</span
-                            >
+                            <span>{{ peopleViewing }}
+                                {{ "PEOPLE_VIEWING" | translate }}</span>
                         </div>
                         <div class="action-buttons" *ngIf="isLoggedIn">
-                            <a
-                                class="btn animated-cart-btn acc_btn"
-                                (click)="addToCart(details.id)"
-                                [title]="'ADD_TO_CART' | translate"
-                            >
+                            <a class="btn animated-cart-btn acc_btn" (click)="addToCart(details.id)"
+                                [title]="'ADD_TO_CART' | translate">
                                 <i class="fa fa-shopping-cart me-2"></i>
                                 {{ "ADD_TO_CART" | translate }}
                             </a>
-                            <a
-                                (click)="toggleFavorite()"
-                                class="btn btn-default acc_btn btn_icn"
+                            <a (click)="toggleFavorite()" class="btn btn-default acc_btn btn_icn"
                                 [class.favorite-active]="isFavorite"
-                                [title]="isFavorite ? ('REMOVE_FROM_WISHLIST' | translate) : ('ADD_TO_WISHLIST' | translate)"
-                            >
+                                [title]="isFavorite ? ('REMOVE_FROM_WISHLIST' | translate) : ('ADD_TO_WISHLIST' | translate)">
                                 <i class="fa" [class.fa-heart]="isFavorite" [class.fa-heart-o]="!isFavorite"></i>
                             </a>
                         </div>
                         <div class="action-buttons" *ngIf="!isLoggedIn">
-                            <a
-                                class="btn animated-cart-btn acc_btn"
-                                (click)="addToClientCart(details)"
-                                [title]="'ADD_TO_CART' | translate"
-                            >
+                            <a class="btn animated-cart-btn acc_btn" (click)="addToClientCart(details)"
+                                [title]="'ADD_TO_CART' | translate">
                                 <i class="fa fa-shopping-cart me-2"></i>
                                 {{ "ADD_TO_CART" | translate }}
                             </a>
-                            <a
-                                (click)="toggleFavorite()"
-                                class="btn btn-default acc_btn btn_icn"
+                            <a (click)="toggleFavorite()" class="btn btn-default acc_btn btn_icn"
                                 [class.favorite-active]="isFavorite"
-                                [title]="isFavorite ? ('REMOVE_FROM_WISHLIST' | translate) : ('ADD_TO_WISHLIST' | translate)"
-                            >
+                                [title]="isFavorite ? ('REMOVE_FROM_WISHLIST' | translate) : ('ADD_TO_WISHLIST' | translate)">
                                 <i class="fa" [class.fa-heart]="isFavorite" [class.fa-heart-o]="!isFavorite"></i>
                             </a>
                         </div>
                         <div class="social-share mt-3">
                             <span class="me-2">{{ "SHARE" | translate }}:</span>
-                            <a
-                                class="social-icon"
-                                (click)="shareOnFacebook()"
-                                [title]="'SHARE_ON_FACEBOOK' | translate"
-                            >
+                            <a class="social-icon" (click)="shareOnFacebook()"
+                                [title]="'SHARE_ON_FACEBOOK' | translate">
                                 <i class="fab fa-facebook-f"></i>
                             </a>
-                            <a
-                                class="social-icon"
-                                (click)="shareOnTwitter()"
-                                [title]="'SHARE_ON_TWITTER' | translate"
-                            >
+                            <a class="social-icon" (click)="shareOnTwitter()" [title]="'SHARE_ON_TWITTER' | translate">
                                 <i class="fab fa-twitter"></i>
                             </a>
-                            <a
-                                class="social-icon"
-                                (click)="shareOnWhatsApp()"
-                                [title]="'SHARE_ON_WHATSAPP' | translate"
-                            >
+                            <a class="social-icon" (click)="shareOnWhatsApp()"
+                                [title]="'SHARE_ON_WHATSAPP' | translate">
                                 <i class="fab fa-whatsapp"></i>
                             </a>
                         </div>
@@ -326,15 +224,10 @@
                                         {{ review?.name || '' }}
                                     </h6>
                                     <div class="ratings cl-theme">
-                                        <rating
-                                            [(ngModel)]="review.rate"
-                                            [max]="5"
-                                            [readonly]="true"
-                                            style="
+                                        <rating [(ngModel)]="review.rate" [max]="5" [readonly]="true" style="
                                                 color: #e1b619;
                                                 font-size: 25px;
-                                            "
-                                        ></rating>
+                                            "></rating>
                                     </div>
                                     <p>{{ review?.review }}</p>
                                 </div>
@@ -345,83 +238,47 @@
                         <h6 class="review-title">
                             {{ "ADD_A_REVIEW" | translate }}
                         </h6>
-                        <form
-                            class="row client-form align-items-center"
-                            *ngIf="isLoggedIn"
-                        >
+                        <form class="row client-form align-items-center" *ngIf="isLoggedIn">
                             <div class="col-md-4 col-12">
                                 <div class="rating">
-                                    <span class="rating-title"
-                                        >{{ "YOUR_RATING" | translate }}:
+                                    <span class="rating-title">{{ "YOUR_RATING" | translate }}:
                                     </span>
-                                    <rating
-                                        [max]="5"
-                                        style="color: #e1b619; font-size: 25px"
-                                        [(ngModel)]="newRate"
-                                        name="newRate"
-                                    ></rating>
+                                    <rating [max]="5" style="color: #e1b619; font-size: 25px" [(ngModel)]="newRate"
+                                        name="newRate"></rating>
                                 </div>
                             </div>
                             <div class="col-md-12 col-12 d-inline-flex">
-                                <textarea
-                                    rows="5"
-                                    [placeholder]="
+                                <textarea rows="5" [placeholder]="
                                         'TYPE_HERE_MESSAGE' | translate
-                                    "
-                                    [(ngModel)]="newReview"
-                                    name="newReview"
-                                ></textarea>
+                                    " [(ngModel)]="newReview" name="newReview"></textarea>
                             </div>
                             <div class="col-12 pb-4">
-                                <button
-                                    type="button"
-                                    class="custom-button rounded"
-                                    (click)="addReview(newReview, newRate)"
-                                >
+                                <button type="button" class="custom-button rounded"
+                                    (click)="addReview(newReview, newRate)">
                                     {{ "SUBMIT_REVIEW" | translate }}
                                 </button>
                             </div>
                         </form>
-                        <form
-                            class="row client-form align-items-center"
-                            *ngIf="!isLoggedIn"
-                        >
+                        <form class="row client-form align-items-center" *ngIf="!isLoggedIn">
                             <div class="col-md-4 col-12">
-                                <input
-                                    type="text"
-                                    name="name"
-                                    [placeholder]="'FULL_NAME' | translate"
-                                    [(ngModel)]="name"
-                                />
+                                <input type="text" name="name" [placeholder]="'FULL_NAME' | translate"
+                                    [(ngModel)]="name" />
                             </div>
                             <div class="col-md-4 col-12">
                                 <div class="rating">
-                                    <span class="rating-title"
-                                        >{{ "YOUR_RATING" | translate }}:
+                                    <span class="rating-title">{{ "YOUR_RATING" | translate }}:
                                     </span>
-                                    <rating
-                                        [max]="5"
-                                        style="color: #e1b619; font-size: 25px"
-                                        [(ngModel)]="newRate"
-                                        name="newRate"
-                                    ></rating>
+                                    <rating [max]="5" style="color: #e1b619; font-size: 25px" [(ngModel)]="newRate"
+                                        name="newRate"></rating>
                                 </div>
                             </div>
                             <div class="col-md-12 col-12 d-inline-flex">
-                                <textarea
-                                    rows="5"
-                                    [placeholder]="
+                                <textarea rows="5" [placeholder]="
                                         'TYPE_HERE_MESSAGE' | translate
-                                    "
-                                    [(ngModel)]="newReview"
-                                    name="newReview"
-                                ></textarea>
+                                    " [(ngModel)]="newReview" name="newReview"></textarea>
                             </div>
                             <div class="col-12 pb-4">
-                                <button
-                                    type="button"
-                                    class="custom-button rounded"
-                                    (click)="
+                                <button type="button" class="custom-button rounded" (click)="
                                         addClientReview(
                                             newReview,
                                             newRate,
@@ -429,8 +286,7 @@
                                             email,
                                             phone
                                         )
-                                    "
-                                >
+                                    ">
                                     {{ "SUBMIT_REVIEW" | translate }}
                                 </button>
                             </div>
@@ -442,54 +298,57 @@
     </div>
 
     <!-- Related Products -->
-    <div
-        class="related_prdct_area text-center"
-        *ngIf="details?.relatedProducts?.length"
-    >
+    <div class="related_prdct_area text-center" *ngIf="details?.relatedProducts?.length">
         <div class="container">
             <div class="rp_title text-center">
                 <h3>{{ "RELATED_PRODUCTS" | translate }}</h3>
             </div>
             <div class="related-products-slides mx-auto">
                 <owl-carousel-o [options]="relatedProductsOptions">
-                    <ng-template
-                        carouselSlide
-                        *ngFor="let related of details?.relatedProducts"
-                    >
+                    <ng-template carouselSlide *ngFor="let related of details?.relatedProducts">
                         <a routerLink="/product/{{ related.id }}">
-                            <div class="event-slide position-relative">
-                                <div class="event-img">
-                                    <img
-                                        [src]="image + (related.files?.[0]?.path || 'fallback-image.jpg')"
-                                        class="bg-image max-height"
-                                        alt="Product Image"
-                                        (load)="onImageLoad(image + (related.files?.[0]?.path || 'fallback-image.jpg'))"
-                                        (error)="onImageError($event)"
-                                    />
-                                    <span
-                                        class="product-new-label"
-                                        *ngIf="related.discount"
-                                    >
+                            <div class="event-slide position-relative product-grid">
+                                <div class="event-img product-image">
+                                    <img [src]="image + (related.image || related.files?.[0]?.path || 'fallback-image.jpg')"
+                                        class="bg-image max-height pic-1" alt="Product Image"
+                                        (load)="onImageLoad(image + (related.image || related.files?.[0]?.path || 'fallback-image.jpg'))"
+                                        (error)="onImageError($event)" />
+                                    <ul class="social">
+                                        <li>
+                                            <a style="cursor: pointer" (click)="addRelatedToFavorite(related, $event)"
+                                                [attr.data-tip]="isRelatedProductInFavorites(related.id) ? ('REMOVE_FROM_WISHLIST' | translate) : ('ADD_TO_WISHLIST' | translate)">
+                                                <i class="fa" [class.fa-heart]="isRelatedProductInFavorites(related.id)"
+                                                    [class.fa-heart-o]="!isRelatedProductInFavorites(related.id)"
+                                                    [style.color]="isRelatedProductInFavorites(related.id) ? '#e74c3c' : ''"></i>
+                                            </a>
+                                        </li>
+                                        <li>
+                                            <a style="cursor: pointer" (click)="addRelatedToCart(related, $event)"
+                                                [attr.data-tip]="'ADD_TO_CART' | translate">
+                                                <i class="fa-solid fa-cart-plus"></i>
+                                            </a>
+                                        </li>
+                                    </ul>
+                                    <span class="product-new-label" *ngIf="related.discount">
                                         {{ "DISCOUNT" | translate }}:
                                         {{ related.discount }}
                                         {{ "EGP" | translate }}
                                     </span>
                                 </div>
-                                <div class="event-content">
-                                    <h3>
+                                <div class="event-content product-content">
+                                    <h3 class="title">
                                         {{
-                                            related.translatedName ||
-                                                related.title
+                                        related.translatedName ||
+                                        related.title
                                         }}
                                     </h3>
                                     <div class="price">
                                         {{ related.price_after_discount }}
                                         {{ "EGP" | translate }}
                                         <span
-                                             *ngIf="related?.price_before_discount !== related?.price_after_discount"
-                                            >{{ related.price_before_discount }}
-                                            {{ "EGP" | translate }}</span
-                                        >
+                                            *ngIf="related?.price_before_discount !== related?.price_after_discount">{{
+                                            related.price_before_discount }}
+                                            {{ "EGP" | translate }}</span>
                                     </div>
                                 </div>
                             </div>

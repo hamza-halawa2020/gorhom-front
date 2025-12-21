@@ -55,7 +55,7 @@ export class ProductDetailsPageComponent implements OnInit, OnDestroy {
     successMessage: string = '';
     errorMessage: string = '';
     id: any;
-    image = environment.imgUrl ;
+    image = environment.imgUrl;
     instructorImage = environment.imgUrl;
     socialImage = environment.imgUrl;
     selectedImage: string = '';
@@ -232,7 +232,7 @@ export class ProductDetailsPageComponent implements OnInit, OnDestroy {
 
     setupImageGallery(): void {
         this.allImages = [];
-        
+
         // Add main product image first if it exists
         if (this.details?.image) {
             this.allImages.push({
@@ -240,7 +240,7 @@ export class ProductDetailsPageComponent implements OnInit, OnDestroy {
                 isMainImage: true
             });
         }
-        
+
         // Add additional images from files array
         if (this.details?.files?.length > 0) {
             this.details.files.forEach((file: any) => {
@@ -250,7 +250,7 @@ export class ProductDetailsPageComponent implements OnInit, OnDestroy {
                 });
             });
         }
-        
+
         // Set the first image as selected
         if (this.allImages.length > 0) {
             this.selectedImage = this.image + this.allImages[0].path;
@@ -262,8 +262,8 @@ export class ProductDetailsPageComponent implements OnInit, OnDestroy {
             this.selectedImage = 'assets/images/fallback-image.jpg';
             this.modalSelectedImage = this.selectedImage;
         }
-        
- 
+
+
     }
 
     translateData(): void {
@@ -380,16 +380,16 @@ export class ProductDetailsPageComponent implements OnInit, OnDestroy {
 
         const wasInFavorites = this.isFavorite;
         const success = this.favoritesService.toggleFavorite(this.details);
-        
+
         if (success) {
             this.isFavorite = !wasInFavorites;
-            
+
             if (this.isFavorite) {
                 this.successMessage = this.translateService.instant('Product added to favorites!');
             } else {
                 this.successMessage = this.translateService.instant('Product removed from favorites!');
             }
-            
+
             setTimeout(() => { this.successMessage = ''; }, 2000);
         } else {
             this.errorMessage = this.translateService.instant('Error updating favorites');
@@ -439,8 +439,8 @@ export class ProductDetailsPageComponent implements OnInit, OnDestroy {
         const url = encodeURIComponent(this.productUrl);
         const title = encodeURIComponent(
             this.details?.translatedName ||
-                this.details?.title ||
-                'Check out this product!'
+            this.details?.title ||
+            'Check out this product!'
         );
         window.open(
             `https://www.facebook.com/sharer/sharer.php?u=${url}&title=${title}`,
@@ -451,8 +451,7 @@ export class ProductDetailsPageComponent implements OnInit, OnDestroy {
     shareOnTwitter(): void {
         const url = encodeURIComponent(this.productUrl);
         const text = encodeURIComponent(
-            `Check out this product: ${
-                this.details?.translatedName || this.details?.title || ''
+            `Check out this product: ${this.details?.translatedName || this.details?.title || ''
             }`
         );
         window.open(
@@ -464,8 +463,7 @@ export class ProductDetailsPageComponent implements OnInit, OnDestroy {
     shareOnWhatsApp(): void {
         const url = encodeURIComponent(this.productUrl);
         const text = encodeURIComponent(
-            `Check out this product: ${
-                this.details?.translatedName || this.details?.title || ''
+            `Check out this product: ${this.details?.translatedName || this.details?.title || ''
             } - ${this.details?.translatedDescription || ''}`
         );
         window.open(
@@ -504,7 +502,7 @@ export class ProductDetailsPageComponent implements OnInit, OnDestroy {
 
     addToCart(product_id: any): void {
         const product = this.details;
-        
+
         if (!product) {
             this.errorMessage = this.translateService.instant('PRODUCT_NOT_FOUND');
             setTimeout(() => { this.errorMessage = ''; }, 1000);
@@ -513,7 +511,7 @@ export class ProductDetailsPageComponent implements OnInit, OnDestroy {
 
         const cart = JSON.parse(localStorage.getItem('cart') || '[]');
         const exists = cart.some((item: any) => item && item.product_id === product.id);
-        
+
         if (exists) {
             this.errorMessage = this.translateService.instant('PRODUCT_ALREADY_IN_CART');
             setTimeout(() => { this.errorMessage = ''; }, 1000);
@@ -630,5 +628,52 @@ export class ProductDetailsPageComponent implements OnInit, OnDestroy {
         );
         (event.target as HTMLImageElement).src =
             'assets/images/fallback-image.jpg';
+    }
+
+    addRelatedToCart(product: any, event: Event): void {
+        event.preventDefault();
+        event.stopPropagation();
+
+        if (this.isLoggedIn) {
+            const cart = JSON.parse(localStorage.getItem('cart') || '[]');
+            const exists = cart.some((item: any) => item && item.product_id === product.id);
+
+            if (exists) {
+                this.errorMessage = this.translateService.instant('PRODUCT_ALREADY_IN_CART');
+                setTimeout(() => { this.errorMessage = ''; }, 1000);
+            } else {
+                this.cartService.addToCart(product).subscribe({
+                    next: (response) => {
+                        this.successMessage = this.translateService.instant('Product added to cart successfully!');
+                        setTimeout(() => { this.successMessage = ''; }, 1000);
+                    },
+                });
+            }
+        } else {
+            this.addToClientCart(product);
+        }
+    }
+
+    addRelatedToFavorite(product: any, event: Event): void {
+        event.preventDefault();
+        event.stopPropagation();
+
+        const success = this.favoritesService.toggleFavorite(product);
+        if (success) {
+            const isInFavorites = this.favoritesService.isInFavorites(product.id);
+            if (isInFavorites) {
+                this.successMessage = this.translateService.instant('Product added to favorites!');
+            } else {
+                this.successMessage = this.translateService.instant('Product removed from favorites!');
+            }
+            setTimeout(() => { this.successMessage = ''; }, 1000);
+        } else {
+            this.errorMessage = this.translateService.instant('Error updating favorites');
+            setTimeout(() => { this.errorMessage = ''; }, 1000);
+        }
+    }
+
+    isRelatedProductInFavorites(productId: number): boolean {
+        return this.favoritesService.isInFavorites(productId);
     }
 }

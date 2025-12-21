@@ -8,6 +8,7 @@ import { NgbCollapseModule } from '@ng-bootstrap/ng-bootstrap';
 import { ClientCartService } from '../../pages/client-cart/client-cart.service';
 import { FavouriteClientService } from '../../pages/favourite-client-page/favourite-client.service';
 import { TranslateModule, TranslateService } from '@ngx-translate/core';
+import { FavoritesService } from '../../services/favorites.service';
 
 @Component({
     selector: 'app-navbar',
@@ -29,11 +30,13 @@ export class NavbarComponent implements OnInit, OnDestroy {
     cartClientData: any[] = [];
     favClientData: any[] = [];
     favData: any[] = [];
+    favoritesCount: number = 0; // New favorites count from FavoritesService
     EMAIL: string = 'info@gorhom.net';
     public cartSubscription!: Subscription;
     public cartClientSubscription!: Subscription;
     public favSubscription!: Subscription;
     public favClientSubscription!: Subscription;
+    public favoritesSubscription!: Subscription; // New subscription for FavoritesService
 
     isLoggedIn: boolean = false;
     isSticky: boolean = false;
@@ -45,7 +48,8 @@ export class NavbarComponent implements OnInit, OnDestroy {
         private cartService: CartService,
         private cartClientService: ClientCartService,
         private favouriteClientService: FavouriteClientService,
-        private translate: TranslateService
+        private translate: TranslateService,
+        private favoritesService: FavoritesService
     ) {
         this.isLoggedIn = !!loginService.isLoggedIn();
 
@@ -84,6 +88,13 @@ export class NavbarComponent implements OnInit, OnDestroy {
             }
         );
 
+        // Subscribe to the new FavoritesService for favorites count
+        this.favoritesSubscription = this.favoritesService.favorites$.subscribe(
+            (favorites) => {
+                this.favoritesCount = favorites.length;
+            }
+        );
+
         this.router.events.subscribe(() => {
             this.cartService.refreshCart();
             this.cartClientService.refreshCart();
@@ -108,6 +119,8 @@ export class NavbarComponent implements OnInit, OnDestroy {
         if (this.favSubscription) this.favSubscription.unsubscribe();
         if (this.favClientSubscription)
             this.favClientSubscription.unsubscribe();
+        if (this.favoritesSubscription)
+            this.favoritesSubscription.unsubscribe();
     }
 
     @HostListener('window:scroll', ['$event'])
