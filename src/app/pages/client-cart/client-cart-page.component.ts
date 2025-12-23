@@ -77,7 +77,7 @@ export class ClientCartPageComponent implements OnInit {
             this.showCoupon(savedCoupon);
         }
         this.translateService.onLangChange.subscribe(() => {
-            this.translateData(); // Re-translate data on language change
+            this.translateData();
         });
     }
 
@@ -87,12 +87,8 @@ export class ClientCartPageComponent implements OnInit {
         this.cartService.showCoupon(payload).subscribe({
             next: (response: any) => {
                 this.couponCode = Object.values(response)[0];
-                this.successMessage =
-                    response.message ||
-                    this.translateService.instant('SUCCESS');
-                setTimeout(() => {
-                    this.successMessage = '';
-                }, 1000);
+                this.successMessage = response.message || this.translateService.instant('SUCCESS');
+                setTimeout(() => { this.successMessage = ''; }, 1000);
                 localStorage.setItem('appliedCoupon', code);
                 this.cdr.detectChanges();
             },
@@ -104,10 +100,7 @@ export class ClientCartPageComponent implements OnInit {
 
     get totalAmount(): number {
         return (
-            this.data?.reduce(
-                (sum: number, cart: any) => sum + cart.total_price,
-                0
-            ) || 0
+            this.data?.reduce((sum: number, cart: any) => sum + cart.total_price, 0) || 0
         );
     }
     onImageError(event: any) {
@@ -132,8 +125,6 @@ export class ClientCartPageComponent implements OnInit {
         this.cartService.allCountries().subscribe({
             next: (response: any) => {
                 this.countries = Object.values(response)[0] as any[];
-                console.log('countries', this.countries);
-
                 this.translateData();
             },
             error: (error: any) => {
@@ -146,6 +137,8 @@ export class ClientCartPageComponent implements OnInit {
         this.cartService.allCities().subscribe({
             next: (response: any) => {
                 this.cities = Object.values(response)[0] as any[];
+
+                console.log(' this.cities', this.cities);
                 this.translateData();
             },
             error: (error: any) => {
@@ -161,24 +154,22 @@ export class ClientCartPageComponent implements OnInit {
             },
             error: (error: any) => {
                 this.handleError(error);
+
             },
         });
     }
 
     onCountryChange() {
-        this.filteredCities = this.cities.filter(
-            (city) => city.country_id == this.selectedCountry
+        const country = this.countries.find(
+            (c) => c.id == this.selectedCountry
         );
+        this.filteredCities = country ? country.cities : [];
         this.selectedCity = '';
         this.shipmentCost = 0;
     }
 
     onCityChange() {
-        const shipment = this.shipments.find(
-            (s) =>
-                s.country_id == this.selectedCountry &&
-                s.city_id == this.selectedCity
-        );
+        const shipment = this.shipments.find((s) => s.country_id == this.selectedCountry && s.city_id == this.selectedCity);
         this.shipmentCost = shipment ? Number(shipment.cost) : 0;
         this.cdr.detectChanges();
     }
@@ -190,15 +181,11 @@ export class ClientCartPageComponent implements OnInit {
 
     removeItem(productId: number) {
         const areYouSure = this.translateService.instant('ARE_YOU_SURE');
-        const removeItemConfirm = this.translateService.instant(
-            'REMOVE_ITEM_CONFIRM'
-        );
+        const removeItemConfirm = this.translateService.instant('REMOVE_ITEM_CONFIRM');
         const yesRemoveIt = this.translateService.instant('YES_REMOVE_IT');
         const cancel = this.translateService.instant('CANCEL');
         const removed = this.translateService.instant('REMOVED');
-        const productRemovedSuccess = this.translateService.instant(
-            'PRODUCT_REMOVED_SUCCESS'
-        );
+        const productRemovedSuccess = this.translateService.instant('PRODUCT_REMOVED_SUCCESS');
 
         Swal.fire({
             title: areYouSure,
@@ -209,12 +196,7 @@ export class ClientCartPageComponent implements OnInit {
             cancelButtonColor: '#3085d6',
             confirmButtonText: yesRemoveIt,
             cancelButtonText: cancel,
-            customClass: {
-                popup:
-                    this.translateService.currentLang === 'ar'
-                        ? 'swal-rtl'
-                        : 'swal-ltr',
-            },
+            customClass: { popup: this.translateService.currentLang === 'ar' ? 'swal-rtl' : 'swal-ltr', },
         }).then((result: any) => {
             if (result.isConfirmed) {
                 try {
@@ -227,12 +209,7 @@ export class ClientCartPageComponent implements OnInit {
                         icon: 'success',
                         timer: 1500,
                         showConfirmButton: false,
-                        customClass: {
-                            popup:
-                                this.translateService.currentLang === 'ar'
-                                    ? 'swal-rtl'
-                                    : 'swal-ltr',
-                        },
+                        customClass: { popup: this.translateService.currentLang === 'ar' ? 'swal-rtl' : 'swal-ltr', },
                     });
                 } catch (error) {
                     Swal.fire({
@@ -241,12 +218,7 @@ export class ClientCartPageComponent implements OnInit {
                         icon: 'error',
                         timer: 1500,
                         showConfirmButton: false,
-                        customClass: {
-                            popup:
-                                this.translateService.currentLang === 'ar'
-                                    ? 'swal-rtl'
-                                    : 'swal-ltr',
-                        },
+                        customClass: { popup: this.translateService.currentLang === 'ar' ? 'swal-rtl' : 'swal-ltr', },
                     });
                 }
             }
@@ -255,15 +227,11 @@ export class ClientCartPageComponent implements OnInit {
 
     clearCart() {
         const areYouSure = this.translateService.instant('ARE_YOU_SURE');
-        const clearCartConfirm =
-            this.translateService.instant('CLEAR_CART_CONFIRM');
-        const yesClearIt = this.translateService.instant('YES_CLEAR_IT');
         const cancel = this.translateService.instant('CANCEL');
+        const clearCartConfirm = this.translateService.instant('CLEAR_CART_CONFIRM');
+        const yesClearIt = this.translateService.instant('YES_CLEAR_IT');
         const cleared = this.translateService.instant('CLEAR');
-        const cartClearedSuccess = this.translateService.instant(
-            'CART_CLEARED_SUCCESS'
-        );
-
+        const cartClearedSuccess = this.translateService.instant('CART_CLEARED_SUCCESS');
         Swal.fire({
             title: areYouSure,
             text: clearCartConfirm,
@@ -273,12 +241,7 @@ export class ClientCartPageComponent implements OnInit {
             cancelButtonColor: '#3085d6',
             confirmButtonText: yesClearIt,
             cancelButtonText: cancel,
-            customClass: {
-                popup:
-                    this.translateService.currentLang === 'ar'
-                        ? 'swal-rtl'
-                        : 'swal-ltr',
-            },
+            customClass: { popup: this.translateService.currentLang === 'ar' ? 'swal-rtl' : 'swal-ltr', },
         }).then((result: any) => {
             if (result.isConfirmed) {
                 try {
@@ -294,12 +257,7 @@ export class ClientCartPageComponent implements OnInit {
                         icon: 'success',
                         timer: 1500,
                         showConfirmButton: false,
-                        customClass: {
-                            popup:
-                                this.translateService.currentLang === 'ar'
-                                    ? 'swal-rtl'
-                                    : 'swal-ltr',
-                        },
+                        customClass: { popup: this.translateService.currentLang === 'ar' ? 'swal-rtl' : 'swal-ltr', },
                     });
                 } catch (error) {
                     Swal.fire({
@@ -308,12 +266,7 @@ export class ClientCartPageComponent implements OnInit {
                         icon: 'error',
                         timer: 1500,
                         showConfirmButton: false,
-                        customClass: {
-                            popup:
-                                this.translateService.currentLang === 'ar'
-                                    ? 'swal-rtl'
-                                    : 'swal-ltr',
-                        },
+                        customClass: { popup: this.translateService.currentLang === 'ar' ? 'swal-rtl' : 'swal-ltr', },
                     });
                 }
             }
@@ -336,36 +289,22 @@ export class ClientCartPageComponent implements OnInit {
             notes: this.notes,
         };
 
-        const selectedCountryObj = this.countries.find(
-            (country) => country.id === +this.selectedCountry
-        );
-        const selectedCityObj = this.cities.find(
-            (city) => city.id === +this.selectedCity
-        );
+        const selectedCountryObj = this.countries.find((country) => country.id === +this.selectedCountry);
+        const selectedCityObj = this.filteredCities.find((city) => city.id === +this.selectedCity);
 
         if (!this.selectedCountry || !this.selectedCity || !this.address) {
-            this.errorMessage =
-                this.translateService.instant('PLEASE_ADD_ADDRESS');
-            setTimeout(() => {
-                this.errorMessage = '';
-            }, 3000);
+            this.errorMessage = this.translateService.instant('PLEASE_ADD_ADDRESS');
+            setTimeout(() => { this.errorMessage = ''; }, 3000);
             return;
         } else if (!this.name || !this.phone || !this.email) {
-            this.errorMessage =
-                this.translateService.instant('PLEASE_ADD_DATA');
-            setTimeout(() => {
-                this.errorMessage = '';
-            }, 3000);
+            this.errorMessage = this.translateService.instant('PLEASE_ADD_DATA');
+            setTimeout(() => { this.errorMessage = ''; }, 3000);
             return;
         }
 
         const totalPriceData = {
-            country: selectedCountryObj
-                ? selectedCountryObj.translatedName || selectedCountryObj.name
-                : 'N/A',
-            city: selectedCityObj
-                ? selectedCityObj.translatedName || selectedCityObj.name
-                : 'N/A',
+            country: selectedCountryObj ? selectedCountryObj.translatedName || selectedCountryObj.name : 'N/A',
+            city: selectedCityObj ? selectedCityObj.translatedName || selectedCityObj.name : 'N/A',
             coupon: this.couponCode?.code || 'N/A',
             couponName: this.couponCode?.code || 'N/A',
             totalAmount: this.totalPrice,
@@ -380,13 +319,6 @@ export class ClientCartPageComponent implements OnInit {
         this.router.navigate(['/checkout']);
     }
 
-    // get finalPrice(): number {
-    //     return (
-    //         this.totalPrice +
-    //         this.shipmentCost -
-    //         (this.couponCode?.discount || 0)
-    //     );
-    // }
 
     get finalPrice(): number {
         const discountPercentage = this.couponCode?.discount || 0;
@@ -396,38 +328,36 @@ export class ClientCartPageComponent implements OnInit {
 
     private handleError(error: any) {
         if (error.error?.errors) {
-            this.errorMessage = Object.values(error.error.errors)
-                .flat()
-                .join(' | ');
+            this.errorMessage = Object.values(error.error.errors).flat().join(' | ');
         } else {
-            this.errorMessage =
-                error.error?.message ||
-                this.translateService.instant('UNEXPECTED_ERROR');
+            this.errorMessage = error.error?.message || this.translateService.instant('UNEXPECTED_ERROR');
         }
-        setTimeout(() => {
-            this.errorMessage = '';
-        }, 3000);
+        setTimeout(() => { this.errorMessage = ''; }, 3000);
     }
 
     translateData() {
         // Translate countries
         this.countries.forEach((country) => {
-            country.translatedName =
-                this.translateService.instant(`${country.name}`) ||
-                country.name;
+            const countryName = country.title || country.name;
+            country.translatedName = this.translateService.instant(`${countryName}`) || countryName;
+
+            if (country.cities) {
+                country.cities.forEach((city: any) => {
+                    const cityName = city.title || city.name;
+                    city.translatedName = this.translateService.instant(`${cityName}`) || cityName;
+                });
+            }
         });
 
         // Translate cities
         this.cities.forEach((city) => {
-            city.translatedName =
-                this.translateService.instant(`${city.name}`) || city.name;
+            const cityName = city.title || city.name;
+            city.translatedName = this.translateService.instant(`${cityName}`) || cityName;
         });
 
         // Translate product titles in cart (if needed)
         this.cartItems.forEach((cart) => {
-            cart.product.translatedTitle =
-                this.translateService.instant(cart.product.title) ||
-                cart.product.title;
+            cart.product.translatedTitle = this.translateService.instant(cart.product.title) || cart.product.title;
         });
     }
 }
