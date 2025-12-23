@@ -16,16 +16,7 @@ import { CartService } from '../cart-page/cart.service';
     selector: 'app-client-cart-page',
 
     standalone: true,
-    imports: [
-        NavbarComponent,
-        PageBannerComponent,
-        FooterComponent,
-        BackToTopComponent,
-        RouterLink,
-        CommonModule,
-        FormsModule,
-        TranslateModule,
-    ],
+    imports: [NavbarComponent, PageBannerComponent, FooterComponent, BackToTopComponent, RouterLink, CommonModule, FormsModule, TranslateModule,],
     templateUrl: './client-cart-page.component.html',
     styleUrl: './client-cart-page.component.scss',
     providers: [CartService],
@@ -133,7 +124,7 @@ export class ClientCartPageComponent implements OnInit {
 
     calculateTotal() {
         this.totalPrice = this.cartItems.reduce((acc, cart) => {
-            return acc + cart.product.priceAfterDiscount * cart.quantity;
+            return acc + cart.product.price_after_discount * cart.quantity;
         }, 0);
     }
 
@@ -141,6 +132,8 @@ export class ClientCartPageComponent implements OnInit {
         this.cartService.allCountries().subscribe({
             next: (response: any) => {
                 this.countries = Object.values(response)[0] as any[];
+                console.log('countries', this.countries);
+
                 this.translateData();
             },
             error: (error: any) => {

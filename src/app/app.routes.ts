@@ -9,7 +9,6 @@ import { ProductPageComponent } from './pages/product-page/product-page.componen
 import { ProductDetailsPageComponent } from './pages/product-details-page/product-details-page.component';
 import { CheckoutPageComponent } from './pages/checkout-page/checkout-page.component';
 import { CartPageWrapperComponent } from './pages/cart-page-wrapper/cart-page-wrapper.component';
-import { CartResolver } from './pages/cart-page-wrapper/cart.resolver';
 import { PaymentStatusPageComponent } from './pages/payment-status-page/payment-status-page.component';
 import { CertificationPageComponent } from './pages/certification-page/certification-page.component';
 import { ShopPageComponent } from './pages/shop-page/shop-page.component';
@@ -34,14 +33,7 @@ export const routes: Routes = [
     { path: 'certifications', component: CertificationPageComponent },
     { path: 'contacts', component: ContactPageComponent },
     { path: 'wishlist', component: FavoritesPageComponent },
- 
-    {
-        path: 'cart',
-        component: CartPageWrapperComponent,
-        resolve: { userType: CartResolver },
-    },
-    
-
+    { path: 'cart', component: CartPageWrapperComponent, },
 
     { path: '**', component: ErrorPageComponent },
 ];

@@ -83,70 +83,42 @@
                             </thead>
                             <tbody>
                                 <tr *ngFor="let cart of cartItems">
-                                    <td class="text-center">
-                                        {{ cart.product.id }}
-                                    </td>
+                                    <td class="text-center">{{ cart.product.id }}</td>
                                     <td class="image text-center" data-title="{{ 'PRODUCT' | translate }}">
-                                        <a routerLink="/product/{{
-                                                cart.product.id
-                                            }}">
-                                            <img [src]="cart.product?.productImages?.length ? (image + cart.product.productImages[0].image) : 'assets/images/logo.svg'"
+                                        <a routerLink="/product/{{cart.product.id}}">
+                                            <img [src]="cart.product?.image ? (image + cart.product.image) : 'assets/images/logo.svg'"
                                                 alt="#" (error)="onImageError($event)" />
                                         </a>
                                     </td>
-                                    <td class="text-center">
-                                        <a>{{
-                                            cart.product.translatedTitle ||
-                                            cart.product.title
-                                            }}</a>
+                                    <td class="text-center"><a>{{cart.product.translatedTitle ||cart.product.title}}</a>
                                     </td>
-                                    <td class="price text-center" data-title="{{
-                                            'UNIT_PRICE' | translate
-                                        }}">
-                                        <span>{{
-                                            cart.product.priceAfterDiscount
-                                            }}</span>
+                                    <td class="price text-center" data-title="{{'UNIT_PRICE' | translate}}">
+                                        <span>{{cart.product.price_after_discount}}</span>
                                     </td>
-                                    <td class="qty text-center" data-title="{{
-                                            'QUANTITY' | translate
-                                        }}">
+                                    <td class="qty text-center" data-title="{{'QUANTITY' | translate}}">
                                         <div class="input-group">
                                             <div class="button minus">
-                                                <button type="button" class="btn btn-primary btn-number" [disabled]="
-                                                        cart.quantity <= 1
-                                                    " (click)="
-                                                        changeQuantity(
-                                                            cart.product.id,
-                                                            -1
-                                                        )
-                                                    ">
+                                                <button type="button" class="btn btn-primary btn-number"
+                                                    [disabled]="cart.quantity <= 1"
+                                                    (click)="changeQuantity(cart.product.id,-1)">
                                                     <i class="fa-solid fa-minus"></i>
                                                 </button>
                                             </div>
                                             <input type="text" class="input-number" [value]="cart.quantity" readonly />
                                             <div class="button plus">
-                                                <button type="button" class="btn btn-primary btn-number" (click)="
-                                                        changeQuantity(
-                                                            cart.product.id,
-                                                            1
-                                                        )
-                                                    ">
+                                                <button type="button" class="btn btn-primary btn-number"
+                                                    (click)="changeQuantity(cart.product.id,1)">
                                                     <i class="fa-solid fa-plus"></i>
                                                 </button>
                                             </div>
                                         </div>
                                     </td>
                                     <td class="total-amount text-center" data-title="{{ 'TOTAL' | translate }}">
-                                        <span>{{
-                                            cart.product.priceAfterDiscount *
-                                            cart.quantity
-                                            }}</span>
+                                        <span>{{cart.product.price_after_discount *cart.quantity}}</span>
                                     </td>
                                     <td class="action text-center" data-title="{{ 'REMOVE' | translate }}">
-                                        <a (click)="
-                                                removeItem(cart.product.id)
-                                            " style="cursor: pointer" [title]="'REMOVE_ITEM' | translate">
-                                            <i class="fa-regular fa-trash-can"></i>
+                                        <a (click)="removeItem(cart.product.id)" style="cursor: pointer"
+                                            [title]="'REMOVE_ITEM' | translate"><i class="fa-regular fa-trash-can"></i>
                                         </a>
                                     </td>
                                 </tr>
@@ -163,129 +135,76 @@
                                     <div class="left">
                                         <div class="row mt-2">
                                             <div class="col">
-                                                <label for="name">{{
-                                                    "ADD_NAME" | translate
-                                                    }}</label>
+                                                <label for="name">{{"ADD_NAME" | translate}}</label>
                                                 <input type="text" name="name" [(ngModel)]="name" [placeholder]="
                                                         'ADD_NAME' | translate
                                                     " class="form-control" id="name" />
                                             </div>
                                             <div class="col">
-                                                <label for="email">{{
-                                                    "ADD_EMAIL" | translate
-                                                    }}</label>
-                                                <input name="email" [(ngModel)]="email" type="email" [placeholder]="
-                                                        'ADD_EMAIL' | translate
-                                                    " class="form-control" id="email" />
+                                                <label for="email">{{"ADD_EMAIL" | translate}}</label>
+                                                <input name="email" [(ngModel)]="email" type="email"
+                                                    [placeholder]="'ADD_EMAIL' | translate" class="form-control"
+                                                    id="email" />
                                             </div>
                                             <div class="col">
-                                                <label for="phone">{{
-                                                    "ADD_PHONE" | translate
-                                                    }}</label>
-                                                <input type="text" name="phone" [(ngModel)]="phone" [placeholder]="
-                                                        'ADD_PHONE' | translate
-                                                    " class="form-control" id="phone" />
+                                                <label for="phone">{{"ADD_PHONE" | translate}}</label>
+                                                <input type="text" name="phone" [(ngModel)]="phone"
+                                                    [placeholder]="'ADD_PHONE' | translate" class="form-control"
+                                                    id="phone" />
                                             </div>
                                         </div>
                                         <div class="row">
                                             <div class="col">
-                                                <label for="country">{{
-                                                    "CHOOSE_A_COUNTRY"
-                                                    | translate
-                                                    }}</label>
-                                                <select id="country" class="form-select" [(ngModel)]="
-                                                        selectedCountry
-                                                    " (change)="onCountryChange()" [attr.aria-label]="
-                                                        'SELECT_A_COUNTRY'
-                                                            | translate
-                                                    ">
+                                                <label for="country">{{"CHOOSE_A_COUNTRY"| translate}}</label>
+                                                <select id="country" class="form-select" [(ngModel)]="selectedCountry"
+                                                    (change)="onCountryChange()"
+                                                    [attr.aria-label]="'SELECT_A_COUNTRY'| translate">
                                                     <option *ngFor="
                                                             let country of countries
                                                         " [value]="country.id">
-                                                        {{
-                                                        country.translatedName ||
-                                                        country.name
-                                                        }}
+                                                        {{country.title}}
                                                     </option>
                                                 </select>
                                             </div>
                                             <div class="col">
-                                                <label for="city">{{
-                                                    "CHOOSE_A_CITY" | translate
-                                                    }}</label>
-                                                <select id="city" class="form-select" [attr.aria-label]="
-                                                        'SELECT_A_CITY'
-                                                            | translate
-                                                    " [(ngModel)]="selectedCity" (change)="onCityChange()">
-                                                    <ng-container *ngIf="
-                                                            filteredCities.length >
-                                                                0;
-                                                            else noCities
-                                                        ">
-                                                        <option>
-                                                            {{'please choose city'| translate}}
-                                                        </option>
-                                                        <option *ngFor="
-                                                                let city of filteredCities
-                                                            " [value]="city.id">
-                                                            {{
-                                                            city.translatedName ||
-                                                            city.name
-                                                            }}
-                                                        </option>
+                                                <label for="city">{{"CHOOSE_A_CITY" | translate}}</label>
+                                                <select id="city" class="form-select"
+                                                    [attr.aria-label]="'SELECT_A_CITY'| translate"
+                                                    [(ngModel)]="selectedCity" (change)="onCityChange()">
+                                                    <ng-container *ngIf="filteredCities.length >0;else noCities">
+                                                        <option>{{'please choose city'| translate}}</option>
+                                                        <option *ngFor="let city of filteredCities" [value]="city.id">
+                                                            {{city.title}}</option>
                                                     </ng-container>
                                                     <ng-template #noCities>
-                                                        <option disabled>
-                                                            {{
-                                                            "NO_CITIES_AVAILABLE"
-                                                            | translate
-                                                            }}
-                                                        </option>
+                                                        <option disabled>{{"NO_CITIES_AVAILABLE"| translate}}</option>
                                                     </ng-template>
                                                 </select>
                                             </div>
                                         </div>
                                         <div class="row mt-2">
                                             <div class="col">
-                                                <label for="address">{{
-                                                    "ADD_ADDRESS" | translate
-                                                    }}</label>
-                                                <textarea name="address" [placeholder]="
-                                                        'ADD_ADDRESS'
-                                                            | translate
-                                                    " class="form-control" id="address"
-                                                    [(ngModel)]="address"></textarea>
+                                                <label for="address">{{"ADD_ADDRESS" | translate}}</label>
+                                                <textarea name="address" [placeholder]="'ADD_ADDRESS'| translate"
+                                                    class="form-control" id="address" [(ngModel)]="address"></textarea>
                                             </div>
                                         </div>
                                         <div class="row mt-2">
                                             <div class="col">
-                                                <label for="notes">{{
-                                                    "ADD_NOTE" | translate
-                                                    }}</label>
-                                                <textarea name="notes" [placeholder]="
-                                                        'ADD_YOUR_NOTES'
-                                                            | translate
-                                                    " class="form-control" id="notes" [(ngModel)]="notes"></textarea>
+                                                <label for="notes">{{"ADD_NOTE" | translate}}</label>
+                                                <textarea name="notes" [placeholder]="'ADD_YOUR_NOTES'| translate"
+                                                    class="form-control" id="notes" [(ngModel)]="notes"></textarea>
                                             </div>
                                         </div>
                                         <div class="row mt-2">
-                                            <label for="code">{{
-                                                "ADD_A_COUPON" | translate
-                                                }}</label>
+                                            <label for="code">{{"ADD_A_COUPON" | translate}}</label>
                                             <div class="col-auto">
-                                                <input #couponInput name="code" [placeholder]="
-                                                        'ENTER_YOUR_COUPON'
-                                                            | translate
-                                                    " class="form-control" id="code"
-                                                    [value]="couponCode?.code || ''" />
+                                                <input #couponInput name="code"
+                                                    [placeholder]="'ENTER_YOUR_COUPON'| translate" class="form-control"
+                                                    id="code" [value]="couponCode?.code || ''" />
                                                 <div class="col-auto mt-1">
-                                                    <button (click)="
-                                                            showCoupon(
-                                                                couponInput.value
-                                                            )
-                                                        " class="btn rounded my-2">
-                                                        {{ "APPLY" | translate }}
-                                                    </button>
+                                                    <button (click)="showCoupon(couponInput.value)"
+                                                        class="btn rounded my-2">{{ "APPLY" | translate }}</button>
                                                 </div>
                                             </div>
                                         </div>
@@ -296,91 +215,42 @@
                                         <table class="table table-bordered text-center">
                                             <thead class="table-dark">
                                                 <tr>
-                                                    <th>
-                                                        {{
-                                                        "description"
-                                                        | translate
-                                                        }}
-                                                    </th>
-                                                    <th>
-                                                        {{
-                                                        "amount" | translate
-                                                        }}
-                                                    </th>
+                                                    <th>{{"description"| translate}}</th>
+                                                    <th>{{"amount" | translate}}</th>
                                                 </tr>
                                             </thead>
                                             <tbody>
                                                 <tr>
-                                                    <td>
-                                                        {{
-                                                        "TOTAL_PRICE"
-                                                        | translate
-                                                        }}
-                                                    </td>
-                                                    <td>
-                                                        <span class="badge bg-primary">{{
-                                                            totalPrice
-                                                            }}</span>
-                                                    </td>
+                                                    <td>{{"TOTAL_PRICE"| translate}}</td>
+                                                    <td><span class="badge bg-primary">{{totalPrice}}</span></td>
                                                 </tr>
                                                 <tr>
+                                                    <td>{{"YOU_SAVE"| translate}}</td>
                                                     <td>
-                                                        {{ "YOU_SAVE" | translate }}
-                                                    </td>
-                                                    <td>
-                                                        <span class="badge bg-success" *ngIf="couponCode">
-
-                                                            {{ couponCode?.discount | number:'1.0-0' }}%
-                                                        </span>
-                                                        <span class="badge bg-danger" *ngIf="!couponCode">
-                                                            0
-                                                        </span>
+                                                        <span class="badge bg-success" *ngIf="couponCode">{{
+                                                            couponCode?.discount | number:'1.0-0' }}%</span>
+                                                        <span class="badge bg-danger" *ngIf="!couponCode">0</span>
                                                     </td>
                                                 </tr>
 
                                                 <tr>
-                                                    <td>
-                                                        {{
-                                                        "SHIPPING"
-                                                        | translate
-                                                        }}
-                                                    </td>
-                                                    <td>
-                                                        <span class="badge bg-success">{{
-                                                            shipmentCost
-                                                            }}</span>
-                                                    </td>
+                                                    <td>{{"SHIPPING"| translate}}</td>
+                                                    <td><span class="badge bg-success">{{shipmentCost}}</span></td>
                                                 </tr>
-
-
                                                 <tr>
-                                                    <td>
-                                                        <strong>{{
-                                                            "YOU_PAY"
-                                                            | translate
-                                                            }}</strong>
-                                                    </td>
-                                                    <td>
-                                                        <span class="badge bg-danger">{{
-                                                            finalPrice
-                                                            }}</span>
-                                                    </td>
+                                                    <td><strong>{{"YOU_PAY" | translate}}</strong></td>
+                                                    <td><span class="badge bg-danger">{{finalPrice}}</span></td>
                                                 </tr>
                                             </tbody>
                                         </table>
-
                                         <div class="button5">
                                             <a (click)="checkout()" class="btn">{{ "CHECKOUT" | translate }}</a>
-                                            <a routerLink="/products" class="btn">{{
-                                                "CONTINUE_SHOPPING"
-                                                | translate
-                                                }}</a>
+                                            <a routerLink="/products" class="btn">{{"CONTINUE_SHOPPING"| translate}}</a>
                                         </div>
                                     </div>
                                 </div>
                             </div>
                         </div>
-                        <!--/ End Total Amount -->
                     </div>
                 </div>
             </div>
