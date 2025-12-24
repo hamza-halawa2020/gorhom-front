@@ -22,25 +22,23 @@ import { CartService } from '../cart-page/cart.service';
     providers: [CartService],
 })
 export class ClientCartPageComponent implements OnInit {
-    data: any[] = []; // Array of cart items
     cartItems: any[] = []; // Array of cart items (from ClientCartService)
     countries: any[] = []; // Array of countries
-    cities: any[] = []; // Array of cities
-    shipments: any[] = []; // Array of shipments
-    shipmentCost: number = 0;
     filteredCities: any[] = []; // Array of filtered cities
     selectedCountry: string = ''; // ID of selected country
     selectedCity: string = ''; // ID of selected city
+    selectedShipmentId: number = 0; // ID of selected shipment
     image = environment.imgUrl;
     successMessage: string = '';
     errorMessage: string = '';
     totalPrice: number = 0; // Total price calculated client-side
-    name: string = ''; // New field: Name
-    email: string = ''; // New field: Email
-    phone: string = ''; // New field: Phone
-    address: string = ''; // Existing field: Address
-    notes: string = ''; // Existing field: Notes
-    couponCode: any;
+    name: string = ''; // Customer name
+    email: string = ''; // Customer email
+    phone: string = ''; // Customer phone
+    address: string = ''; // Customer address
+    paymentMethod: string = 'cash_on_delivery'; // Payment method - always cash
+    couponCode: string = ''; // Coupon code
+    shipmentCost: number = 0;
 
     constructor(
         public router: Router,
@@ -50,61 +48,37 @@ export class ClientCartPageComponent implements OnInit {
     ) { }
 
     ngOnInit(): void {
-        this.fetchCartData(); // Fetch cart items from ClientCartService
+        this.fetchCartData();
         this.fetchCountries();
-        this.fetchCitiess();
-        this.fetchShipment();
-        const savedCheckoutData = localStorage.getItem('checkoutData');
-        if (savedCheckoutData) {
-            const checkoutData = JSON.parse(savedCheckoutData);
-            this.selectedCountry = checkoutData.country_id || '';
-            this.name = checkoutData.name || '';
-            this.email = checkoutData.email || '';
-            this.phone = checkoutData.phone || '';
-            this.address = checkoutData.address || '';
-            this.notes = checkoutData.notes || '';
-
-            setTimeout(() => {
-                this.onCountryChange();
-                setTimeout(() => {
-                    this.selectedCity = checkoutData.city_id || '';
-                    this.onCityChange();
-                }, 500);
-            }, 500);
-        }
-        const savedCoupon = localStorage.getItem('appliedCoupon');
-        if (savedCoupon) {
-            this.showCoupon(savedCoupon);
-        }
+        this.loadSavedData();
         this.translateService.onLangChange.subscribe(() => {
             this.translateData();
         });
     }
 
-    showCoupon(code: string) {
-        const payload = { code: code };
+    loadSavedData() {
+        const savedData = localStorage.getItem('checkoutData');
+        if (savedData) {
+            const data = JSON.parse(savedData);
+            this.name = data.name || '';
+            this.email = data.email || '';
+            this.phone = data.phone || '';
+            this.address = data.address || '';
+            this.selectedCountry = data.country_id || '';
+            this.selectedCity = data.city_id || '';
+            this.couponCode = data.coupon_code || '';
 
-        this.cartService.showCoupon(payload).subscribe({
-            next: (response: any) => {
-                this.couponCode = Object.values(response)[0];
-                this.successMessage = response.message || this.translateService.instant('SUCCESS');
-                setTimeout(() => { this.successMessage = ''; }, 1000);
-                localStorage.setItem('appliedCoupon', code);
-                this.cdr.detectChanges();
-            },
-            error: (error) => {
-                this.handleError(error);
-            },
-        });
-    }
-
-    get totalAmount(): number {
-        return (
-            this.data?.reduce((sum: number, cart: any) => sum + cart.total_price, 0) || 0
-        );
-    }
-    onImageError(event: any) {
-        event.target.src = 'assets/images/logo.svg';
+            if (this.selectedCountry) {
+                setTimeout(() => {
+                    this.onCountryChange();
+                    if (this.selectedCity) {
+                        setTimeout(() => {
+                            this.onCityChange();
+                        }, 300);
+                    }
+                }, 300);
+            }
+        }
     }
 
     fetchCartData() {
@@ -133,67 +107,52 @@ export class ClientCartPageComponent implements OnInit {
         });
     }
 
-    fetchCitiess() {
-        this.cartService.allCities().subscribe({
-            next: (response: any) => {
-                this.cities = Object.values(response)[0] as any[];
-
-                console.log(' this.cities', this.cities);
-                this.translateData();
-            },
-            error: (error: any) => {
-                this.handleError(error);
-            },
-        });
-    }
-
-    fetchShipment() {
-        this.cartService.allShipments().subscribe({
-            next: (response: any) => {
-                this.shipments = Object.values(response)[0] as any[];
-            },
-            error: (error: any) => {
-                this.handleError(error);
-
-            },
-        });
-    }
-
     onCountryChange() {
-        const country = this.countries.find(
-            (c) => c.id == this.selectedCountry
-        );
+        const country = this.countries.find(c => c.id == this.selectedCountry);
         this.filteredCities = country ? country.cities : [];
         this.selectedCity = '';
         this.shipmentCost = 0;
-        
-        // Log for debugging
-        console.log('Selected Country:', this.selectedCountry);
-        console.log('Filtered Cities:', this.filteredCities);
-        
+        this.selectedShipmentId = 0;
+        this.saveFormData();
         this.cdr.detectChanges();
     }
 
     onCityChange() {
         if (!this.selectedCity || !this.selectedCountry) {
             this.shipmentCost = 0;
+            this.selectedShipmentId = 0;
             return;
         }
         
-        // Find the selected city from filtered cities
         const selectedCityObj = this.filteredCities.find(city => city.id == this.selectedCity);
         
-        // Get shipment cost from the city's shipment property
-        this.shipmentCost = selectedCityObj?.shipment?.cost ? Number(selectedCityObj.shipment.cost) : 0;
+        if (selectedCityObj?.shipment) {
+            this.shipmentCost = Number(selectedCityObj.shipment.cost) || 0;
+            this.selectedShipmentId = selectedCityObj.shipment.id;
+        } else {
+            this.shipmentCost = 0;
+            this.selectedShipmentId = 0;
+        }
         
-        // Log for debugging
-        console.log('Selected Country:', this.selectedCountry);
-        console.log('Selected City:', this.selectedCity);
-        console.log('Selected City Object:', selectedCityObj);
-        console.log('Shipment Data:', selectedCityObj?.shipment);
-        console.log('Shipping Cost:', this.shipmentCost);
-        
+        this.saveFormData();
         this.cdr.detectChanges();
+    }
+
+    saveFormData() {
+        const formData = {
+            name: this.name,
+            email: this.email,
+            phone: this.phone,
+            address: this.address,
+            country_id: this.selectedCountry,
+            city_id: this.selectedCity,
+            coupon_code: this.couponCode
+        };
+        localStorage.setItem('checkoutData', JSON.stringify(formData));
+    }
+
+    onImageError(event: any) {
+        event.target.src = 'assets/images/logo.svg';
     }
 
     changeQuantity(productId: number, change: number) {
@@ -271,8 +230,6 @@ export class ClientCartPageComponent implements OnInit {
                     this.cartService.refreshCart();
 
                     localStorage.removeItem('checkoutData');
-                    localStorage.removeItem('totalPriceData');
-                    localStorage.removeItem('appliedCoupon');
                     Swal.fire({
                         title: cleared,
                         text: cartClearedSuccess,
@@ -296,56 +253,71 @@ export class ClientCartPageComponent implements OnInit {
     }
 
     checkout() {
-        const orderItems = {
-            orderItems: this.cartItems.map((cart) => ({
-                product_id: cart.product.id,
-                quantity: cart.quantity,
-            })),
-            coupon_id: this.couponCode?.id || null,
-            name: this.name,
-            email: this.email,
-            phone: this.phone,
-            address: this.address,
-            country_id: this.selectedCountry,
-            city_id: this.selectedCity,
-            notes: this.notes,
-        };
-
-        const selectedCountryObj = this.countries.find((country) => country.id === +this.selectedCountry);
-        const selectedCityObj = this.filteredCities.find((city) => city.id === +this.selectedCity);
-
-        if (!this.selectedCountry || !this.selectedCity || !this.address) {
-            this.errorMessage = this.translateService.instant('PLEASE_ADD_ADDRESS');
-            setTimeout(() => { this.errorMessage = ''; }, 3000);
-            return;
-        } else if (!this.name || !this.phone || !this.email) {
+        // Validation
+        if (!this.name || !this.phone || !this.address) {
             this.errorMessage = this.translateService.instant('PLEASE_ADD_DATA');
             setTimeout(() => { this.errorMessage = ''; }, 3000);
             return;
         }
 
-        const totalPriceData = {
-            country: selectedCountryObj ? selectedCountryObj.translatedName || selectedCountryObj.name : 'N/A',
-            city: selectedCityObj ? selectedCityObj.translatedName || selectedCityObj.name : 'N/A',
-            coupon: this.couponCode?.code || 'N/A',
-            couponName: this.couponCode?.code || 'N/A',
-            totalAmount: this.totalPrice,
-            shipmentCost: this.shipmentCost,
-            discount: this.couponCode?.discount || 0,
-            finalPrice: this.finalPrice,
+        if (!this.selectedCountry || !this.selectedCity || !this.selectedShipmentId) {
+            this.errorMessage = this.translateService.instant('PLEASE_SELECT_LOCATION');
+            setTimeout(() => { this.errorMessage = ''; }, 3000);
+            return;
+        }
+
+        if (this.cartItems.length === 0) {
+            this.errorMessage = this.translateService.instant('CART_IS_EMPTY');
+            setTimeout(() => { this.errorMessage = ''; }, 3000);
+            return;
+        }
+
+        // Prepare order data according to backend API
+        const orderData = {
+            name: this.name,
+            phone: this.phone,
+            email: this.email || null,
+            address: this.address,
+            shipment_id: this.selectedShipmentId,
+            coupon_code: this.couponCode || null,
+            payment_method: this.paymentMethod,
+            items: this.cartItems.map(cart => ({
+                product_id: cart.product.id,
+                quantity: cart.quantity
+            }))
         };
 
-        localStorage.setItem('checkoutData', JSON.stringify(orderItems));
-        localStorage.setItem('totalPriceData', JSON.stringify(totalPriceData));
-
-        this.router.navigate(['/checkout']);
+        // Create order
+        this.cartService.createOrder(orderData).subscribe({
+            next: (response: any) => {
+                this.successMessage = this.translateService.instant('ORDER_CREATED_SUCCESS');
+                
+                // Clear cart and saved data
+                this.cartService.clearCart();
+                localStorage.removeItem('checkoutData');
+                
+                // Show success message
+                Swal.fire({
+                    title: this.translateService.instant('SUCCESS'),
+                    text: this.translateService.instant('ORDER_CREATED_SUCCESS'),
+                    icon: 'success',
+                    confirmButtonText: this.translateService.instant('OK'),
+                    customClass: { 
+                        popup: this.translateService.currentLang === 'ar' ? 'swal-rtl' : 'swal-ltr' 
+                    },
+                }).then(() => {
+                    this.router.navigate(['/']);
+                });
+            },
+            error: (error) => {
+                this.handleError(error);
+            }
+        });
     }
 
 
     get finalPrice(): number {
-        const discountPercentage = this.couponCode?.discount || 0;
-        const discountAmount = (this.totalPrice * discountPercentage) / 100;
-        return this.totalPrice + this.shipmentCost - discountAmount;
+        return this.totalPrice + this.shipmentCost;
     }
 
     private handleError(error: any) {
@@ -371,13 +343,7 @@ export class ClientCartPageComponent implements OnInit {
             }
         });
 
-        // Translate cities
-        this.cities.forEach((city) => {
-            const cityName = city.title || city.name;
-            city.translatedName = this.translateService.instant(`${cityName}`) || cityName;
-        });
-
-        // Translate product titles in cart (if needed)
+        // Translate product titles in cart
         this.cartItems.forEach((cart) => {
             cart.product.translatedTitle = this.translateService.instant(cart.product.title) || cart.product.title;
         });

@@ -28,6 +28,10 @@ export class CartService {
         return this.http.post(`${this.apiUrl}/showCoupon`, payload);
     }
 
+    createOrder(orderData: any) {
+        return this.http.post(`${this.apiUrl}/orders`, orderData);
+    }
+
     // --- Core Cart Logic ---
 
     private loadCartFromStorage(): void {
