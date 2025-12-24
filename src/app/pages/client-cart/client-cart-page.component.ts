@@ -52,7 +52,7 @@ export class ClientCartPageComponent implements OnInit {
         this.fetchCountries();
         this.loadSavedData();
         this.translateService.onLangChange.subscribe(() => {
-            this.translateData();
+            this.fetchCountries(); // Re-fetch data with new language
         });
     }
 

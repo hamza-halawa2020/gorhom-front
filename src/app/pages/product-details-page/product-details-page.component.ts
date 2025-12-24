@@ -170,7 +170,7 @@ export class ProductDetailsPageComponent implements OnInit, OnDestroy {
                 event.lang === 'ar'
                     ? this.relatedProductsOptionsAr
                     : this.relatedProductsOptionsEn;
-            this.translateData();
+            this.getDetails(); // Re-fetch data with new language
         });
         this.startViewingUpdate();
         this.startAutoSlide();

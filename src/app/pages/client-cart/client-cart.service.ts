@@ -2,6 +2,8 @@ import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { environment } from '../../../environments/environment.development';
 import { BehaviorSubject } from 'rxjs';
+import { TranslateService } from '@ngx-translate/core';
+
 @Injectable({
     providedIn: 'root',
 })
@@ -14,7 +16,10 @@ export class ClientCartService {
 
     cart$ = this.cartSubject.asObservable();
 
-    constructor(private http: HttpClient) {}
+    constructor(
+        private http: HttpClient,
+        private translateService: TranslateService
+    ) {}
 
     addToClientCart(product: any) {
         const currentCart = this.cartSubject.getValue();
@@ -49,7 +54,8 @@ export class ClientCartService {
     }
 
     getProductById(productId: number) {
-        return this.http.get(`${this.apiUrl}/products/${productId}`);
+        const currentLang = this.translateService.currentLang || 'en';
+        return this.http.get(`${this.apiUrl}/products/${productId}?lang=${currentLang}`);
     }
 
     updateQuantity(productId: number, change: number) {

@@ -58,7 +58,7 @@ export class ProductPageComponent implements OnInit {
     ngOnInit(): void {
         this.fetchdata();
         this.translateService.onLangChange.subscribe(() => {
-            this.translateData();
+            this.fetchdata(); // Re-fetch data with new language
         });
     }
 

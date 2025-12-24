@@ -55,7 +55,7 @@ export class CategorySectionComponent implements OnInit {
     ngOnInit(): void {
         this.fetchData();
         this.translateService.onLangChange.subscribe(() => {
-            this.translateData();
+            this.fetchData(); // Re-fetch data with new language
         });
     }
 }

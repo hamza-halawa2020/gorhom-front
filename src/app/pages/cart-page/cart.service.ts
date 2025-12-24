@@ -2,6 +2,7 @@ import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { environment } from '../../../environments/environment.development';
 import { BehaviorSubject, of } from 'rxjs';
+import { TranslateService } from '@ngx-translate/core';
 
 @Injectable({
     providedIn: 'root',
@@ -11,18 +12,26 @@ export class CartService {
     private cartSubject = new BehaviorSubject<any[]>([]);
     public cart$ = this.cartSubject.asObservable();
 
-    constructor(private http: HttpClient) {
+    constructor(
+        private http: HttpClient,
+        private translateService: TranslateService
+    ) {
         this.loadCartFromStorage();
     }
 
     allCountries() {
-        return this.http.get(`${this.apiUrl}/countries`);
+        const currentLang = this.translateService.currentLang || 'en';
+        return this.http.get(`${this.apiUrl}/countries?lang=${currentLang}`);
     }
+    
     allShipments() {
-        return this.http.get(`${this.apiUrl}/shipments`);
+        const currentLang = this.translateService.currentLang || 'en';
+        return this.http.get(`${this.apiUrl}/shipments?lang=${currentLang}`);
     }
+    
     allCities() {
-        return this.http.get(`${this.apiUrl}/cities`);
+        const currentLang = this.translateService.currentLang || 'en';
+        return this.http.get(`${this.apiUrl}/cities?lang=${currentLang}`);
     }
     showCoupon(payload: { code: string }) {
         return this.http.post(`${this.apiUrl}/showCoupon`, payload);

@@ -1,6 +1,7 @@
 import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { environment } from '../../../environments/environment.development';
+import { TranslateService } from '@ngx-translate/core';
 
 @Injectable({
     providedIn: 'root',
@@ -8,8 +9,14 @@ import { environment } from '../../../environments/environment.development';
 export class BrandsService {
     private apiUrl = environment.backEndUrl;
     private data = '/categories';
-    constructor(private http: HttpClient) {}
+    
+    constructor(
+        private http: HttpClient,
+        private translateService: TranslateService
+    ) {}
+    
     index() {
-        return this.http.get(`${this.apiUrl}${this.data}`);
+        const currentLang = this.translateService.currentLang || 'en';
+        return this.http.get(`${this.apiUrl}${this.data}?lang=${currentLang}`);
     }
 }

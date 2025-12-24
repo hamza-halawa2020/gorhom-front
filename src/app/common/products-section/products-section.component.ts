@@ -36,7 +36,7 @@ export class ProductsSectionComponent implements OnInit {
     ngOnInit(): void {
         this.fetchSliderData();
         this.translate.onLangChange.subscribe(() => {
-            this.setFilter(this.activeFilter);
+            this.fetchSliderData(); // Re-fetch data with new language
         });
     }
 
