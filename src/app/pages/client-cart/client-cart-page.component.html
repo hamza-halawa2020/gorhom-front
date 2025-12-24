@@ -235,7 +235,11 @@
 
                                                 <tr>
                                                     <td>{{"SHIPPING"| translate}}</td>
-                                                    <td><span class="badge bg-success">{{shipmentCost}}</span></td>
+                                                    <td>
+                                                        <span class="badge bg-success" *ngIf="shipmentCost > 0">{{shipmentCost}}</span>
+                                                        <span class="badge bg-info" *ngIf="shipmentCost === 0 && selectedCountry && selectedCity">{{"FREE_SHIPPING" | translate}}</span>
+                                                        <span class="badge bg-secondary" *ngIf="!selectedCountry || !selectedCity">{{"SELECT_LOCATION" | translate}}</span>
+                                                    </td>
                                                 </tr>
                                                 <tr>
                                                     <td><strong>{{"YOU_PAY" | translate}}</strong></td>

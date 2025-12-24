@@ -166,11 +166,33 @@ export class ClientCartPageComponent implements OnInit {
         this.filteredCities = country ? country.cities : [];
         this.selectedCity = '';
         this.shipmentCost = 0;
+        
+        // Log for debugging
+        console.log('Selected Country:', this.selectedCountry);
+        console.log('Filtered Cities:', this.filteredCities);
+        
+        this.cdr.detectChanges();
     }
 
     onCityChange() {
-        const shipment = this.shipments.find((s) => s.country_id == this.selectedCountry && s.city_id == this.selectedCity);
-        this.shipmentCost = shipment ? Number(shipment.cost) : 0;
+        if (!this.selectedCity || !this.selectedCountry) {
+            this.shipmentCost = 0;
+            return;
+        }
+        
+        // Find the selected city from filtered cities
+        const selectedCityObj = this.filteredCities.find(city => city.id == this.selectedCity);
+        
+        // Get shipment cost from the city's shipment property
+        this.shipmentCost = selectedCityObj?.shipment?.cost ? Number(selectedCityObj.shipment.cost) : 0;
+        
+        // Log for debugging
+        console.log('Selected Country:', this.selectedCountry);
+        console.log('Selected City:', this.selectedCity);
+        console.log('Selected City Object:', selectedCityObj);
+        console.log('Shipment Data:', selectedCityObj?.shipment);
+        console.log('Shipping Cost:', this.shipmentCost);
+        
         this.cdr.detectChanges();
     }
 
