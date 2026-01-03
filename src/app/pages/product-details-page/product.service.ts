@@ -26,10 +26,10 @@ export class ProductService {
     }
 
     addReview(item: any) {
-        return this.http.post(`${this.apiUrl}/product-reviews`, item);
+        return this.http.post(`${this.apiUrl}/reviews`, item);
     }
     
     addClientReview(item: any) {
-        return this.http.post(`${this.apiUrl}/product-reviews-store`, item);
+        return this.http.post(`${this.apiUrl}/reviews`, item);
     }
 }

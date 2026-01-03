@@ -616,6 +616,15 @@
   "VIEW_DETAILS": "View Details",
   "YOUR_WISHLIST_IS_EMPTY": "Your Wishlist is empty",
   "CONTINUE_SHOPPING": "Continue Shopping",
-  "ORDER_CREATED_SUCCESS": "ORDER CREATED SUCCESS"
-
+  "ORDER_CREATED_SUCCESS": "ORDER CREATED SUCCESS",
+  "NAME_REQUIRED": "Name is required",
+  "EMAIL_REQUIRED": "Email is required",
+  "PHONE_REQUIRED": "Phone is required",
+  "RATING_REQUIRED": "Please select a rating",
+  "REVIEW_CANNOT_BE_EMPTY": "Review cannot be empty",
+  "REVIEW_UNDER_REVIEW": "Review added successfully but it is under review!",
+  "PRODUCT_ADDED_TO_FAVORITES": "Product added to favorites!",
+  "PRODUCT_REMOVED_FROM_FAVORITES": "Product removed from favorites!",
+  "ERROR_UPDATING_FAVORITES": "Error updating favorites",
+  "PRODUCT_ADDED_TO_CART_SUCCESS": "Product added to cart successfully!"
 }

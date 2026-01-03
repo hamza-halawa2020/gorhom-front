@@ -380,14 +380,14 @@ export class ProductDetailsPageComponent implements OnInit, OnDestroy {
             this.isFavorite = !wasInFavorites;
 
             if (this.isFavorite) {
-                this.successMessage = this.translateService.instant('Product added to favorites!');
+                this.successMessage = this.translateService.instant('PRODUCT_ADDED_TO_FAVORITES');
             } else {
-                this.successMessage = this.translateService.instant('Product removed from favorites!');
+                this.successMessage = this.translateService.instant('PRODUCT_REMOVED_FROM_FAVORITES');
             }
 
             setTimeout(() => { this.successMessage = ''; }, 2000);
         } else {
-            this.errorMessage = this.translateService.instant('Error updating favorites');
+            this.errorMessage = this.translateService.instant('ERROR_UPDATING_FAVORITES');
             setTimeout(() => { this.errorMessage = ''; }, 2000);
         }
     }
@@ -483,11 +483,11 @@ export class ProductDetailsPageComponent implements OnInit, OnDestroy {
         const success = this.cartService.addToCart(product);
         if (this.cartService.isInCart(product.id)) {
             this.successMessage = this.translateService.instant(
-                'Product added to cart successfully!'
+                'PRODUCT_ADDED_TO_CART_SUCCESS'
             );
         } else {
             this.successMessage = this.translateService.instant(
-                'Product added to cart successfully!'
+                'PRODUCT_ADDED_TO_CART_SUCCESS'
             );
         }
         setTimeout(() => (this.successMessage = ''), 1000);
@@ -500,7 +500,7 @@ export class ProductDetailsPageComponent implements OnInit, OnDestroy {
     addReview(reviewText: string, rating: number): void {
         if (!reviewText || reviewText.trim() === '') {
             this.errorMessage = this.translateService.instant(
-                'Review cannot be empty!'
+                'REVIEW_CANNOT_BE_EMPTY'
             );
             setTimeout(() => (this.errorMessage = ''), 1000);
             return;
@@ -519,7 +519,7 @@ export class ProductDetailsPageComponent implements OnInit, OnDestroy {
                     this.details.reviews.unshift(response);
                 }
                 this.successMessage = this.translateService.instant(
-                    'Review added successfully but it is under review!'
+                    'REVIEW_UNDER_REVIEW'
                 );
                 setTimeout(() => (this.successMessage = ''), 3000);
                 this.newReview = '';
@@ -538,12 +538,27 @@ export class ProductDetailsPageComponent implements OnInit, OnDestroy {
         reviewText: string,
         rating: number,
         nameText: string,
-        emailText: string,
-        phoneText: string
     ): void {
+        // Validation
+        if (!nameText || nameText.trim() === '') {
+            this.errorMessage = this.translateService.instant(
+                'NAME_REQUIRED'
+            );
+            setTimeout(() => (this.errorMessage = ''), 1000);
+            return;
+        }
+
         if (!reviewText || reviewText.trim() === '') {
             this.errorMessage = this.translateService.instant(
-                'Review cannot be empty!'
+                'REVIEW_CANNOT_BE_EMPTY'
+            );
+            setTimeout(() => (this.errorMessage = ''), 1000);
+            return;
+        }
+
+        if (rating === 0 || !rating) {
+            this.errorMessage = this.translateService.instant(
+                'RATING_REQUIRED'
             );
             setTimeout(() => (this.errorMessage = ''), 1000);
             return;
@@ -552,10 +567,8 @@ export class ProductDetailsPageComponent implements OnInit, OnDestroy {
         const reviewData = {
             product_id: this.id,
             review: reviewText,
-            rating: rating || 0,
+            rate: rating,
             name: nameText,
-            email: emailText,
-            phone: phoneText,
         };
 
         this.productService.addClientReview(reviewData).subscribe({
@@ -565,11 +578,12 @@ export class ProductDetailsPageComponent implements OnInit, OnDestroy {
                     this.details.reviews.unshift(response);
                 }
                 this.successMessage = this.translateService.instant(
-                    'Review added successfully but it is under review!'
+                    'REVIEW_UNDER_REVIEW'
                 );
                 setTimeout(() => (this.successMessage = ''), 3000);
                 this.newReview = '';
                 this.newRate = 0;
+                this.name = '';
             },
             error: (error) => {
                 this.errorMessage =
@@ -601,7 +615,7 @@ export class ProductDetailsPageComponent implements OnInit, OnDestroy {
         event.stopPropagation();
 
         this.cartService.addToCart(product);
-        this.successMessage = this.translateService.instant('Product added to cart successfully!');
+        this.successMessage = this.translateService.instant('PRODUCT_ADDED_TO_CART_SUCCESS');
         setTimeout(() => { this.successMessage = ''; }, 1000);
     }
 
@@ -621,13 +635,13 @@ export class ProductDetailsPageComponent implements OnInit, OnDestroy {
         if (success) {
             const isInFavorites = this.favoritesService.isInFavorites(product.id);
             if (isInFavorites) {
-                this.successMessage = this.translateService.instant('Product added to favorites!');
+                this.successMessage = this.translateService.instant('PRODUCT_ADDED_TO_FAVORITES');
             } else {
-                this.successMessage = this.translateService.instant('Product removed from favorites!');
+                this.successMessage = this.translateService.instant('PRODUCT_REMOVED_FROM_FAVORITES');
             }
             setTimeout(() => { this.successMessage = ''; }, 1000);
         } else {
-            this.errorMessage = this.translateService.instant('Error updating favorites');
+            this.errorMessage = this.translateService.instant('ERROR_UPDATING_FAVORITES');
             setTimeout(() => { this.errorMessage = ''; }, 1000);
         }
     }
