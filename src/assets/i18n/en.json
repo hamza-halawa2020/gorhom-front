@@ -577,5 +577,15 @@
   "CREDIT_CARD_PRIVACY": "Credit Card: Visa, MasterCard, Discover, American Express, JCB, Visa Electron. The total will be charged to your card when the order is shipped.",
   "FAST_CHECKOUT_PRIVACY": "Gorhom features a Fast Checkout option, allowing you to securely save your credit card details so that you don't have to re-enter them for future purchases.",
   "PAYPAL_PRIVACY": "PayPal: Shop easily online without having to enter your credit card details on the website. Your account will be charged once the order is completed. To register for a PayPal account, visit the website paypal.com.",
-  "RETURN_POLICY_PRIVACY": "Items returned within 14 days of their original shipment date in same as new condition will be eligible for a full refund or store credit. Refunds will be charged back form of payment used for purchase. Customer is responsible for shipping charges when making returns and shipping/handling fees of original purchase is non-refundable."
+  "RETURN_POLICY_PRIVACY": "Items returned within 14 days of their original shipment date in same as new condition will be eligible for a full refund or store credit. Refunds will be charged back form of payment used for purchase. Customer is responsible for shipping charges when making returns and shipping/handling fees of original purchase is non-refundable.",
+  "SORT_BY": "Sort By",
+  "ALPHA_A_TO_Z": "Alphabetically: A to Z",
+  "ALPHA_Z_TO_A": "Alphabetically: Z to A",
+  "PRICE_LOW_TO_HIGH": "Price: Low to High",
+  "PRICE_HIGH_TO_LOW": "Price: High to Low",
+  "DATE_OLD_TO_NEW": "Date: Old to New",
+  "DATE_NEW_TO_OLD": "Date: New to Old",
+  "DISCOUNT": "Discount",
+  "REMOVE_FROM_WISHLIST": "Remove from Wishlist",
+  "ALREADY_IN_CART": "Already in Cart"
 }
