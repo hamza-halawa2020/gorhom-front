@@ -879,5 +879,22 @@
   "DATE_NEW_TO_OLD": "التاريخ: من الأحدث إلى الأقدم",
   "DISCOUNT": "خصم",
   "REMOVE_FROM_WISHLIST": "إزالة من قائمة الرغبات",
-  "ALREADY_IN_CART": "موجود بالفعل في السلة"
+  "ALREADY_IN_CART": "موجود بالفعل في السلة",
+  "CLOSE": "إغلاق",
+  "PREVIOUS_IMAGE": "الصورة السابقة",
+  "NEXT_IMAGE": "الصورة التالية",
+  "PEOPLE_VIEWING": "أشخاص يشاهدون",
+  "SHARE": "شارك",
+  "SHARE_ON_FACEBOOK": "شارك على فيسبوك",
+  "SHARE_ON_TWITTER": "شارك على تويتر",
+  "SHARE_ON_WHATSAPP": "شارك على واتس آب",
+  "RELATED_PRODUCTS": "المنتجات ذات الصلة",
+  "MY_FAVORITES": "المفضلة لدي",
+  "CLEAR_ALL": "حذف الكل",
+  "NO_FAVORITES_YET": "لا توجد مفضلات حتى الآن",
+  "START_ADDING_FAVORITES_MESSAGE": "ابدأ بإضافة منتجاتك المفضلة إلى قائمة الرغبات",
+  "START_SHOPPING": "ابدأ التسوق",
+  "VIEW_DETAILS": "عرض التفاصيل",
+  "YOUR_WISHLIST_IS_EMPTY": "قائمة الرغبات الخاصة بك فارغة",
+  "CONTINUE_SHOPPING": "متابعة التسوق"
 }

@@ -11,12 +11,11 @@ import { CommonModule, NgClass, NgIf } from '@angular/common';
 import { environment } from '../../../environments/environment.development';
 import { FormsModule } from '@angular/forms';
 import { ProductService } from './product.service';
-import { LoginService } from '../login-page/login.service';
 import { CartService } from '../cart-page/cart.service';
-import { FavouriteClientService } from '../favourite-client-page/favourite-client.service';
+import { FavouriteClientService } from '../favorites-page/favourite-client.service';
 import { TranslateModule, TranslateService } from '@ngx-translate/core';
 import { CarouselModule, OwlOptions } from 'ngx-owl-carousel-o';
-import { FavoritesService } from '../../services/favorites.service';
+import { FavoritesService } from '../favorites-page/favorites.service';
 
 declare var bootstrap: any;
 
@@ -151,12 +150,10 @@ export class ProductDetailsPageComponent implements OnInit, OnDestroy {
         private productService: ProductService,
         private cartService: CartService,
         private favClientService: FavouriteClientService,
-        private loginService: LoginService,
         private cdr: ChangeDetectorRef,
         public translateService: TranslateService,
         private favoritesService: FavoritesService
     ) {
-        this.isLoggedIn = !!loginService.isLoggedIn();
         this.relatedProductsOptions =
             this.translateService.currentLang === 'ar'
                 ? this.relatedProductsOptionsAr

@@ -10,7 +10,6 @@ import { environment } from '../../../environments/environment.development';
 import { CommonModule, NgClass, NgIf } from '@angular/common';
 import { CheckoutService } from './checkout.service';
 import { CartService } from '../cart-page/cart.service';
-import { LoginService } from '../login-page/login.service';
 
 import { TranslateModule, TranslateService } from '@ngx-translate/core';
 
@@ -48,10 +47,8 @@ export class CheckoutPageComponent implements OnInit {
         public router: Router,
         private checkoutService: CheckoutService,
         private cartService: CartService,
-        private loginService: LoginService,
         public translateService: TranslateService
     ) {
-        this.isLoggedIn = !!loginService.isLoggedIn();
     }
 
     ngOnInit(): void {

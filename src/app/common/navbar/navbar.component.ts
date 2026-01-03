@@ -1,14 +1,13 @@
 import { NgClass, NgIf } from '@angular/common';
 import { Component, HostListener, OnDestroy, OnInit } from '@angular/core';
 import { RouterLink, RouterLinkActive, Router } from '@angular/router';
-import { LoginService } from '../../pages/login-page/login.service';
 import { CartService } from '../../pages/cart-page/cart.service';
 import { Subscription } from 'rxjs';
 import { NgbCollapseModule } from '@ng-bootstrap/ng-bootstrap';
 
-import { FavouriteClientService } from '../../pages/favourite-client-page/favourite-client.service';
+import { FavouriteClientService } from '../../pages/favorites-page/favourite-client.service';
 import { TranslateModule, TranslateService } from '@ngx-translate/core';
-import { FavoritesService } from '../../services/favorites.service';
+import { FavoritesService } from '../../pages/favorites-page/favorites.service';
 
 @Component({
     selector: 'app-navbar',
@@ -42,13 +41,11 @@ export class NavbarComponent implements OnInit, OnDestroy {
 
     constructor(
         public router: Router,
-        public loginService: LoginService,
         private cartService: CartService,
         private favouriteClientService: FavouriteClientService,
         private translate: TranslateService,
         private favoritesService: FavoritesService
     ) {
-        this.isLoggedIn = !!loginService.isLoggedIn();
 
         // Initialize languages
         this.translate.addLangs(['en', 'ar']);
@@ -126,7 +123,6 @@ export class NavbarComponent implements OnInit, OnDestroy {
     }
 
     logout() {
-        this.loginService.logout();
         this.isLoggedIn = false; // Update isLoggedIn after logout
     }
 

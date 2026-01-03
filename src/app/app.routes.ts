@@ -8,7 +8,6 @@ import { ContactPageComponent } from './pages/contact-page/contact-page.componen
 import { ProductPageComponent } from './pages/product-page/product-page.component';
 import { ProductDetailsPageComponent } from './pages/product-details-page/product-details-page.component';
 import { CheckoutPageComponent } from './pages/checkout-page/checkout-page.component';
-import { CartPageWrapperComponent } from './pages/cart-page-wrapper/cart-page-wrapper.component';
 import { PaymentStatusPageComponent } from './pages/payment-status-page/payment-status-page.component';
 import { CertificationPageComponent } from './pages/certification-page/certification-page.component';
 import { ShopPageComponent } from './pages/shop-page/shop-page.component';
@@ -16,6 +15,7 @@ import { CategoryPageComponent } from './pages/category-page/category-page.compo
 import { ReturnsRefundsPageComponent } from './pages/returns-refunds/returns-refunds-page.component';
 import { ShippingDeliveryPageComponent } from './pages/shipping-delivery/shipping-delivery-page.component';
 import { FavoritesPageComponent } from './pages/favorites-page/favorites-page.component';
+import { ClientCartPageComponent } from './pages/client-cart/client-cart-page.component';
 
 export const routes: Routes = [
     { path: '', component: HomeDemoOneComponent },
@@ -33,7 +33,7 @@ export const routes: Routes = [
     { path: 'certifications', component: CertificationPageComponent },
     { path: 'contacts', component: ContactPageComponent },
     { path: 'wishlist', component: FavoritesPageComponent },
-    { path: 'cart', component: CartPageWrapperComponent, },
+    { path: 'cart', component: ClientCartPageComponent, },
 
     { path: '**', component: ErrorPageComponent },
 ];

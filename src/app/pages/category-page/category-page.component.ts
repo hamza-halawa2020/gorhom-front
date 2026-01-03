@@ -10,10 +10,9 @@ import { environment } from '../../../environments/environment.development';
 import { CommonModule, NgClass, NgIf } from '@angular/common';
 import { CategoryService } from './category.service';
 import { CartService } from '../cart-page/cart.service';
-import { FavouriteClientService } from '../favourite-client-page/favourite-client.service';
-import { LoginService } from '../login-page/login.service';
+import { FavouriteClientService } from '../favorites-page/favourite-client.service';
 import { TranslateModule, TranslateService } from '@ngx-translate/core';
-import { FavoritesService } from '../../services/favorites.service';
+import { FavoritesService } from '../favorites-page/favorites.service';
 
 @Component({
     selector: 'app-category-page',

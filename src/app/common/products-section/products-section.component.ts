@@ -5,7 +5,7 @@ import { CommonModule } from '@angular/common';
 import { ProductSliderService } from './product-slider.service';
 import { environment } from '../../../environments/environment.development';
 import { CartService } from '../../pages/cart-page/cart.service';
-import { FavoritesService } from '../../services/favorites.service';
+import { FavoritesService } from '../../pages/favorites-page/favorites.service';
 
 @Component({
     selector: 'app-products-section',

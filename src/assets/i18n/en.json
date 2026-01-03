@@ -587,5 +587,22 @@
   "DATE_NEW_TO_OLD": "Date: New to Old",
   "DISCOUNT": "Discount",
   "REMOVE_FROM_WISHLIST": "Remove from Wishlist",
-  "ALREADY_IN_CART": "Already in Cart"
+  "ALREADY_IN_CART": "Already in Cart",
+  "CLOSE": "Close",
+  "PREVIOUS_IMAGE": "Previous Image",
+  "NEXT_IMAGE": "Next Image",
+  "PEOPLE_VIEWING": "people viewing",
+  "SHARE": "Share",
+  "SHARE_ON_FACEBOOK": "Share on Facebook",
+  "SHARE_ON_TWITTER": "Share on Twitter",
+  "SHARE_ON_WHATSAPP": "Share on WhatsApp",
+  "RELATED_PRODUCTS": "Related Products",
+  "MY_FAVORITES": "My Favorites",
+  "CLEAR_ALL": "Clear All",
+  "NO_FAVORITES_YET": "No Favorites Yet",
+  "START_ADDING_FAVORITES_MESSAGE": "Start adding your favorite products to your wishlist",
+  "START_SHOPPING": "Start Shopping",
+  "VIEW_DETAILS": "View Details",
+  "YOUR_WISHLIST_IS_EMPTY": "Your Wishlist is empty",
+  "CONTINUE_SHOPPING": "Continue Shopping"
 }
