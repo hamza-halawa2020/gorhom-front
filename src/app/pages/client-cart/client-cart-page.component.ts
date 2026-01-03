@@ -10,7 +10,7 @@ import { FormsModule } from '@angular/forms';
 import Swal from 'sweetalert2';
 import { ChangeDetectorRef } from '@angular/core';
 import { TranslateModule, TranslateService } from '@ngx-translate/core';
-import { CartService } from '../cart-page/cart.service';
+import { CartService } from './cart.service';
 
 @Component({
     selector: 'app-client-cart-page',

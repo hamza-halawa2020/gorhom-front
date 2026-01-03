@@ -6,7 +6,7 @@ import { NavbarComponent } from '../../common/navbar/navbar.component';
 import { CommonModule, NgClass, NgIf } from '@angular/common';
 import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
 import { ActivatedRoute } from '@angular/router';
-import { CartService } from '../cart-page/cart.service';
+import { CartService } from '../client-cart/cart.service';
 import { TranslateService, TranslateModule } from '@ngx-translate/core';
 import { PaymentStatusService } from './payment.service';
 import { environment } from '../../../environments/environment';

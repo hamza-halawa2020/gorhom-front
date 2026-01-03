@@ -11,7 +11,7 @@ import { CommonModule, NgClass, NgIf } from '@angular/common';
 import { environment } from '../../../environments/environment.development';
 import { FormsModule } from '@angular/forms';
 import { ProductService } from './product.service';
-import { CartService } from '../cart-page/cart.service';
+import { CartService } from '../client-cart/cart.service';
 import { FavouriteClientService } from '../favorites-page/favourite-client.service';
 import { TranslateModule, TranslateService } from '@ngx-translate/core';
 import { CarouselModule, OwlOptions } from 'ngx-owl-carousel-o';

@@ -9,7 +9,6 @@ import { ProductPageComponent } from './pages/product-page/product-page.componen
 import { ProductDetailsPageComponent } from './pages/product-details-page/product-details-page.component';
 import { CheckoutPageComponent } from './pages/checkout-page/checkout-page.component';
 import { PaymentStatusPageComponent } from './pages/payment-status-page/payment-status-page.component';
-import { CertificationPageComponent } from './pages/certification-page/certification-page.component';
 import { ShopPageComponent } from './pages/shop-page/shop-page.component';
 import { CategoryPageComponent } from './pages/category-page/category-page.component';
 import { ReturnsRefundsPageComponent } from './pages/returns-refunds/returns-refunds-page.component';
@@ -30,7 +29,6 @@ export const routes: Routes = [
     { path: 'returns-refunds', component: ReturnsRefundsPageComponent },
     { path: 'shipping-delivery', component: ShippingDeliveryPageComponent },
     { path: 'terms-conditions', component: TermsConditionsPageComponent },
-    { path: 'certifications', component: CertificationPageComponent },
     { path: 'contacts', component: ContactPageComponent },
     { path: 'wishlist', component: FavoritesPageComponent },
     { path: 'cart', component: ClientCartPageComponent, },

@@ -1,7 +1,7 @@
 import { NgClass, NgIf } from '@angular/common';
 import { Component, HostListener, OnDestroy, OnInit } from '@angular/core';
 import { RouterLink, RouterLinkActive, Router } from '@angular/router';
-import { CartService } from '../../pages/cart-page/cart.service';
+import { CartService } from '../../pages/client-cart/cart.service';
 import { Subscription } from 'rxjs';
 import { NgbCollapseModule } from '@ng-bootstrap/ng-bootstrap';
 

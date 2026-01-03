@@ -4,7 +4,7 @@ import { RouterLink } from '@angular/router';
 import { CommonModule } from '@angular/common';
 import { ProductSliderService } from './product-slider.service';
 import { environment } from '../../../environments/environment.development';
-import { CartService } from '../../pages/cart-page/cart.service';
+import { CartService } from '../../pages/client-cart/cart.service';
 import { FavoritesService } from '../../pages/favorites-page/favorites.service';
 
 @Component({

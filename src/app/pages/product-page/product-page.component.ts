@@ -11,7 +11,7 @@ import { CommonModule, NgClass, NgIf } from '@angular/common';
 import { ProductService } from './product.service';
 import { TranslateModule, TranslateService } from '@ngx-translate/core';
 import { FavoritesService } from '../favorites-page/favorites.service';
-import { CartService } from '../cart-page/cart.service';
+import { CartService } from '../client-cart/cart.service';
 
 @Component({
     selector: 'app-product-page',

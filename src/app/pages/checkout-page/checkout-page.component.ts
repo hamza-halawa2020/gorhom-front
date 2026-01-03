@@ -9,7 +9,7 @@ import { NavbarComponent } from '../../common/navbar/navbar.component';
 import { environment } from '../../../environments/environment.development';
 import { CommonModule, NgClass, NgIf } from '@angular/common';
 import { CheckoutService } from './checkout.service';
-import { CartService } from '../cart-page/cart.service';
+import { CartService } from '../client-cart/cart.service';
 
 import { TranslateModule, TranslateService } from '@ngx-translate/core';
 
