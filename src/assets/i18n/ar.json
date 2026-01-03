@@ -773,6 +773,17 @@
   "WISHLIST": "قائمة الرغبات",
   "CART": "السلة",
   "ALL_RIGHTS_RESERVED": "جميع الحقوق محفوظة © 2024 جورهوم",
+  "ADD_NAME": "أضف الاسم",
+  "ADD_EMAIL": "أضف البريد الإلكتروني",
+  "ADD_PHONE": "أضف رقم الهاتف",
+  "PLEASE_ADD_ADDRESS": "يرجى إضافة عنوانك {البلد، المدينة، العنوان}",
+  "PLEASE_ADD_DATA": "يرجى إضافة بياناتك {الاسم، البريد الإلكتروني، الهاتف}",
+  "DESCRIPTION": "الوصف",
+  "AMOUNT": "المبلغ",
+  "CART_SUBTOTAL": "إجمالي السلة",
+  "SELECT_LOCATION": "اختر الموقع",
+  "TOTAL_AMOUNT": "المبلغ الإجمالي",
+  "PLACE_ORDER": "تقديم الطلب",
   "EXPLORE_OUR_MAIN_CATEGORIES": "استكشف فئاتنا الرئيسية",
   "NO_CATEGORIES_AVAILABLE": "لا توجد فئات متاحة",
   "LOAD_MORE": "تحميل المزيد",
@@ -896,5 +907,6 @@
   "START_SHOPPING": "ابدأ التسوق",
   "VIEW_DETAILS": "عرض التفاصيل",
   "YOUR_WISHLIST_IS_EMPTY": "قائمة الرغبات الخاصة بك فارغة",
-  "CONTINUE_SHOPPING": "متابعة التسوق"
+  "CONTINUE_SHOPPING": "متابعة التسوق",
+  "ORDER_CREATED_SUCCESS": "تم انشاء الطلب بنجاح"
 }

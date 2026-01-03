@@ -486,6 +486,17 @@
   "WISHLIST": "Wishlist",
   "CART": "Cart",
   "ALL_RIGHTS_RESERVED": "All Rights Reserved © 2024 Gorhom",
+  "ADD_NAME": "Add Name",
+  "ADD_EMAIL": "Add Email",
+  "ADD_PHONE": "Add Phone",
+  "PLEASE_ADD_ADDRESS": "Please add your address {country, city, address}",
+  "PLEASE_ADD_DATA": "Please add your data {name, email, phone}",
+  "DESCRIPTION": "Description",
+  "AMOUNT": "Amount",
+  "CART_SUBTOTAL": "Cart Subtotal",
+  "SELECT_LOCATION": "Select Location",
+  "TOTAL_AMOUNT": "Total Amount",
+  "PLACE_ORDER": "Place Order",
   "SHIPPING_OVERVIEW": "Overview",
   "SHIPPING_INTRO": "At Gorhom, we are committed to delivering your orders promptly and securely. This page provides detailed information about our shipping methods, delivery times, costs, and policies to ensure a smooth shopping experience.",
   "SHIPPING_METHODS_TITLE": "Shipping Methods and Delivery Times",
@@ -604,5 +615,7 @@
   "START_SHOPPING": "Start Shopping",
   "VIEW_DETAILS": "View Details",
   "YOUR_WISHLIST_IS_EMPTY": "Your Wishlist is empty",
-  "CONTINUE_SHOPPING": "Continue Shopping"
+  "CONTINUE_SHOPPING": "Continue Shopping",
+  "ORDER_CREATED_SUCCESS": "ORDER CREATED SUCCESS"
+
 }
