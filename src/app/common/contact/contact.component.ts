@@ -2,7 +2,7 @@ import { CommonModule, NgClass, NgIf } from '@angular/common';
 import { Component, OnInit } from '@angular/core';
 import { RouterLink, Router } from '@angular/router';
 import { ContactService } from './contact.service';
-import { TranslateModule } from '@ngx-translate/core';
+import { TranslateModule, TranslateService } from '@ngx-translate/core';
 import {
     ReactiveFormsModule,
     FormBuilder,
@@ -26,7 +26,8 @@ export class ContactComponent implements OnInit {
     constructor(
         public router: Router,
         private contactService: ContactService,
-        private fb: FormBuilder
+        private fb: FormBuilder,
+        private translate: TranslateService
     ) {
         this.contactForm = this.fb.group({
             name: ['', Validators.required],
@@ -41,14 +42,17 @@ export class ContactComponent implements OnInit {
 
     onSubmit() {
         if (this.contactForm.invalid) {
-            this.errorMessage =
-                'Please fill out all required fields correctly.';
+            this.translate.get('CONTACT_FORM_INVALID').subscribe((translation: string) => {
+                this.errorMessage = translation;
+            });
             return;
         }
 
         this.contactService.store(this.contactForm.value).subscribe({
-            next: (response) => {
-                this.successMessage = 'Message sent successfully!';
+            next: () => {
+                this.translate.get('CONTACT_SUCCESS_MESSAGE').subscribe((translation: string) => {
+                    this.successMessage = translation;
+                });
                 setTimeout(() => {
                     this.successMessage = '';
                 }, 3000);
@@ -61,7 +65,14 @@ export class ContactComponent implements OnInit {
                         .flat()
                         .join(' | ');
                 } else {
-                    this.errorMessage = error.error?.message || 'An unexpected error occurred.';
+                    const errorMsg = error.error?.message;
+                    if (errorMsg) {
+                        this.errorMessage = errorMsg;
+                    } else {
+                        this.translate.get('CONTACT_UNEXPECTED_ERROR').subscribe((translation: string) => {
+                            this.errorMessage = translation;
+                        });
+                    }
                 }
                 setTimeout(() => {
                     this.errorMessage = '';

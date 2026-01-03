@@ -386,6 +386,12 @@
   "LOGOUT": "تسجيل الخروج",
   "SUBMISSION_SUCCESS": "تم إرسال الرسالة بنجاح!",
   "SUBMISSION_ERROR": "يرجى ملء جميع الحقول المطلوبة بشكل صحيح.",
+  "CONTACT_FORM_INVALID": "يرجى ملء جميع الحقول المطلوبة بشكل صحيح.",
+  "CONTACT_SUCCESS_MESSAGE": "تم إرسال الرسالة بنجاح!",
+  "CONTACT_UNEXPECTED_ERROR": "حدث خطأ غير متوقع.",
+  "CONTACT_US_PAGE_TITLE": "اتصل بنا",
+  "CONTACT_FORM_TITLE": "تواصل معنا",
+  "CONTACT_INFO_TITLE": "معلومات الاتصال",
   "SUCCESS": "نجاح",
   "ERROR": "خطأ",
   "GET_IN_TOUCH": "تواصل معنا",
@@ -762,5 +768,5 @@
   "SUBSCRIBE_NEWSLETTER_TEXT": "",
   "shipping-delivery": "",
   "OUR_BRANDS": "علاماتنا التجارية",
-  "EXPLORE_OUR_MAIN_CATEGORIES": "Explore Our Main Categories"
+  "EXPLORE_OUR_MAIN_CATEGORIES": "استكشف فئاتنا الرئيسية"
 }
