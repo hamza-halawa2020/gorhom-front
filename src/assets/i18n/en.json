@@ -632,5 +632,13 @@
   "FIRST_ORDER_DISCOUNT": "First Order Discount",
   "CHECK_FIRST_ORDER": "Check First Order",
   "NOT_FIRST_ORDER": "This is not your first order.",
-  "ERROR_CHECKING_PHONE": "Error checking phone number. Please try again."
+  "ERROR_CHECKING_PHONE": "Error checking phone number. Please try again.",
+  "COUPON_CODE_REQUIRED": "Coupon code is required",
+  "COUPON_VALID": "Coupon is valid! Discount applied.",
+  "COUPON_INVALID": "Invalid coupon code",
+  "COUPON_EXPIRED": "Coupon has expired",
+  "COUPON_USAGE_LIMIT": "You have reached the maximum usage limit for this coupon",
+  "COUPON_MIN_ORDER": "Order amount is less than the minimum required for this coupon",
+  "COUPON_APPLIED": "Coupon Applied",
+  "COUPON_DISCOUNT": "Coupon Discount"
 }

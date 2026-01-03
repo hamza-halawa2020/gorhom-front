@@ -924,5 +924,13 @@
   "FIRST_ORDER_DISCOUNT": "خصم الطلب الأول",
   "CHECK_FIRST_ORDER": "تحقق من الطلب الأول",
   "NOT_FIRST_ORDER": "هذا ليس طلبك الأول.",
-  "ERROR_CHECKING_PHONE": "خطأ في التحقق من رقم الهاتف. يرجى المحاولة مرة أخرى."
+  "ERROR_CHECKING_PHONE": "خطأ في التحقق من رقم الهاتف. يرجى المحاولة مرة أخرى.",
+  "COUPON_CODE_REQUIRED": "كود الكوبون مطلوب",
+  "COUPON_VALID": "الكوبون صحيح! تم تطبيق الخصم.",
+  "COUPON_INVALID": "كود كوبون غير صحيح",
+  "COUPON_EXPIRED": "انتهت صلاحية الكوبون",
+  "COUPON_USAGE_LIMIT": "لقد وصلت إلى الحد الأقصى لاستخدام هذا الكوبون",
+  "COUPON_MIN_ORDER": "قيمة الطلب أقل من الحد الأدنى المطلوب لهذا الكوبون",
+  "COUPON_APPLIED": "تم تطبيق الكوبون",
+  "COUPON_DISCOUNT": "خصم الكوبون"
 }

@@ -45,6 +45,10 @@ export class CartService {
         return this.http.get(`${this.apiUrl}/check-first-order?phone=${phone}`);
     }
 
+    validateCoupon(payload: any) {
+        return this.http.post(`${this.apiUrl}/validate-coupon`, payload);
+    }
+
     // --- Core Cart Logic ---
 
     private loadCartFromStorage(): void {
