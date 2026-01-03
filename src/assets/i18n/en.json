@@ -626,5 +626,11 @@
   "PRODUCT_ADDED_TO_FAVORITES": "Product added to favorites!",
   "PRODUCT_REMOVED_FROM_FAVORITES": "Product removed from favorites!",
   "ERROR_UPDATING_FAVORITES": "Error updating favorites",
-  "PRODUCT_ADDED_TO_CART_SUCCESS": "Product added to cart successfully!"
+  "PRODUCT_ADDED_TO_CART_SUCCESS": "Product added to cart successfully!",
+  "FIRST_ORDER_COUPON_AVAILABLE": "Great! You have an automatic coupon for your first order!",
+  "FIRST_ORDER_NO_COUPON": "This is your first order but no automatic coupon is available.",
+  "FIRST_ORDER_DISCOUNT": "First Order Discount",
+  "CHECK_FIRST_ORDER": "Check First Order",
+  "NOT_FIRST_ORDER": "This is not your first order.",
+  "ERROR_CHECKING_PHONE": "Error checking phone number. Please try again."
 }

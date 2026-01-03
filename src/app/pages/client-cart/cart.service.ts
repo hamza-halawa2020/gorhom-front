@@ -41,6 +41,10 @@ export class CartService {
         return this.http.post(`${this.apiUrl}/orders`, orderData);
     }
 
+    checkFirstOrder(phone: string) {
+        return this.http.get(`${this.apiUrl}/check-first-order?phone=${phone}`);
+    }
+
     // --- Core Cart Logic ---
 
     private loadCartFromStorage(): void {

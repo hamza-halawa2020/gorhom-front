@@ -918,5 +918,11 @@
   "PRODUCT_ADDED_TO_FAVORITES": "تمت إضافة المنتج إلى المفضلة!",
   "PRODUCT_REMOVED_FROM_FAVORITES": "تمت إزالة المنتج من المفضلة!",
   "ERROR_UPDATING_FAVORITES": "خطأ في تحديث المفضلة",
-  "PRODUCT_ADDED_TO_CART_SUCCESS": "تمت إضافة المنتج إلى السلة بنجاح!"
+  "PRODUCT_ADDED_TO_CART_SUCCESS": "تمت إضافة المنتج إلى السلة بنجاح!",
+  "FIRST_ORDER_COUPON_AVAILABLE": "رائع! لديك خصم تلقائي لطلبك الأول!",
+  "FIRST_ORDER_NO_COUPON": "هذا طلبك الأول لكن لا يوجد خصم تلقائي متاح.",
+  "FIRST_ORDER_DISCOUNT": "خصم الطلب الأول",
+  "CHECK_FIRST_ORDER": "تحقق من الطلب الأول",
+  "NOT_FIRST_ORDER": "هذا ليس طلبك الأول.",
+  "ERROR_CHECKING_PHONE": "خطأ في التحقق من رقم الهاتف. يرجى المحاولة مرة أخرى."
 }

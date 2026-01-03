@@ -30,4 +30,8 @@ export class CheckoutService {
     getPaymentLink(orderID: any) {
         return this.http.post(`${this.apiUrl}/payment/credit`, orderID);
     }
+
+    checkFirstOrder(phone: string) {
+        return this.http.get(`${this.apiUrl}/check-first-order?phone=${phone}`);
+    }
 }

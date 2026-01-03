@@ -153,6 +153,13 @@
                                                     id="phone" />
                                             </div>
                                         </div>
+                                        <div class="row mt-2">
+                                            <div class="col">
+                                                <button type="button" class="btn btn-info w-100" (click)="checkPhoneForFirstOrder()">
+                                                    {{ "CHECK_FIRST_ORDER" | translate }}
+                                                </button>
+                                            </div>
+                                        </div>
                                         <div class="row">
                                             <div class="col">
                                                 <label for="country">{{"CHOOSE_A_COUNTRY"| translate}}</label>
@@ -213,6 +220,10 @@
                                                     <td>{{"TOTAL_PRICE"| translate}}</td>
                                                     <td><span class="badge bg-primary">{{totalPrice}}</span></td>
                                                 </tr>
+                                                <tr *ngIf="isFirstOrder && automaticCoupon">
+                                                    <td>{{"FIRST_ORDER_DISCOUNT" | translate}}</td>
+                                                    <td><span class="badge bg-success">-{{automaticDiscount | number:'1.0-0'}}</span></td>
+                                                </tr>
                                                 <tr>
                                                     <td>{{"SHIPPING"| translate}}</td>
                                                     <td>
@@ -223,7 +234,7 @@
                                                 </tr>
                                                 <tr>
                                                     <td><strong>{{"TOTAL_AMOUNT" | translate}}</strong></td>
-                                                    <td><span class="badge bg-danger">{{finalPrice}}</span></td>
+                                                    <td><span class="badge bg-danger">{{finalPrice - automaticDiscount}}</span></td>
                                                 </tr>
                                             </tbody>
                                         </table>

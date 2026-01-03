@@ -39,6 +39,9 @@ export class ClientCartPageComponent implements OnInit {
     paymentMethod: string = 'cash_on_delivery'; // Payment method - always cash
     couponCode: string = ''; // Coupon code
     shipmentCost: number = 0;
+    isFirstOrder: boolean = false; // Track if it's a first order
+    automaticCoupon: any = null; // Store automatic coupon for first order
+    automaticDiscount: number = 0; // Store automatic discount amount
 
     constructor(
         public router: Router,
@@ -149,6 +152,74 @@ export class ClientCartPageComponent implements OnInit {
             coupon_code: this.couponCode
         };
         localStorage.setItem('checkoutData', JSON.stringify(formData));
+    }
+
+    checkPhoneForFirstOrder() {
+        if (!this.phone || this.phone.trim() === '') {
+            this.errorMessage = this.translateService.instant('PHONE_REQUIRED');
+            setTimeout(() => { this.errorMessage = ''; }, 2000);
+            return;
+        }
+
+        this.cartService.checkFirstOrder(this.phone).subscribe({
+            next: (response: any) => {
+                const data = Object.values(response)[0] as any;
+                this.isFirstOrder = data.is_first_order;
+                
+                if (this.isFirstOrder && data.coupon) {
+                    this.automaticCoupon = data.coupon;
+                    // Calculate discount based on coupon type
+                    this.calculateAutomaticDiscount();
+                    this.successMessage = this.translateService.instant('FIRST_ORDER_COUPON_AVAILABLE');
+                    setTimeout(() => { this.successMessage = ''; }, 3000);
+                } else if (this.isFirstOrder && !data.coupon) {
+                    this.automaticCoupon = null;
+                    this.automaticDiscount = 0;
+                    this.successMessage = this.translateService.instant('FIRST_ORDER_NO_COUPON');
+                    setTimeout(() => { this.successMessage = ''; }, 3000);
+                } else {
+                    this.automaticCoupon = null;
+                    this.automaticDiscount = 0;
+                    this.successMessage = this.translateService.instant('NOT_FIRST_ORDER');
+                    setTimeout(() => { this.successMessage = ''; }, 3000);
+                }
+                this.cdr.detectChanges();
+            },
+            error: (error) => {
+                this.isFirstOrder = false;
+                this.automaticCoupon = null;
+                this.automaticDiscount = 0;
+                this.errorMessage = this.translateService.instant('ERROR_CHECKING_PHONE');
+                setTimeout(() => { this.errorMessage = ''; }, 2000);
+            }
+        });
+    }
+
+    calculateAutomaticDiscount() {
+        if (!this.automaticCoupon) {
+            this.automaticDiscount = 0;
+            return;
+        }
+
+        const coupon = this.automaticCoupon;
+        let discount = 0;
+
+        if (coupon.type === 'percentage') {
+            discount = (this.totalPrice * coupon.value) / 100;
+            // Apply max discount limit if exists
+            if (coupon.max_discount && discount > coupon.max_discount) {
+                discount = coupon.max_discount;
+            }
+        } else if (coupon.type === 'fixed') {
+            discount = coupon.value;
+        }
+
+        // Check minimum order amount
+        if (coupon.min_order_amount && this.totalPrice < coupon.min_order_amount) {
+            discount = 0;
+        }
+
+        this.automaticDiscount = discount;
     }
 
     onImageError(event: any) {
