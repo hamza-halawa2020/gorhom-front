@@ -42,6 +42,9 @@ export class ClientCartPageComponent implements OnInit {
     isFirstOrder: boolean = false; // Track if it's a first order
     automaticCoupon: any = null; // Store automatic coupon for first order
     automaticDiscount: number = 0; // Store automatic discount amount
+    manualCoupon: any = null; // Store manual coupon
+    manualCouponDiscount: number = 0; // Store manual coupon discount
+    clientId: number = 0; // Client ID for coupon validation
 
     constructor(
         public router: Router,
@@ -384,6 +387,63 @@ export class ClientCartPageComponent implements OnInit {
                 this.handleError(error);
             }
         });
+    }
+
+    validateCoupon() {
+        if (!this.couponCode || this.couponCode.trim() === '') {
+            this.errorMessage = this.translateService.instant('COUPON_CODE_REQUIRED');
+            setTimeout(() => { this.errorMessage = ''; }, 2000);
+            return;
+        }
+
+        if (!this.phone || this.phone.trim() === '') {
+            this.errorMessage = this.translateService.instant('PHONE_REQUIRED');
+            setTimeout(() => { this.errorMessage = ''; }, 2000);
+            return;
+        }
+
+        const payload = {
+            code: this.couponCode,
+            order_amount: this.totalPrice,
+            phone: this.phone
+        };
+
+        this.cartService.validateCoupon(payload).subscribe({
+            next: (response: any) => {
+                const data = Object.values(response)[0] as any;
+                this.manualCoupon = data.coupon;
+                this.manualCouponDiscount = data.discount_amount;
+                
+                this.successMessage = this.translateService.instant('COUPON_VALID');
+                setTimeout(() => { this.successMessage = ''; }, 3000);
+                this.cdr.detectChanges();
+            },
+            error: (error) => {
+                this.manualCoupon = null;
+                this.manualCouponDiscount = 0;
+                
+                let errorMsg = 'COUPON_INVALID';
+                if (error.error?.message) {
+                    if (error.error.message.includes('expired')) {
+                        errorMsg = 'COUPON_EXPIRED';
+                    } else if (error.error.message.includes('maximum')) {
+                        errorMsg = 'COUPON_USAGE_LIMIT';
+                    } else if (error.error.message.includes('minimum')) {
+                        errorMsg = 'COUPON_MIN_ORDER';
+                    }
+                }
+                
+                this.errorMessage = this.translateService.instant(errorMsg);
+                setTimeout(() => { this.errorMessage = ''; }, 2000);
+            }
+        });
+    }
+
+    removeCoupon() {
+        this.manualCoupon = null;
+        this.manualCouponDiscount = 0;
+        this.couponCode = '';
+        this.saveFormData();
     }
 
 
