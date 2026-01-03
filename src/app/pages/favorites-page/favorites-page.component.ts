@@ -27,6 +27,7 @@ export class FavoritesPageComponent implements OnInit, OnDestroy {
   favorites: any[] = [];
   image = environment.imgUrl;
   private favoritesSubscription?: Subscription;
+  showClearConfirmModal: boolean = false;
 
   constructor(
     private favoritesService: FavoritesService,
@@ -59,9 +60,16 @@ export class FavoritesPageComponent implements OnInit, OnDestroy {
   }
 
   clearAllFavorites(): void {
-    if (confirm(this.translateService.instant('Are you sure you want to clear all favorites?'))) {
-      this.favoritesService.clearFavorites();
-    }
+    this.showClearConfirmModal = true;
+  }
+
+  confirmClearFavorites(): void {
+    this.favoritesService.clearFavorites();
+    this.showClearConfirmModal = false;
+  }
+
+  cancelClearFavorites(): void {
+    this.showClearConfirmModal = false;
   }
 
   getProductImage(product: any): string {

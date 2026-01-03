@@ -135,4 +135,38 @@
 
     <app-back-to-top />
     <app-footer />
+
+    <!-- Clear Favorites Confirmation Modal -->
+    <div *ngIf="showClearConfirmModal" class="modal-overlay">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title">{{ "ARE_YOU_SURE" | translate }}</h5>
+                <button 
+                    type="button" 
+                    class="btn-close" 
+                    (click)="cancelClearFavorites()"
+                    [attr.aria-label]="'CLOSE' | translate"
+                ></button>
+            </div>
+            <div class="modal-body">
+                <p>{{ "CLEAR_WISHLIST_CONFIRM" | translate }}</p>
+            </div>
+            <div class="modal-footer">
+                <button 
+                    type="button" 
+                    class="btn btn-secondary" 
+                    (click)="cancelClearFavorites()"
+                >
+                    {{ "CANCEL" | translate }}
+                </button>
+                <button 
+                    type="button" 
+                    class="btn btn-danger" 
+                    (click)="confirmClearFavorites()"
+                >
+                    {{ "YES_CLEAR_IT" | translate }}
+                </button>
+            </div>
+        </div>
+    </div>
 </div>
