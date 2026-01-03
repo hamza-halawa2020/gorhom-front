@@ -7,7 +7,7 @@ import { environment } from '../../../environments/environment.development';
 })
 export class FeedBackService {
     private apiUrl = environment.backEndUrl;
-    private data = '/reviews';
+    private data = '/reviews/accepted';
     constructor(private http: HttpClient) {}
     index() {
         return this.http.get(`${this.apiUrl}${this.data}`);
