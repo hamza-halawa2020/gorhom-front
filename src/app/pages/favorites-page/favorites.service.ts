@@ -42,6 +42,7 @@ export class FavoritesService {
         discount: product.discount,
         image: product.image,
         files: product.files,
+        sizes: product.sizes, // Add sizes data
         slug: product.slug,
         category: product.category,
         dateAdded: new Date().toISOString()

@@ -63,11 +63,15 @@ export class ProductDetailsPageComponent implements OnInit, OnDestroy {
     peopleViewing: number = 22;
     private viewingInterval: any;
     private autoSlideInterval: any;
+    private paramsSubscription: any;
+    private productSubscription: any;
     allImages: { path: string; isMainImage: boolean }[] = []; // Array to hold all images including main image
     isFavorite: boolean = false; // Track if current product is in favorites
     selectedSize: any = null; // Track selected size
     selectedSizePrice: number = 0; // Track price of selected size
     selectedSizeStock: number = 0; // Track stock of selected size
+    selectedSizeDiscount: number = 0; // Track discount of selected size
+    selectedSizePriceBeforeDiscount: number = 0; // Track price before discount
 
     get hasImages(): boolean {
         return this.allImages && this.allImages.length > 0;
@@ -181,6 +185,8 @@ export class ProductDetailsPageComponent implements OnInit, OnDestroy {
     ngOnDestroy(): void {
         if (this.viewingInterval) clearTimeout(this.viewingInterval);
         if (this.autoSlideInterval) clearInterval(this.autoSlideInterval);
+        if (this.paramsSubscription) this.paramsSubscription.unsubscribe();
+        if (this.productSubscription) this.productSubscription.unsubscribe();
     }
 
     startViewingUpdate(): void {
@@ -216,9 +222,21 @@ export class ProductDetailsPageComponent implements OnInit, OnDestroy {
     }
 
     getDetails(): void {
-        this.activateRoute.params.subscribe((params) => {
+        if (this.paramsSubscription) {
+            this.paramsSubscription.unsubscribe();
+        }
+        if (this.productSubscription) {
+            this.productSubscription.unsubscribe();
+        }
+
+        this.paramsSubscription = this.activateRoute.params.subscribe((params) => {
             this.id = +params['id'];
-            this.productService.show(this.id).subscribe((data) => {
+            
+            if (this.productSubscription) {
+                this.productSubscription.unsubscribe();
+            }
+            
+            this.productSubscription = this.productService.show(this.id).subscribe((data) => {
                 this.details = Object.values(data)[0];
                 this.translateData();
                 this.setupImageGallery();
@@ -478,7 +496,15 @@ export class ProductDetailsPageComponent implements OnInit, OnDestroy {
     onSizeChange(size: any): void {
         this.selectedSize = size;
         this.selectedSizePrice = size.price_after_discount ?? size.price;
+        this.selectedSizePriceBeforeDiscount = size.price_before_discount ?? size.price;
         this.selectedSizeStock = size.stock;
+        
+        // Calculate discount
+        if (this.selectedSizePriceBeforeDiscount && this.selectedSizePrice) {
+            this.selectedSizeDiscount = this.selectedSizePriceBeforeDiscount - this.selectedSizePrice;
+        } else {
+            this.selectedSizeDiscount = 0;
+        }
     }
 
     setDefaultSize(): void {
@@ -657,9 +683,44 @@ export class ProductDetailsPageComponent implements OnInit, OnDestroy {
         event.preventDefault();
         event.stopPropagation();
 
-        this.cartService.addToCart(product);
+        // Get default size with stock
+        const defaultSize = this.getDefaultSize(product);
+        if (!defaultSize) {
+            this.errorMessage = this.translateService.instant('OUT_OF_STOCK');
+            setTimeout(() => { this.errorMessage = ''; }, 1000);
+            return;
+        }
+
+        // Add size info to product before adding to cart
+        const productWithSize = {
+            ...product,
+            selected_size: defaultSize,
+            selected_size_id: defaultSize.id,
+            selected_size_name: defaultSize.size,
+            selected_price: defaultSize.price_after_discount ?? defaultSize.price
+        };
+
+        this.cartService.addToCart(productWithSize);
         this.successMessage = this.translateService.instant('PRODUCT_ADDED_TO_CART_SUCCESS');
         setTimeout(() => { this.successMessage = ''; }, 1000);
+    }
+
+    getDefaultSize(product: any): any {
+        // Find the first size with stock > 0
+        if (product?.sizes && product.sizes.length > 0) {
+            return product.sizes.find((size: any) => size.stock > 0);
+        }
+        return null;
+    }
+
+    getDefaultSizePrice(product: any): number {
+        const defaultSize = this.getDefaultSize(product);
+        return defaultSize ? (defaultSize.price_after_discount ?? defaultSize.price) : (product?.price_after_discount ?? product?.price ?? 0);
+    }
+
+    getDefaultSizePriceBeforeDiscount(product: any): number | null {
+        const defaultSize = this.getDefaultSize(product);
+        return defaultSize?.price_before_discount ?? null;
     }
 
     isRelatedProductInCart(productId: number): boolean {

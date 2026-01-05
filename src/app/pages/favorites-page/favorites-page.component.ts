@@ -81,6 +81,30 @@ export class FavoritesPageComponent implements OnInit, OnDestroy {
     return 'assets/images/fallback-image.jpg';
   }
 
+  getDefaultSize(product: any): any {
+    // Find the first size with stock > 0
+    if (product?.sizes && product.sizes.length > 0) {
+      return product.sizes.find((size: any) => size.stock > 0);
+    }
+    return null;
+  }
+
+  getDefaultSizePrice(product: any): number {
+    const defaultSize = this.getDefaultSize(product);
+    return defaultSize ? (defaultSize.price_after_discount ?? defaultSize.price) : (product?.price_after_discount ?? product?.price ?? 0);
+  }
+
+  getDefaultSizePriceBeforeDiscount(product: any): number | null {
+    const defaultSize = this.getDefaultSize(product);
+    return defaultSize?.price_before_discount ?? null;
+  }
+
+  getDiscount(product: any): number {
+    const priceAfter = this.getDefaultSizePrice(product);
+    const priceBefore = this.getDefaultSizePriceBeforeDiscount(product);
+    return priceBefore ? priceBefore - priceAfter : 0;
+  }
+
   onImageError(event: Event): void {
     (event.target as HTMLImageElement).src = 'assets/images/fallback-image.jpg';
   }

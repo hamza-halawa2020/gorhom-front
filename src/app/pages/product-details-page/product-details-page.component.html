@@ -150,14 +150,24 @@
                         <a class="pd_title">{{ details?.translatedName }}</a>
                         <div class="my-1">
                             <div class="pd_price">
-                                <span class="new">{{ details?.price_after_discount }}
+                                <span class="new">{{ selectedSizePrice || details?.price_after_discount }}
                                     {{ "EGP" | translate }}</span>
 
                                 <span class="old"
-                                    *ngIf="details?.price_before_discount !== details?.price_after_discount">
-                                    ({{ details?.price_before_discount }} {{ 'EGP' | translate }})
+                                    *ngIf="selectedSize && selectedSize.price_before_discount && selectedSize.price_before_discount !== selectedSizePrice">
+                                    {{ selectedSize.price_before_discount }} {{ 'EGP' | translate }}
+                                </span>
+                                <span class="old"
+                                    *ngIf="!selectedSize && details?.price_before_discount !== details?.price_after_discount">
+                                    {{ details?.price_before_discount }} {{ 'EGP' | translate }}
                                 </span>
 
+                            </div>
+                            <div class="discount-info mt-2" *ngIf="selectedSizeDiscount > 0">
+                                <span class="badge bg-danger">{{ "DISCOUNT" | translate }}: {{ selectedSizeDiscount }} {{ "EGP" | translate }}</span>
+                            </div>
+                            <div class="size-badge mt-2" *ngIf="selectedSize">
+                                <span class="badge bg-info">{{ "SIZE" | translate }}: {{ selectedSize.size }}</span>
                             </div>
                         </div>
                         <div class="mt-4">
@@ -352,12 +362,18 @@
                                         }}
                                     </h3>
                                     <div class="price">
-                                        {{ related.price_after_discount }}
+                                        {{ getDefaultSizePrice(related) }}
                                         {{ "EGP" | translate }}
                                         <span
-                                            *ngIf="related?.price_before_discount !== related?.price_after_discount">{{
-                                            related.price_before_discount }}
+                                            *ngIf="getDefaultSizePriceBeforeDiscount(related) && getDefaultSizePriceBeforeDiscount(related) !== getDefaultSizePrice(related)">{{
+                                            getDefaultSizePriceBeforeDiscount(related) }}
                                             {{ "EGP" | translate }}</span>
+                                    </div>
+                                    <div class="discount-info mt-1" *ngIf="getDefaultSize(related) && getDefaultSizePriceBeforeDiscount(related) && (getDefaultSizePriceBeforeDiscount(related) ?? 0) !== getDefaultSizePrice(related)">
+                                        <small class="text-danger">{{ "DISCOUNT" | translate }}: {{ (getDefaultSizePriceBeforeDiscount(related) ?? 0) - getDefaultSizePrice(related) }} {{ "EGP" | translate }}</small>
+                                    </div>
+                                    <div class="size-info mt-2" *ngIf="getDefaultSize(related)">
+                                        <small class="text-muted">{{ "SIZE" | translate }}: {{ getDefaultSize(related).size }}</small>
                                     </div>
                                 </div>
                             </div>

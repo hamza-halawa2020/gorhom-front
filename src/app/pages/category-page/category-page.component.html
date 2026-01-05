@@ -183,11 +183,17 @@
                                         </a>
                                     </h3>
                                     <div class="price">
-                                        {{ product.price_after_discount }} {{ "EGP" | translate }}
-                                        <span *ngIf="product?.price_before_discount !== product?.price_after_discount">
+                                        {{ getDefaultSizePrice(product) }} {{ "EGP" | translate }}
+                                        <span *ngIf="getDefaultSizePriceBeforeDiscount(product) && getDefaultSizePriceBeforeDiscount(product) !== getDefaultSizePrice(product)">
 
-                                            {{ product.price_before_discount }} {{ "EGP" | translate }}
+                                            {{ getDefaultSizePriceBeforeDiscount(product) }} {{ "EGP" | translate }}
                                         </span>
+                                    </div>
+                                    <div class="discount-info mt-1" *ngIf="getDefaultSize(product) && getDefaultSizePriceBeforeDiscount(product) && (getDefaultSizePriceBeforeDiscount(product) ?? 0) !== getDefaultSizePrice(product)">
+                                        <small class="text-danger">{{ "DISCOUNT" | translate }}: {{ (getDefaultSizePriceBeforeDiscount(product) ?? 0) - getDefaultSizePrice(product) }} {{ "EGP" | translate }}</small>
+                                    </div>
+                                    <div class="size-info mt-1" *ngIf="getDefaultSize(product)">
+                                        <small class="text-muted">{{ "SIZE" | translate }}: {{ getDefaultSize(product).size }}</small>
                                     </div>
                                     <a *ngIf="isLoggedIn" class="add-to-cart" style="cursor: pointer"
                                         (click)="addToCart(product.id)">

@@ -74,12 +74,17 @@ export class ProductsSectionComponent implements OnInit {
                 this.maxProductsToShow
             );
         } else if (filter === 'offers') {
+            // Filter products that have a discount on their default size
             filtered = this.shuffleArray(
-                this.products.filter((product) => product.discount > 0)
+                this.products.filter((product) => {
+                    const priceBefore = this.getDefaultSizePriceBeforeDiscount(product);
+                    const priceAfter = this.getDefaultSizePrice(product);
+                    return priceBefore && priceAfter && priceBefore > priceAfter;
+                })
             ).slice(0, this.maxProductsToShow);
         } else if (filter === 'BEST_PRICE') {
             filtered = [...this.products]
-                .sort((a, b) => a.priceAfterDiscount - b.priceAfterDiscount)
+                .sort((a, b) => this.getDefaultSizePrice(a) - this.getDefaultSizePrice(b))
                 .slice(0, this.maxProductsToShow);
         }
 
@@ -104,7 +109,24 @@ export class ProductsSectionComponent implements OnInit {
             return;
         }
 
-        const success = this.cartService.addToCart(product);
+        // Get default size with stock
+        const defaultSize = this.getDefaultSize(product);
+        if (!defaultSize) {
+            this.errorMessage = this.translate.instant('OUT_OF_STOCK');
+            setTimeout(() => { this.errorMessage = ''; }, 1000);
+            return;
+        }
+
+        // Add size info to product before adding to cart
+        const productWithSize = {
+            ...product,
+            selected_size: defaultSize,
+            selected_size_id: defaultSize.id,
+            selected_size_name: defaultSize.size,
+            selected_price: defaultSize.price_after_discount ?? defaultSize.price
+        };
+
+        const success = this.cartService.addToCart(productWithSize);
 
         if (this.cartService.isInCart(product.id)) {
             this.successMessage = this.translate.instant('PRODUCT_ADDED_TO_CART');
@@ -112,6 +134,24 @@ export class ProductsSectionComponent implements OnInit {
             this.successMessage = this.translate.instant('PRODUCT_ADDED_TO_CART');
         }
         setTimeout(() => { this.successMessage = ''; }, 1000);
+    }
+
+    getDefaultSize(product: any): any {
+        // Find the first size with stock > 0
+        if (product?.sizes && product.sizes.length > 0) {
+            return product.sizes.find((size: any) => size.stock > 0);
+        }
+        return null;
+    }
+
+    getDefaultSizePrice(product: any): number {
+        const defaultSize = this.getDefaultSize(product);
+        return defaultSize ? (defaultSize.price_after_discount ?? defaultSize.price) : (product?.price_after_discount ?? product?.price ?? 0);
+    }
+
+    getDefaultSizePriceBeforeDiscount(product: any): number | null {
+        const defaultSize = this.getDefaultSize(product);
+        return defaultSize?.price_before_discount ?? null;
     }
 
     addToFavourite(product_id: any) {

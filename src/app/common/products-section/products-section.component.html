@@ -106,14 +106,21 @@
                         <div class="product-info text-center mt-3">
                             <h3 class="product-title">{{ product.title }}</h3>
                             <div class="price">
-                                <span class="discounted-price">{{ product.price_after_discount }} EGP</span>
+                                <span class="discounted-price">{{ getDefaultSizePrice(product) }} EGP</span>
                                 <span class="original-price" *ngIf="
-                                        product?.price_before_discount !==
-                                        product?.price_after_discount
+                                        getDefaultSizePriceBeforeDiscount(product) &&
+                                        getDefaultSizePriceBeforeDiscount(product) !==
+                                        getDefaultSizePrice(product)
                                     ">
 
-                                    {{ product.price_before_discount }} EGP
+                                    {{ getDefaultSizePriceBeforeDiscount(product) }} EGP
                                 </span>
+                            </div>
+                            <div class="discount-info mt-1" *ngIf="getDefaultSize(product) && getDefaultSizePriceBeforeDiscount(product) && (getDefaultSizePriceBeforeDiscount(product) ?? 0) !== getDefaultSizePrice(product)">
+                                <small class="text-danger">{{ "DISCOUNT" | translate }}: {{ (getDefaultSizePriceBeforeDiscount(product) ?? 0) - getDefaultSizePrice(product) }} EGP</small>
+                            </div>
+                            <div class="size-info mt-1" *ngIf="getDefaultSize(product)">
+                                <small class="text-muted">{{ "SIZE" | translate }}: {{ getDefaultSize(product).size }}</small>
                             </div>
                             <div class="category mt-1">
                                 <small>{{ product.category.name }}</small>

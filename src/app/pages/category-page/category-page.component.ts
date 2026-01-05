@@ -124,10 +124,10 @@ export class CategoryPageComponent implements OnInit {
                 sortedData.sort((a, b) => (b.title || '').localeCompare(a.title || ''));
                 break;
             case 'price_low_to_high':
-                sortedData.sort((a, b) => (a.price_after_discount || 0) - (b.price_after_discount || 0));
+                sortedData.sort((a, b) => this.getDefaultSizePrice(a) - this.getDefaultSizePrice(b));
                 break;
             case 'price_high_to_low':
-                sortedData.sort((a, b) => (b.price_after_discount || 0) - (a.price_after_discount || 0));
+                sortedData.sort((a, b) => this.getDefaultSizePrice(b) - this.getDefaultSizePrice(a));
                 break;
             case 'date_old_to_new':
                 sortedData.sort(
@@ -160,13 +160,48 @@ export class CategoryPageComponent implements OnInit {
             return;
         }
 
-        const success = this.cartService.addToCart(product);
+        // Get default size with stock
+        const defaultSize = this.getDefaultSize(product);
+        if (!defaultSize) {
+            this.errorMessage = this.translateService.instant('OUT_OF_STOCK');
+            setTimeout(() => { this.errorMessage = ''; }, 1000);
+            return;
+        }
+
+        // Add size info to product before adding to cart
+        const productWithSize = {
+            ...product,
+            selected_size: defaultSize,
+            selected_size_id: defaultSize.id,
+            selected_size_name: defaultSize.size,
+            selected_price: defaultSize.price_after_discount ?? defaultSize.price
+        };
+
+        const success = this.cartService.addToCart(productWithSize);
         if (this.cartService.isInCart(product.id)) {
             this.successMessage = this.translateService.instant('PRODUCT_ADDED_TO_CART');
         } else {
             this.successMessage = this.translateService.instant('PRODUCT_ADDED_TO_CART');
         }
         setTimeout(() => { this.successMessage = ''; }, 1000);
+    }
+
+    getDefaultSize(product: any): any {
+        // Find the first size with stock > 0
+        if (product?.sizes && product.sizes.length > 0) {
+            return product.sizes.find((size: any) => size.stock > 0);
+        }
+        return null;
+    }
+
+    getDefaultSizePrice(product: any): number {
+        const defaultSize = this.getDefaultSize(product);
+        return defaultSize ? (defaultSize.price_after_discount ?? defaultSize.price) : (product?.price_after_discount ?? product?.price ?? 0);
+    }
+
+    getDefaultSizePriceBeforeDiscount(product: any): number | null {
+        const defaultSize = this.getDefaultSize(product);
+        return defaultSize?.price_before_discount ?? null;
     }
 
     addToFavourite(category_id: any) {
