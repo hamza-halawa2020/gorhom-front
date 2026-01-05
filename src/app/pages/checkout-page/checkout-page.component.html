@@ -126,6 +126,9 @@
                                                     }}:
                                                     {{ item.quantity }}
                                                 </span>
+                                                <span class="size" *ngIf="item.size_name">
+                                                    {{ "SIZE" | translate }}: {{ item.size_name }}
+                                                </span>
                                             </li>
                                         </ul>
                                     </div>

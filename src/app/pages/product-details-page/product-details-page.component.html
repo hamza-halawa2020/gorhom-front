@@ -168,12 +168,34 @@
                             <span>{{ peopleViewing }}
                                 {{ "PEOPLE_VIEWING" | translate }}</span>
                         </div>
+                        <!-- Size Selection -->
+                        <div class="size-selection my-3" *ngIf="details?.sizes && details.sizes.length > 0">
+                            <label class="form-label fw-bold">{{ "SELECT_SIZE" | translate }}:</label>
+                            <select class="form-select" [(ngModel)]="selectedSize" (change)="onSizeChange(selectedSize)" name="size">
+                                <option [ngValue]="null">{{ "CHOOSE_SIZE" | translate }}</option>
+                                <option *ngFor="let size of details.sizes" [ngValue]="size">
+                                    {{ size.size }} - {{ size.price_after_discount ?? size.price }} {{ "EGP" | translate }} 
+                                    ({{ "STOCK" | translate }}: {{ size.stock }})
+                                </option>
+                            </select>
+                        </div>
+                        <!-- Display Selected Size Info -->
+                        <div class="selected-size-info my-2" *ngIf="selectedSize">
+                            <div class="alert alert-info">
+                                <strong>{{ "SELECTED_SIZE" | translate }}:</strong> {{ selectedSize.size }}<br>
+                                <strong>{{ "PRICE" | translate }}:</strong> {{ selectedSizePrice }} {{ "EGP" | translate }}<br>
+                                <strong>{{ "AVAILABLE_STOCK" | translate }}:</strong> {{ selectedSizeStock }}
+                            </div>
+                        </div>
                         <div class="action-buttons" *ngIf="details">
                             <a class="btn animated-cart-btn acc_btn" (click)="addToCart(details.id)"
-                                [title]="isProductInCart(details.id) ? ('ALREADY_IN_CART' | translate) : ('ADD_TO_CART' | translate)">
+                                [class.disabled]="!selectedSize || selectedSizeStock <= 0"
+                                [style.opacity]="!selectedSize || selectedSizeStock <= 0 ? '0.5' : '1'"
+                                [style.cursor]="!selectedSize || selectedSizeStock <= 0 ? 'not-allowed' : 'pointer'"
+                                [title]="!selectedSize ? ('PLEASE_SELECT_SIZE' | translate) : (selectedSizeStock <= 0 ? ('OUT_OF_STOCK' | translate) : (isProductInCart(details.id) ? ('ALREADY_IN_CART' | translate) : ('ADD_TO_CART' | translate)))">
                                 <i class="fa me-2" [class.fa-check]="isProductInCart(details.id)"
                                     [class.fa-shopping-cart]="!isProductInCart(details.id)"></i>
-                                {{ (isProductInCart(details.id) ? "ALREADY_IN_CART" : "ADD_TO_CART") | translate }}
+                                {{ (!selectedSize ? "PLEASE_SELECT_SIZE" : (selectedSizeStock <= 0 ? "OUT_OF_STOCK" : (isProductInCart(details.id) ? "ALREADY_IN_CART" : "ADD_TO_CART"))) | translate }}
                             </a>
                             <a (click)="toggleFavorite()" class="btn btn-default acc_btn btn_icn"
                                 [class.favorite-active]="isFavorite"

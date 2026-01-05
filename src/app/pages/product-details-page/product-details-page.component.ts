@@ -65,6 +65,9 @@ export class ProductDetailsPageComponent implements OnInit, OnDestroy {
     private autoSlideInterval: any;
     allImages: { path: string; isMainImage: boolean }[] = []; // Array to hold all images including main image
     isFavorite: boolean = false; // Track if current product is in favorites
+    selectedSize: any = null; // Track selected size
+    selectedSizePrice: number = 0; // Track price of selected size
+    selectedSizeStock: number = 0; // Track stock of selected size
 
     get hasImages(): boolean {
         return this.allImages && this.allImages.length > 0;
@@ -219,6 +222,7 @@ export class ProductDetailsPageComponent implements OnInit, OnDestroy {
                 this.details = Object.values(data)[0];
                 this.translateData();
                 this.setupImageGallery();
+                this.setDefaultSize(); // Set default size with stock
                 this.checkIfFavorite(); // Check if product is already in favorites
                 this.cdr.detectChanges();
             });
@@ -471,6 +475,22 @@ export class ProductDetailsPageComponent implements OnInit, OnDestroy {
         this.addToCart(product.id, product);
     }
 
+    onSizeChange(size: any): void {
+        this.selectedSize = size;
+        this.selectedSizePrice = size.price_after_discount ?? size.price;
+        this.selectedSizeStock = size.stock;
+    }
+
+    setDefaultSize(): void {
+        // Find the first size with stock > 0
+        if (this.details?.sizes && this.details.sizes.length > 0) {
+            const defaultSize = this.details.sizes.find((size: any) => size.stock > 0);
+            if (defaultSize) {
+                this.onSizeChange(defaultSize);
+            }
+        }
+    }
+
     addToCart(product_id: any, productObj?: any): void {
         const product = productObj || this.details;
 
@@ -480,7 +500,30 @@ export class ProductDetailsPageComponent implements OnInit, OnDestroy {
             return;
         }
 
-        const success = this.cartService.addToCart(product);
+        // Check if size is selected when adding to cart
+        if (!this.selectedSize) {
+            this.errorMessage = this.translateService.instant('PLEASE_SELECT_SIZE');
+            setTimeout(() => { this.errorMessage = ''; }, 1000);
+            return;
+        }
+
+        // Check if stock is available
+        if (this.selectedSizeStock <= 0) {
+            this.errorMessage = this.translateService.instant('OUT_OF_STOCK');
+            setTimeout(() => { this.errorMessage = ''; }, 1000);
+            return;
+        }
+
+        // Add size info to product before adding to cart
+        const productWithSize = {
+            ...product,
+            selected_size: this.selectedSize,
+            selected_size_id: this.selectedSize.id,
+            selected_size_name: this.selectedSize.size,
+            selected_price: this.selectedSizePrice
+        };
+
+        const success = this.cartService.addToCart(productWithSize);
         if (this.cartService.isInCart(product.id)) {
             this.successMessage = this.translateService.instant(
                 'PRODUCT_ADDED_TO_CART_SUCCESS'

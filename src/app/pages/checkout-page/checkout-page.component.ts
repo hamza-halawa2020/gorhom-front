@@ -111,6 +111,20 @@ export class CheckoutPageComponent implements OnInit {
                     return;
                 }
 
+                // Check if any item has zero stock
+                if (checkoutData.orderItems && checkoutData.orderItems.length > 0) {
+                    const hasOutOfStock = checkoutData.orderItems.some((item: any) => item.stock <= 0);
+                    if (hasOutOfStock) {
+                        this.errorMessage = this.translateService.instant(
+                            'SOME_ITEMS_OUT_OF_STOCK'
+                        );
+                        setTimeout(() => {
+                            this.errorMessage = '';
+                        }, 3000);
+                        return;
+                    }
+                }
+
                 // Show loader
                 this.isLoading = true;
 
@@ -191,6 +205,20 @@ export class CheckoutPageComponent implements OnInit {
                         this.errorMessage = '';
                     }, 3000);
                     return;
+                }
+
+                // Check if any item has zero stock
+                if (checkoutData.orderItems && checkoutData.orderItems.length > 0) {
+                    const hasOutOfStock = checkoutData.orderItems.some((item: any) => item.stock <= 0);
+                    if (hasOutOfStock) {
+                        this.errorMessage = this.translateService.instant(
+                            'SOME_ITEMS_OUT_OF_STOCK'
+                        );
+                        setTimeout(() => {
+                            this.errorMessage = '';
+                        }, 3000);
+                        return;
+                    }
                 }
 
                 // Show loader

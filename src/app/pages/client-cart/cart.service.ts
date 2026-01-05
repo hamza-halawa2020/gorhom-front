@@ -77,30 +77,42 @@ export class CartService {
 
     addToCart(product: any): void {
         const currentCart = this.getCart();
-        const existingItem = currentCart.find((item) => item.product_id === product.id);
+        // Use selected_size_id if available, otherwise use product_id for uniqueness
+        const cartItemKey = product.selected_size_id ? `${product.id}-${product.selected_size_id}` : product.id;
+        const existingItem = currentCart.find((item) => {
+            const itemKey = item.selected_size_id ? `${item.product_id}-${item.selected_size_id}` : item.product_id;
+            return itemKey === cartItemKey;
+        });
 
         if (existingItem) {
-            this.updateQuantity(product.id, 1);
+            this.updateQuantity(product.id, 1, product.selected_size_id);
         } else {
-            const price = product.price_after_discount || product.price || 0;
+            const price = product.selected_price || product.price_after_discount || product.price || 0;
             const newItem = {
-                id: Date.now(), // Unique ID for the cart item (optional, but good for tracking)
+                id: Date.now(),
                 product_id: product.id,
                 quantity: 1,
                 product: product,
                 total_price: price * 1,
+                selected_size_id: product.selected_size_id || null,
+                selected_size_name: product.selected_size_name || null,
+                selected_price: price,
             };
             const updatedCart = [...currentCart, newItem];
             this.saveCartToStorage(updatedCart);
         }
     }
 
-    updateQuantity(productId: number, change: number): void {
+    updateQuantity(productId: number, change: number, sizeId?: number): void {
         let cart = this.getCart();
         cart = cart.map((item) => {
-            if (item.product_id === productId) {
+            const itemMatches = sizeId 
+                ? item.product_id === productId && item.selected_size_id === sizeId
+                : item.product_id === productId;
+            
+            if (itemMatches) {
                 const newQuantity = Math.max(1, item.quantity + change);
-                const price = item.product?.price_after_discount || item.product?.price || 0;
+                const price = item.selected_price || item.product?.price_after_discount || item.product?.price || 0;
                 return {
                     ...item,
                     quantity: newQuantity,

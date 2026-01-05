@@ -97,7 +97,9 @@ export class ClientCartPageComponent implements OnInit {
 
     calculateTotal() {
         this.totalPrice = this.cartItems.reduce((acc, cart) => {
-            return acc + cart.product.price_after_discount * cart.quantity;
+            // Use selected_price if available (for items with size), otherwise use product price
+            const price = cart.selected_price || cart.product.price_after_discount || cart.product.price || 0;
+            return acc + price * cart.quantity;
         }, 0);
     }
 
@@ -230,11 +232,17 @@ export class ClientCartPageComponent implements OnInit {
     }
 
     changeQuantity(productId: number, change: number) {
-        this.cartService.updateQuantity(productId, change);
+        const cartItem = this.cartItems.find(item => item.product_id === productId);
+        if (cartItem) {
+            this.cartService.updateQuantity(productId, change, cartItem.selected_size_id);
+        } else {
+            this.cartService.updateQuantity(productId, change);
+        }
         this.calculateTotal();
     }
 
     removeItem(productId: number) {
+        const cartItem = this.cartItems.find(item => item.product_id === productId);
         const areYouSure = this.translateService.instant('ARE_YOU_SURE');
         const removeItemConfirm = this.translateService.instant('REMOVE_ITEM_CONFIRM');
         const yesRemoveIt = this.translateService.instant('YES_REMOVE_IT');
@@ -255,8 +263,15 @@ export class ClientCartPageComponent implements OnInit {
         }).then((result: any) => {
             if (result.isConfirmed) {
                 try {
-                    this.cartService.removeFromCart(productId);
-                    this.cartService.refreshCart();
+                    // If item has size, we need to remove by item id instead
+                    if (cartItem?.id) {
+                        this.cartService.delete(cartItem.id).subscribe(() => {
+                            this.cartService.refreshCart();
+                        });
+                    } else {
+                        this.cartService.removeFromCart(productId);
+                        this.cartService.refreshCart();
+                    }
 
                     Swal.fire({
                         title: removed,
@@ -357,6 +372,7 @@ export class ClientCartPageComponent implements OnInit {
             payment_method: this.paymentMethod,
             items: this.cartItems.map(cart => ({
                 product_id: cart.product.id,
+                product_size_id: cart.selected_size_id || null,
                 quantity: cart.quantity
             }))
         };

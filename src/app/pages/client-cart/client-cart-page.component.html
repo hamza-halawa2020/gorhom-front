@@ -67,6 +67,9 @@
                                         {{ "NAME" | translate }}
                                     </th>
                                     <th class="text-center">
+                                        {{ "SIZE" | translate }}
+                                    </th>
+                                    <th class="text-center">
                                         {{ "UNIT_PRICE" | translate }}
                                     </th>
                                     <th class="text-center">
@@ -92,8 +95,12 @@
                                     </td>
                                     <td class="text-center"><a>{{cart.product.translatedTitle ||cart.product.title}}</a>
                                     </td>
+                                    <td class="text-center" data-title="{{ 'SIZE' | translate }}">
+                                        <span *ngIf="cart.selected_size_name">{{ cart.selected_size_name }}</span>
+                                        <span *ngIf="!cart.selected_size_name">-</span>
+                                    </td>
                                     <td class="price text-center" data-title="{{'UNIT_PRICE' | translate}}">
-                                        <span>{{cart.product.price_after_discount}}</span>
+                                        <span>{{ cart.selected_price || cart.product.price_after_discount }}</span>
                                     </td>
                                     <td class="qty text-center" data-title="{{'QUANTITY' | translate}}">
                                         <div class="input-group">
@@ -114,7 +121,7 @@
                                         </div>
                                     </td>
                                     <td class="total-amount text-center" data-title="{{ 'TOTAL' | translate }}">
-                                        <span>{{cart.product.price_after_discount *cart.quantity}}</span>
+                                        <span>{{ (cart.selected_price || cart.product.price_after_discount) * cart.quantity }}</span>
                                     </td>
                                     <td class="action text-center" data-title="{{ 'REMOVE' | translate }}">
                                         <a (click)="removeItem(cart.product.id)" style="cursor: pointer"
