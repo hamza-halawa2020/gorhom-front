@@ -2,24 +2,11 @@ export const MAIN_SLIDER_DATA = {
     data: [
         {
             id: 1,
-            title: 'Slide One',
-            description: 'First slide description',
-            image: 'assets/images/slider/1.jpg',
-            link: '/about'
+            image: 'assets/images/slider/1.jpeg',
         },
         {
             id: 2,
-            title: 'Slide Two',
-            description: 'Second slide description',
-            image: 'assets/images/slider/1.jpg',
-            link: '/services'
-        },
-        {
-            id: 3,
-            title: 'Slide Three',
-            description: 'Third slide description',
-            image: 'assets/images/slider/1.jpg',
-            link: '/contact'
+            image: 'assets/images/slider/2.jpeg',
         }
     ],
     status: 'success',

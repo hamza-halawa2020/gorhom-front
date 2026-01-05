@@ -640,5 +640,15 @@
   "COUPON_USAGE_LIMIT": "You have reached the maximum usage limit for this coupon",
   "COUPON_MIN_ORDER": "Order amount is less than the minimum required for this coupon",
   "COUPON_APPLIED": "Coupon Applied",
-  "COUPON_DISCOUNT": "Coupon Discount"
+  "COUPON_DISCOUNT": "Coupon Discount",
+  "SELECT_SIZE": "Select Size",
+  "CHOOSE_SIZE": "Choose a size",
+  "SIZE": "Size",
+  "STOCK": "Stock",
+  "SELECTED_SIZE": "Selected Size",
+  "PRICE": "Price",
+  "AVAILABLE_STOCK": "Available Stock",
+  "PLEASE_SELECT_SIZE": "Please select a size before adding to cart",
+  "OUT_OF_STOCK": "Out of Stock",
+  "SOME_ITEMS_OUT_OF_STOCK": "Some items are out of stock. Please check your cart."
 }

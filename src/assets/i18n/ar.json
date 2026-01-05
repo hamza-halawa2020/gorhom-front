@@ -932,5 +932,15 @@
   "COUPON_USAGE_LIMIT": "لقد وصلت إلى الحد الأقصى لاستخدام هذا الكوبون",
   "COUPON_MIN_ORDER": "قيمة الطلب أقل من الحد الأدنى المطلوب لهذا الكوبون",
   "COUPON_APPLIED": "تم تطبيق الكوبون",
-  "COUPON_DISCOUNT": "خصم الكوبون"
+  "COUPON_DISCOUNT": "خصم الكوبون",
+  "SELECT_SIZE": "اختر الحجم",
+  "CHOOSE_SIZE": "اختر حجماً",
+  "SIZE": "الحجم",
+  "STOCK": "المخزون",
+  "SELECTED_SIZE": "الحجم المختار",
+  "PRICE": "السعر",
+  "AVAILABLE_STOCK": "المخزون المتاح",
+  "PLEASE_SELECT_SIZE": "يرجى اختيار حجم قبل إضافة المنتج إلى السلة",
+  "OUT_OF_STOCK": "غير متوفر",
+  "SOME_ITEMS_OUT_OF_STOCK": "بعض المنتجات غير متوفرة. يرجى التحقق من سلتك."
 }

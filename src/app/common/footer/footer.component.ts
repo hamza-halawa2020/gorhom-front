@@ -12,7 +12,7 @@ import { TranslateModule } from '@ngx-translate/core';
 })
 export class FooterComponent {
     email: string = 'info@gorhom.net';
-    phone: string = '+201068743043';
+    phone: string = '+201034100565';
 
     accordionState: { [key: string]: boolean } = {
         getInTouch: false,
