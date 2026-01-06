@@ -11,7 +11,7 @@ import { TranslateModule } from '@ngx-translate/core';
     styleUrls: ['./footer.component.scss'],
 })
 export class FooterComponent {
-    email: string = 'info@gorhom.net';
+    email: string = 'info@gorhom.com';
     phone: string = '+201034100565';
 
     accordionState: { [key: string]: boolean } = {

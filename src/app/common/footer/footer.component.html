@@ -6,84 +6,52 @@
                 <!-- Company Info -->
                 <div class="col-md-2 col-sm-6">
                     <div class="single-footer-widget">
-                        <h3
-                            class="accordion-header d-block d-md-none"
-                            (click)="toggleAccordion('getInTouch')"
-                        >
+                        <h3 class="accordion-header d-block d-md-none" (click)="toggleAccordion('getInTouch')">
                             <span class="header-text">{{
                                 "GET_IN_TOUCH" | translate
-                            }}</span>
-                            <span
-                                class="accordion-icon"
-                                [ngClass]="{
+                                }}</span>
+                            <span class="accordion-icon" [ngClass]="{
                                     active: accordionState['getInTouch']
-                                }"
-                            >
+                                }">
                                 {{ accordionState["getInTouch"] ? "−" : "+" }}
                             </span>
                         </h3>
-                        <div
-                            class="accordion-content d-md-block"
-                            [ngClass]="{
+                        <div class="accordion-content d-md-block" [ngClass]="{
                                 'd-block': accordionState['getInTouch'],
                                 'd-none': !accordionState['getInTouch'],
                                 animate: true
-                            }"
-                        >
+                            }">
                             <div class="logo-wrapper">
                                 <a routerLink="/">
-                                    <img
-                                        src="/assets/images/logo.svg"
-                                        alt="Logo"
-                                    />
+                                    <img src="/assets/images/logo.svg" alt="Logo" />
                                 </a>
                             </div>
                             <p>
                                 <i class="fas fa-map-marker-alt"></i>
-                                <a
-                                    href="https://www.google.com/maps/place/New+Cairo,+Cairo+Governorate,+Egypt"
-                                    target="_blank"
-                                    class="text-white"
-                                    >{{ "NEW_CAIRO" | translate }}</a
-                                >
+                                <a href="https://www.google.com/maps/place/New+Cairo,+Cairo+Governorate,+Egypt"
+                                    target="_blank" class="text-white">{{ "NEW_CAIRO" | translate }}</a>
                             </p>
                             <p>
                                 <i class="fas fa-envelope"></i>
-                                <a
-                                    class="text-white"
-                                    href="mailto:{{ email }}"
-                                    >{{ email }}</a
-                                >
+                                <a class="text-white" href="mailto:{{ email }}">{{ email }}</a>
                             </p>
                             <p>
                                 <i class="fa-solid fa-phone"></i>
-                                <a
-                                    href="tel:+201034100565"
-                                    class="text-white"
-                                    style="direction: ltr; unicode-bidi: embed"
-                                >
+                                <a href="tel:+201034100565" class="text-white"
+                                    style="direction: ltr; unicode-bidi: embed">
                                     {{ phone }}
                                 </a>
                             </p>
                             <div class="socials">
-                                <a
-                                    href="https://www.facebook.com/profile.php?id=61573516777116&mibextid=wwXIfr&rdid=lMvCednv1akwUEdx&share_url=https%3A%2F%2Fwww.facebook.com%2Fshare%2F191vZW2FiD%2F%3Fmibextid%3DwwXIfr"
-                                    class="d-inline-block position-relative rounded-circle text-center"
-                                >
+                                <a href="https://www.facebook.com"
+                                    class="d-inline-block position-relative rounded-circle text-center">
                                     <i class="fa-brands fa-facebook-f"></i>
                                 </a>
-                                <a
-                                    href="https://www.instagram.com/gorhom_care/?igsh=MXFqMW1hMnhyamR1cw%3D%3D"
-                                    class="d-inline-block position-relative rounded-circle text-center"
-                                >
+                                <a href="https://www.instagram.com"
+                                    class="d-inline-block position-relative rounded-circle text-center">
                                     <i class="fa-brands fa-instagram"></i>
                                 </a>
-                                <a
-                                    href="https://www.facebook.com/profile.php?id=61575556840449&mibextid=wwXIfr&rdid=rOJD5ThxCkI69Uog&share_url=https%3A%2F%2Fwww.facebook.com%2Fshare%2F1AZjEJdQF3%2F%3Fmibextid%3DwwXIfr"
-                                    class="d-inline-block position-relative rounded-circle text-center"
-                                >
-                                    <i class="fa-brands fa-facebook-f"></i>
-                                </a>
+
                             </div>
                         </div>
                     </div>
@@ -92,30 +60,21 @@
                 <!-- Policies & Support -->
                 <div class="col-md-2 col-sm-6">
                     <div class="single-footer-widget">
-                        <h3
-                            class="accordion-header d-block d-md-none"
-                            (click)="toggleAccordion('policies')"
-                        >
+                        <h3 class="accordion-header d-block d-md-none" (click)="toggleAccordion('policies')">
                             <span class="header-text">{{
                                 "POLICIES_SUPPORT" | translate
-                            }}</span>
-                            <span
-                                class="accordion-icon"
-                                [ngClass]="{
+                                }}</span>
+                            <span class="accordion-icon" [ngClass]="{
                                     active: accordionState['policies']
-                                }"
-                            >
+                                }">
                                 {{ accordionState["policies"] ? "−" : "+" }}
                             </span>
                         </h3>
-                        <div
-                            class="accordion-content d-md-block"
-                            [ngClass]="{
+                        <div class="accordion-content d-md-block" [ngClass]="{
                                 'd-block': accordionState['policies'],
                                 'd-none': !accordionState['policies'],
                                 animate: true
-                            }"
-                        >
+                            }">
                             <h3 class="d-none d-md-block">
                                 {{ "POLICIES_SUPPORT" | translate }}
                             </h3>
@@ -123,22 +82,22 @@
                                 <li>
                                     <a routerLink="/privacy-policy">{{
                                         "PRIVACY_POLICY" | translate
-                                    }}</a>
+                                        }}</a>
                                 </li>
                                 <li>
                                     <a routerLink="/terms-conditions">{{
                                         "TERMS_OF_SERVICE" | translate
-                                    }}</a>
+                                        }}</a>
                                 </li>
                                 <li>
                                     <a routerLink="/returns-refunds">{{
                                         "RETURNS_REFUNDS" | translate
-                                    }}</a>
+                                        }}</a>
                                 </li>
                                 <li>
                                     <a routerLink="/shipping-delivery">{{
                                         "SHIPPING_DELIVERY" | translate
-                                    }}</a>
+                                        }}</a>
                                 </li>
                             </ul>
                         </div>
@@ -148,32 +107,23 @@
                 <!-- Stay Connected -->
                 <div class="col-md-2 col-sm-6">
                     <div class="single-footer-widget">
-                        <h3
-                            class="accordion-header d-block d-md-none"
-                            (click)="toggleAccordion('stayConnected')"
-                        >
+                        <h3 class="accordion-header d-block d-md-none" (click)="toggleAccordion('stayConnected')">
                             <span class="header-text">{{
                                 "STAY_CONNECTED" | translate
-                            }}</span>
-                            <span
-                                class="accordion-icon"
-                                [ngClass]="{
+                                }}</span>
+                            <span class="accordion-icon" [ngClass]="{
                                     active: accordionState['stayConnected']
-                                }"
-                            >
+                                }">
                                 {{
-                                    accordionState["stayConnected"] ? "−" : "+"
+                                accordionState["stayConnected"] ? "−" : "+"
                                 }}
                             </span>
                         </h3>
-                        <div
-                            class="accordion-content d-md-block"
-                            [ngClass]="{
+                        <div class="accordion-content d-md-block" [ngClass]="{
                                 'd-block': accordionState['stayConnected'],
                                 'd-none': !accordionState['stayConnected'],
                                 animate: true
-                            }"
-                        >
+                            }">
                             <h3 class="d-none d-md-block">
                                 {{ "STAY_CONNECTED" | translate }}
                             </h3>
@@ -181,12 +131,12 @@
                                 <li>
                                     <a routerLink="/about">{{
                                         "ABOUT_US" | translate
-                                    }}</a>
+                                        }}</a>
                                 </li>
                                 <li>
                                     <a routerLink="/contacts">{{
                                         "CONTACT_US" | translate
-                                    }}</a>
+                                        }}</a>
                                 </li>
                             </ul>
                         </div>
@@ -196,30 +146,21 @@
                 <!-- MENU -->
                 <div class="col-md-2 col-sm-6">
                     <div class="single-footer-widget">
-                        <h3
-                            class="accordion-header d-block d-md-none"
-                            (click)="toggleAccordion('MENU')"
-                        >
+                        <h3 class="accordion-header d-block d-md-none" (click)="toggleAccordion('MENU')">
                             <span class="header-text">{{
                                 "MENU" | translate
-                            }}</span>
-                            <span
-                                class="accordion-icon"
-                                [ngClass]="{
+                                }}</span>
+                            <span class="accordion-icon" [ngClass]="{
                                     active: accordionState['MENU']
-                                }"
-                            >
+                                }">
                                 {{ accordionState["MENU"] ? "−" : "+" }}
                             </span>
                         </h3>
-                        <div
-                            class="accordion-content d-md-block"
-                            [ngClass]="{
+                        <div class="accordion-content d-md-block" [ngClass]="{
                                 'd-block': accordionState['MENU'],
                                 'd-none': !accordionState['MENU'],
                                 animate: true
-                            }"
-                        >
+                            }">
                             <h3 class="d-none d-md-block">
                                 {{ "MENU" | translate }}
                             </h3>
@@ -227,7 +168,7 @@
                                 <li>
                                     <a routerLink="/products">{{
                                         "SHOP" | translate
-                                    }}</a>
+                                        }}</a>
                                 </li>
                             </ul>
                         </div>
@@ -237,30 +178,21 @@
                 <!-- Newsletter Signup -->
                 <div class="col-md-2 col-sm-6">
                     <div class="single-footer-widget">
-                        <h3
-                            class="accordion-header d-block d-md-none"
-                            (click)="toggleAccordion('newsletter')"
-                        >
+                        <h3 class="accordion-header d-block d-md-none" (click)="toggleAccordion('newsletter')">
                             <span class="header-text">{{
                                 "NEWSLETTER_SIGNUP" | translate
-                            }}</span>
-                            <span
-                                class="accordion-icon"
-                                [ngClass]="{
+                                }}</span>
+                            <span class="accordion-icon" [ngClass]="{
                                     active: accordionState['newsletter']
-                                }"
-                            >
+                                }">
                                 {{ accordionState["newsletter"] ? "−" : "+" }}
                             </span>
                         </h3>
-                        <div
-                            class="accordion-content d-md-block"
-                            [ngClass]="{
+                        <div class="accordion-content d-md-block" [ngClass]="{
                                 'd-block': accordionState['newsletter'],
                                 'd-none': !accordionState['newsletter'],
                                 animate: true
-                            }"
-                        >
+                            }">
                             <div class="subscribe-box">
                                 <div class="subscribe-content">
                                     <h3 class="d-none d-md-block">
@@ -268,16 +200,13 @@
                                     </h3>
                                     <p>
                                         {{
-                                            "SUBSCRIBE_NEWSLETTER_TEXT"
-                                                | translate
+                                        "SUBSCRIBE_NEWSLETTER_TEXT"
+                                        | translate
                                         }}
                                     </p>
                                 </div>
                                 <div class="payment-methods">
-                                    <img
-                                        src="/assets/images/payment_white.png"
-                                        alt="payment method"
-                                    />
+                                    <img src="/assets/images/payment_white.png" alt="payment method" />
                                 </div>
                             </div>
                         </div>
@@ -293,7 +222,7 @@
             <div class="row">
                 <div class="col-12">
                     <p>
-                        {{ "ALL_RIGHTS_RESERVED" | translate }} 
+                        {{ "ALL_RIGHTS_RESERVED" | translate }}
                     </p>
                 </div>
             </div>
@@ -301,12 +230,7 @@
     </div>
 
     <!-- WhatsApp Floating Button -->
-    <a
-        href="https://wa.me/201034100565"
-        target="_blank"
-        class="whatsapp-float"
-        aria-label="Chat on WhatsApp"
-    >
+    <a href="https://wa.me/201034100565" target="_blank" class="whatsapp-float" aria-label="Chat on WhatsApp">
         <i class="fab fa-whatsapp"></i>
     </a>
 </footer>
