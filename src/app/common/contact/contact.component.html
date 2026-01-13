@@ -1,18 +1,10 @@
 <!-- Success Message as a Toast -->
-<div
-    *ngIf="successMessage"
-    class="toast-container position-fixed top-0 end-0 p-3"
->
-    <div
-        class="toast show"
-        role="alert"
-        aria-live="assertive"
-        aria-atomic="true"
-    >
+<div *ngIf="successMessage" class="toast-container position-fixed top-0 end-0 p-3">
+    <div class="toast show" role="alert" aria-live="assertive" aria-atomic="true">
         <div class="toast-header">
             <strong class="me-auto text-success">{{
                 "SUCCESS" | translate
-            }}</strong>
+                }}</strong>
         </div>
         <div class="toast-body">
             <h6>
@@ -23,20 +15,12 @@
 </div>
 
 <!-- Error Message as a Toast -->
-<div
-    *ngIf="errorMessage"
-    class="toast-container position-fixed top-0 end-0 p-3"
->
-    <div
-        class="toast show"
-        role="alert"
-        aria-live="assertive"
-        aria-atomic="true"
-    >
+<div *ngIf="errorMessage" class="toast-container position-fixed top-0 end-0 p-3">
+    <div class="toast show" role="alert" aria-live="assertive" aria-atomic="true">
         <div class="toast-header">
             <strong class="me-auto text-danger">{{
                 "ERROR" | translate
-            }}</strong>
+                }}</strong>
         </div>
         <div class="toast-body">
             <h6>
@@ -47,7 +31,7 @@
 </div>
 
 <!-- Contact Form -->
-<div class="contact-area bg-f3f3f3 border-top pb-5 pt-5">
+<!-- <div class="contact-area bg-f3f3f3 border-top pb-5 pt-5">
     <div class="container">
         <div class="section-title text-center">
             <p [innerHTML]="'GET_IN_TOUCH' | translate"></p>
@@ -114,4 +98,4 @@
             </div>
         </form>
     </div>
-</div>
+</div> -->

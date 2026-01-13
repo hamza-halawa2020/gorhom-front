@@ -33,6 +33,6 @@ import { TranslateModule, TranslateService } from '@ngx-translate/core';
     providers: [ContactService],
 })
 export class ContactPageComponent {
-    infoEmail = 'info@email.com';
-    adminEmail = 'admin@email.com';
+    infoEmail = 'info@gorhom.com';
+    adminEmail = 'contact@gorhom.com';
 }
