@@ -1,4 +1,4 @@
-import { CommonModule, NgClass, NgIf } from '@angular/common';
+import { CommonModule, NgClass, NgIf, NgOptimizedImage } from '@angular/common';
 import { Component, OnInit, ViewChild } from '@angular/core';
 import { RouterLink, Router } from '@angular/router';
 import {
@@ -21,6 +21,7 @@ import { TranslateService } from '@ngx-translate/core';
         NgIf,
         NgClass,
         HttpClientModule,
+        NgOptimizedImage,
     ],
     templateUrl: './main-slider.component.html',
     styleUrls: ['./main-slider.component.scss'],
@@ -95,7 +96,7 @@ export class MainSlider implements OnInit {
 
     fetchSliderData() {
         this.mainSliderService.index().subscribe({
-            next: (response:any) => {
+            next: (response: any) => {
                 this.sliderData = Object.values(response)[0];
             },
         });

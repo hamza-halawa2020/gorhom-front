@@ -51,9 +51,7 @@
               "src/assets/js/jquery-1.12.4.min.js",
               "src/assets/js/jquery.magnific-popup.min.js",
               "src/assets/js/nicesellect.js",
-              "src/assets/js/purecounter_vanilla.js",
-              "src/assets/js/scripts.js",
-              "src/assets/js/wow.min.js"
+              "src/assets/js/scripts.js"
             ]
           },
           "configurations": {

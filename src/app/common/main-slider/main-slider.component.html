@@ -5,15 +5,8 @@
                 <div class="text-center">
                     <a href="{{ slide.link }}">
                         <div class="image-container">
-                            <img
-                                src="{{ image + slide.image }}"
-                                class="carousel-image"
-                                alt="{{ slide.image }}"
-                                [attr.fetchpriority]="i === 0 ? 'high' : 'auto'"
-                                [attr.loading]="i === 0 ? 'eager' : 'lazy'"
-                                width="1200"
-                                height="500"
-                            />
+                            <img [ngSrc]="image + slide.image" class="carousel-image" [alt]="slide.title"
+                                [priority]="i === 0" width="1200" height="500" />
                             <div class="overlay-content">
                                 <h3 class="fw-semibold">{{ slide.title }}</h3>
                                 <div class="fw-medium">

@@ -2,7 +2,8 @@ import { NgClass, NgIf } from '@angular/common';
 import { Component, HostListener, OnDestroy, OnInit } from '@angular/core';
 import { RouterLink, RouterLinkActive, Router } from '@angular/router';
 import { CartService } from '../../pages/client-cart/cart.service';
-import { Subscription } from 'rxjs';
+import { fromEvent, Subscription } from 'rxjs';
+import { auditTime } from 'rxjs/operators';
 import { NgbCollapseModule } from '@ng-bootstrap/ng-bootstrap';
 
 import { FavouriteClientService } from '../../pages/favorites-page/favourite-client.service';
@@ -38,6 +39,7 @@ export class NavbarComponent implements OnInit, OnDestroy {
     isLoggedIn: boolean = false;
     isSticky: boolean = false;
     currentLanguage: string = 'en'; // Track current language
+    private subscriptions = new Subscription();
 
     constructor(
         public router: Router,
@@ -87,6 +89,15 @@ export class NavbarComponent implements OnInit, OnDestroy {
             this.cartService.refreshCart();
         });
 
+        // Optimize scroll listener to prevent forced reflows
+        this.subscriptions.add(
+            fromEvent(window, 'scroll')
+                .pipe(auditTime(100))
+                .subscribe(() => {
+                    this.checkScroll();
+                })
+        );
+
         this.router.events.subscribe(() => {
             // this.favouriteService.refreshFav();
             this.favouriteClientService.refreshFav();
@@ -106,9 +117,9 @@ export class NavbarComponent implements OnInit, OnDestroy {
             this.favClientSubscription.unsubscribe();
         if (this.favoritesSubscription)
             this.favoritesSubscription.unsubscribe();
+        this.subscriptions.unsubscribe();
     }
 
-    @HostListener('window:scroll', ['$event'])
     checkScroll() {
         const scrollPosition =
             window.scrollY ||
