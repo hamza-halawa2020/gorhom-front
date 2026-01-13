@@ -38,6 +38,7 @@
 ::ng-deep {
     .feedback-slides {
         max-width: 1200px; /* Wider container to fit 3 reviews */
+        min-height: 380px; /* Reserve space for the carousel */
 
         .owl-theme {
             .owl-nav {

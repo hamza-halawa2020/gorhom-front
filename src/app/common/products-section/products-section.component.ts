@@ -1,4 +1,5 @@
 import { ChangeDetectorRef, Component, OnInit } from '@angular/core';
+import { NgOptimizedImage } from '@angular/common';
 import { TranslateModule, TranslateService } from '@ngx-translate/core';
 import { RouterLink } from '@angular/router';
 import { CommonModule } from '@angular/common';
@@ -10,7 +11,7 @@ import { FavoritesService } from '../../pages/favorites-page/favorites.service';
 @Component({
     selector: 'app-products-section',
     standalone: true,
-    imports: [RouterLink, TranslateModule, CommonModule],
+    imports: [RouterLink, TranslateModule, CommonModule, NgOptimizedImage],
     templateUrl: './products-section.component.html',
     styleUrls: ['./products-section.component.scss'],
 })

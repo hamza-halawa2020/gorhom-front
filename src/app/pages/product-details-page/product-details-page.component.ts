@@ -7,7 +7,7 @@ import { ContactComponent } from '../../common/contact/contact.component';
 import { FooterComponent } from '../../common/footer/footer.component';
 import { BackToTopComponent } from '../../common/back-to-top/back-to-top.component';
 import { NavbarComponent } from '../../common/navbar/navbar.component';
-import { CommonModule, NgClass, NgIf } from '@angular/common';
+import { CommonModule, NgClass, NgIf, NgOptimizedImage } from '@angular/common';
 import { environment } from '../../../environments/environment.development';
 import { FormsModule } from '@angular/forms';
 import { ProductService } from './product.service';
@@ -37,6 +37,7 @@ declare var bootstrap: any;
         FormsModule,
         TranslateModule,
         CarouselModule, // Add CarouselModule
+        NgOptimizedImage,
     ],
     templateUrl: './product-details-page.component.html',
     styleUrls: ['./product-details-page.component.scss'],
@@ -231,11 +232,11 @@ export class ProductDetailsPageComponent implements OnInit, OnDestroy {
 
         this.paramsSubscription = this.activateRoute.params.subscribe((params) => {
             this.id = +params['id'];
-            
+
             if (this.productSubscription) {
                 this.productSubscription.unsubscribe();
             }
-            
+
             this.productSubscription = this.productService.show(this.id).subscribe((data) => {
                 this.details = Object.values(data)[0];
                 this.translateData();
@@ -498,7 +499,7 @@ export class ProductDetailsPageComponent implements OnInit, OnDestroy {
         this.selectedSizePrice = size.price_after_discount ?? size.price;
         this.selectedSizePriceBeforeDiscount = size.price_before_discount ?? size.price;
         this.selectedSizeStock = size.stock;
-        
+
         // Calculate discount
         if (this.selectedSizePriceBeforeDiscount && this.selectedSizePrice) {
             this.selectedSizeDiscount = this.selectedSizePriceBeforeDiscount - this.selectedSizePrice;

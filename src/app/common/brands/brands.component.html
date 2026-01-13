@@ -10,11 +10,8 @@
                         <a routerLink="/categories/{{ slide.id }}">
                             <div class="event-slide position-relative">
                                 <div class="event-img">
-                                    <img
-                                        src="{{ image + slide.image }}"
-                                        class="bg-image max-height"
-                                        alt="bg-image"
-                                    />
+                                    <img [ngSrc]="image + slide.image" class="bg-image max-height" alt="bg-image"
+                                        width="150" height="100" />
                                 </div>
                                 <div class="p-2 text-center">{{slide.name}}</div>
                             </div>

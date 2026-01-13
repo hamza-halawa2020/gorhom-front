@@ -56,6 +56,14 @@ body {
     padding: 0;
     color: #4c0048;
 }
+@font-face {
+    font-family: 'Font Awesome 6 Free';
+    font-style: normal;
+    font-weight: 900;
+    font-display: swap;
+    src: url("/media/fa-solid-900.woff2") format("woff2");
+}
+
 .h1,
 .h2,
 .h3,

@@ -108,7 +108,8 @@
                                     let related of allImages || [];
                                     let i = index
                                 " [class.active]="i === currentIndex" (click)="selectImage(image + related?.path, i)">
-                                <img [src]="image + related?.path" alt="Thumbnail" class="thumbnail-img" />
+                                <img [ngSrc]="image + related?.path" alt="Thumbnail" class="thumbnail-img" width="80"
+                                    height="80" />
                             </div>
                         </div>
 
@@ -121,8 +122,9 @@
                                     " [title]="'PREVIOUS_IMAGE' | translate">
                                     <i class="fa fa-chevron-left"></i>
                                 </button>
-                                <img [src]="selectedImage" class="main-image" alt="Product Image"
-                                    (mousemove)="onMouseMove($event)" (mouseleave)="onMouseLeave()" />
+                                <img [ngSrc]="selectedImage" class="main-image" alt="Product Image"
+                                    (mousemove)="onMouseMove($event)" (mouseleave)="onMouseLeave()" width="600"
+                                    height="600" priority />
                                 <div class="zoom-lens" *ngIf="showZoom" [style.left.px]="zoomPosition.x"
                                     [style.top.px]="zoomPosition.y" [style.background-image]="
                                         'url(' + selectedImage + ')'
@@ -164,7 +166,8 @@
 
                             </div>
                             <div class="discount-info mt-2" *ngIf="selectedSizeDiscount > 0">
-                                <span class="badge bg-danger">{{ "DISCOUNT" | translate }}: {{ selectedSizeDiscount }} {{ "EGP" | translate }}</span>
+                                <span class="badge bg-danger">{{ "DISCOUNT" | translate }}: {{ selectedSizeDiscount }}
+                                    {{ "EGP" | translate }}</span>
                             </div>
                             <div class="size-badge mt-2" *ngIf="selectedSize">
                                 <span class="badge bg-info">{{ "SIZE" | translate }}: {{ selectedSize.size }}</span>
@@ -181,10 +184,12 @@
                         <!-- Size Selection -->
                         <div class="size-selection my-3" *ngIf="details?.sizes && details.sizes.length > 0">
                             <label class="form-label fw-bold">{{ "SELECT_SIZE" | translate }}:</label>
-                            <select class="form-select" [(ngModel)]="selectedSize" (change)="onSizeChange(selectedSize)" name="size">
+                            <select class="form-select" [(ngModel)]="selectedSize" (change)="onSizeChange(selectedSize)"
+                                name="size">
                                 <option [ngValue]="null">{{ "CHOOSE_SIZE" | translate }}</option>
                                 <option *ngFor="let size of details.sizes" [ngValue]="size">
-                                    {{ size.size }} - {{ size.price_after_discount ?? size.price }} {{ "EGP" | translate }} 
+                                    {{ size.size }} - {{ size.price_after_discount ?? size.price }} {{ "EGP" | translate
+                                    }}
                                     ({{ "STOCK" | translate }}: {{ size.stock }})
                                 </option>
                             </select>
@@ -193,7 +198,8 @@
                         <div class="selected-size-info my-2" *ngIf="selectedSize">
                             <div class="alert alert-info">
                                 <strong>{{ "SELECTED_SIZE" | translate }}:</strong> {{ selectedSize.size }}<br>
-                                <strong>{{ "PRICE" | translate }}:</strong> {{ selectedSizePrice }} {{ "EGP" | translate }}<br>
+                                <strong>{{ "PRICE" | translate }}:</strong> {{ selectedSizePrice }} {{ "EGP" | translate
+                                }}<br>
                                 <strong>{{ "AVAILABLE_STOCK" | translate }}:</strong> {{ selectedSizeStock }}
                             </div>
                         </div>
@@ -205,13 +211,15 @@
                                 [title]="!selectedSize ? ('PLEASE_SELECT_SIZE' | translate) : (selectedSizeStock <= 0 ? ('OUT_OF_STOCK' | translate) : (isProductInCart(details.id) ? ('ALREADY_IN_CART' | translate) : ('ADD_TO_CART' | translate)))">
                                 <i class="fa me-2" [class.fa-check]="isProductInCart(details.id)"
                                     [class.fa-shopping-cart]="!isProductInCart(details.id)"></i>
-                                {{ (!selectedSize ? "PLEASE_SELECT_SIZE" : (selectedSizeStock <= 0 ? "OUT_OF_STOCK" : (isProductInCart(details.id) ? "ALREADY_IN_CART" : "ADD_TO_CART"))) | translate }}
-                            </a>
-                            <a (click)="toggleFavorite()" class="btn btn-default acc_btn btn_icn"
-                                [class.favorite-active]="isFavorite"
-                                [title]="isFavorite ? ('REMOVE_FROM_WISHLIST' | translate) : ('ADD_TO_WISHLIST' | translate)">
-                                <i class="fa" [class.fa-heart]="isFavorite" [class.fa-heart-o]="!isFavorite"></i>
-                            </a>
+                                {{ (!selectedSize ? "PLEASE_SELECT_SIZE" : (selectedSizeStock <= 0 ? "OUT_OF_STOCK" :
+                                    (isProductInCart(details.id) ? "ALREADY_IN_CART" : "ADD_TO_CART" ))) | translate }}
+                                    </a>
+                                    <a (click)="toggleFavorite()" class="btn btn-default acc_btn btn_icn"
+                                        [class.favorite-active]="isFavorite"
+                                        [title]="isFavorite ? ('REMOVE_FROM_WISHLIST' | translate) : ('ADD_TO_WISHLIST' | translate)">
+                                        <i class="fa" [class.fa-heart]="isFavorite"
+                                            [class.fa-heart-o]="!isFavorite"></i>
+                                    </a>
                         </div>
                         <div class="social-share mt-3">
                             <span class="me-2">{{ "SHARE" | translate }}:</span>
@@ -328,10 +336,11 @@
                         <a routerLink="/product/{{ related.id }}">
                             <div class="event-slide position-relative product-grid">
                                 <div class="event-img product-image">
-                                    <img [src]="image + (related.image || related.files?.[0]?.path || 'fallback-image.jpg')"
+                                    <img [ngSrc]="image + (related.image || related.files?.[0]?.path || 'fallback-image.jpg')"
                                         class="bg-image max-height pic-1" alt="Product Image"
                                         (load)="onImageLoad(image + (related.image || related.files?.[0]?.path || 'fallback-image.jpg'))"
-                                        (error)="onImageError($event)" />
+                                        (error)="onImageError($event)" width="320" height="480"
+                                        sizes="(max-width: 576px) 100vw, (max-width: 992px) 50vw, 33vw" />
                                     <ul class="social">
                                         <li>
                                             <a style="cursor: pointer" (click)="addRelatedToFavorite(related, $event)"
@@ -369,11 +378,15 @@
                                             getDefaultSizePriceBeforeDiscount(related) }}
                                             {{ "EGP" | translate }}</span>
                                     </div>
-                                    <div class="discount-info mt-1" *ngIf="getDefaultSize(related) && getDefaultSizePriceBeforeDiscount(related) && (getDefaultSizePriceBeforeDiscount(related) ?? 0) !== getDefaultSizePrice(related)">
-                                        <small class="text-danger">{{ "DISCOUNT" | translate }}: {{ (getDefaultSizePriceBeforeDiscount(related) ?? 0) - getDefaultSizePrice(related) }} {{ "EGP" | translate }}</small>
+                                    <div class="discount-info mt-1"
+                                        *ngIf="getDefaultSize(related) && getDefaultSizePriceBeforeDiscount(related) && (getDefaultSizePriceBeforeDiscount(related) ?? 0) !== getDefaultSizePrice(related)">
+                                        <small class="text-danger">{{ "DISCOUNT" | translate }}: {{
+                                            (getDefaultSizePriceBeforeDiscount(related) ?? 0) -
+                                            getDefaultSizePrice(related) }} {{ "EGP" | translate }}</small>
                                     </div>
                                     <div class="size-info mt-2" *ngIf="getDefaultSize(related)">
-                                        <small class="text-muted">{{ "SIZE" | translate }}: {{ getDefaultSize(related).size }}</small>
+                                        <small class="text-muted">{{ "SIZE" | translate }}: {{
+                                            getDefaultSize(related).size }}</small>
                                     </div>
                                 </div>
                             </div>

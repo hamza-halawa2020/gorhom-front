@@ -43,6 +43,7 @@
 ::ng-deep {
     .upcoming-courses-slides {
         max-width: 1200px;
+        min-height: 350px; /* Reserve space for the carousel and name */
         padding: {
             left: 45px;
             right: 45px;

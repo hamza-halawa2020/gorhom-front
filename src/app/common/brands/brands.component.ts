@@ -1,5 +1,5 @@
 import { CarouselModule, OwlOptions } from 'ngx-owl-carousel-o';
-import { CommonModule, NgClass, NgIf } from '@angular/common';
+import { CommonModule, NgClass, NgIf, NgOptimizedImage } from '@angular/common';
 import { Component, OnInit } from '@angular/core';
 import { RouterLink, Router } from '@angular/router';
 import { HttpClientModule } from '@angular/common/http';
@@ -18,13 +18,14 @@ import { TranslateModule, TranslateService } from '@ngx-translate/core';
         NgClass,
         HttpClientModule,
         TranslateModule,
+        NgOptimizedImage,
     ],
     templateUrl: './brands.component.html',
     styleUrl: './brands.component.scss',
 })
 export class BrandsComponent {
     sliderData: any[] = [];
-    image = environment.imgUrl ;
+    image = environment.imgUrl;
     currentOptions: OwlOptions;
     successMessage: string = '';
     errorMessage: string = '';

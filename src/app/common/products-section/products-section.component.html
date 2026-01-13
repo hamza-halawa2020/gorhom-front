@@ -55,7 +55,7 @@
 
         <!-- Products Grid -->
         <div class="row g-4">
-            <div class="col-xl-3 col-lg-4 col-md-6 col-6" *ngFor="let product of filteredProducts">
+            <div class="col-xl-3 col-lg-4 col-md-6 col-6" *ngFor="let product of filteredProducts; let i = index">
                 <div class="product-card">
                     <!-- Discount Badge -->
                     <div class="discount-badge" *ngIf="product.discount > 0">
@@ -80,8 +80,9 @@
                         <!-- Default Image -->
                         <a routerLink="/product/{{ product.id }}">
                             <img class="default-image img-fluid"
-                                [src]="product.image ? image + product.image : 'assets/images/logo.svg'"
-                                [alt]="product.title" />
+                                [ngSrc]="product.image ? image + product.image : 'assets/images/logo_optimized.svg'"
+                                [alt]="product.title" width="320" height="480" [priority]="i < 4"
+                                sizes="(max-width: 576px) 50vw, (max-width: 992px) 33vw, 25vw" />
 
                         </a>
 
@@ -116,11 +117,15 @@
                                     {{ getDefaultSizePriceBeforeDiscount(product) }} EGP
                                 </span>
                             </div>
-                            <div class="discount-info mt-1" *ngIf="getDefaultSize(product) && getDefaultSizePriceBeforeDiscount(product) && (getDefaultSizePriceBeforeDiscount(product) ?? 0) !== getDefaultSizePrice(product)">
-                                <small class="text-danger">{{ "DISCOUNT" | translate }}: {{ (getDefaultSizePriceBeforeDiscount(product) ?? 0) - getDefaultSizePrice(product) }} EGP</small>
+                            <div class="discount-info mt-1"
+                                *ngIf="getDefaultSize(product) && getDefaultSizePriceBeforeDiscount(product) && (getDefaultSizePriceBeforeDiscount(product) ?? 0) !== getDefaultSizePrice(product)">
+                                <small class="text-danger">{{ "DISCOUNT" | translate }}: {{
+                                    (getDefaultSizePriceBeforeDiscount(product) ?? 0) - getDefaultSizePrice(product) }}
+                                    EGP</small>
                             </div>
                             <div class="size-info mt-1" *ngIf="getDefaultSize(product)">
-                                <small class="text-muted">{{ "SIZE" | translate }}: {{ getDefaultSize(product).size }}</small>
+                                <small class="text-muted">{{ "SIZE" | translate }}: {{ getDefaultSize(product).size
+                                    }}</small>
                             </div>
                             <div class="category mt-1">
                                 <small>{{ product.category.name }}</small>
