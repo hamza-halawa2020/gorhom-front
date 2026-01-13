@@ -2,14 +2,14 @@
     background-color: #fff;
 
     h3 {
-        font-size: calc(1.6rem + 0.8vw); /* حجم ديناميكي للعنوان */
+        font-size: calc(1.6rem + 0.8vw); 
         font-weight: 600;
         color: #333;
         text-transform: uppercase;
     }
 
     .w-50 {
-        margin: 0 auto; /* تمركز أفقي */
+        margin: 0 auto; 
     }
 
     .category-card {
@@ -24,13 +24,13 @@
             overflow: hidden;
 
             &.large-card {
-                height: 50vw; /* ارتفاع أساسي */
-                min-height: 250px; /* الحد الأدنى */
-                max-height: 500px; /* الحد الأقصى */
+                height: 50vw; 
+                min-height: 250px; 
+                max-height: 500px; 
             }
 
             &.small-card {
-                height: 33.33vw; /* نسبة 2:3 مقارنة بـ large-card */
+                height: 33.33vw;    
                 min-height: 166px;
                 max-height: 333px;
             }
@@ -46,7 +46,7 @@
                 position: absolute;
                 top: 50%;
                 left: 50%;
-                width: 50%; /* حجم ديناميكي للدائرة */
+                width: 50%;     
                 height: 50%;
                 background: rgba(255, 255, 255, 0.1);
                 border-radius: 50%;
@@ -62,9 +62,9 @@
                 width: 100%;
                 background: #58ccc3;
                 color: white;
-                padding: calc(6px + 0.3vw); /* حشوة */
+                padding: calc(6px + 0.3vw); 
                 text-align: center;
-                font-size: calc(0.9rem + 0.3vw); /* حجم نص */
+                font-size: calc(0.9rem + 0.3vw); 
                 font-weight: 500;
                 text-transform: uppercase;
             }
@@ -86,7 +86,7 @@
 
     .explore-link {
         display: inline-block;
-        font-size: calc(0.9rem + 0.3vw); /* حجم ديناميكي */
+        font-size: calc(0.9rem + 0.3vw); 
         font-weight: 500;
         color: #333;
         text-transform: uppercase;
@@ -101,7 +101,7 @@
     }
 
     .d-flex.flex-column {
-        gap: 0; /* إزالة الفجوة بين البطاقات */
+        gap: 0; 
     }
 
     @keyframes bubbleEffect {
