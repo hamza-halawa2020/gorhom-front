@@ -150,6 +150,7 @@ export class ProductDetailsPageComponent implements OnInit, OnDestroy {
     showZoom: boolean = false;
     zoomPosition: { x: number; y: number } = { x: 0, y: 0 };
     zoomBackgroundPosition: string = '0px 0px';
+    private imageRect: DOMRect | null = null;
 
     productUrl: string = '';
 
@@ -421,7 +422,12 @@ export class ProductDetailsPageComponent implements OnInit, OnDestroy {
 
     onMouseMove(event: MouseEvent): void {
         const img = event.target as HTMLImageElement;
-        const rect = img.getBoundingClientRect();
+
+        // Cache the bounding rect once per move sequence to avoid forced reflows
+        if (!this.imageRect) {
+            this.imageRect = img.getBoundingClientRect();
+        }
+        const rect = this.imageRect;
 
         const x = event.clientX - rect.left;
         const y = event.clientY - rect.top;
@@ -451,6 +457,7 @@ export class ProductDetailsPageComponent implements OnInit, OnDestroy {
 
     onMouseLeave(): void {
         this.showZoom = false;
+        this.imageRect = null; // Clear cache
     }
 
     shareOnFacebook(): void {
