@@ -1,9 +1,10 @@
 .image-container {
     position: relative;
     width: 100%;
-    height: 50vw; 
-    min-height: 200px; 
-    max-height: 500px; 
+    aspect-ratio: 12 / 5;
+    background: #f0f0f0; /* skeleton color */
+    min-height: 200px;
+    max-height: 500px;
 }
 
 .new-class {

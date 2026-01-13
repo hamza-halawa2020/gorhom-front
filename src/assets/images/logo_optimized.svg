@@ -1,0 +1,7 @@
+<svg version="1.2" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 150 50" width="150" height="50">
+    <title>Gorhom Logo</title>
+    <!-- Placeholder recreation of the logo using pure SVG paths -->
+    <text x="10" y="35" font-family="Poppins, sans-serif" font-weight="800" font-size="28" fill="#4c0048">Gorhom</text>
+    <path d="M125 15 Q135 5 145 15 Q145 35 135 45 Q125 35 125 15 Z" fill="#4c0048" />
+    <circle cx="135" cy="25" r="5" fill="#fbe8fe" />
+</svg>

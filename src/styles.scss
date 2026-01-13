@@ -14,6 +14,7 @@
 
 #loading-screen img {
     width: 150px;
+    height: 50px;
     animation: fadeIn 1.5s ease-in-out infinite alternate;
     border-radius: 50%;
 }
@@ -48,6 +49,7 @@ body.loaded #loading-screen {
     --fontSize: 20px;
     --fontFamily: "Poppins", sans-serif;
     --headingFontFamily: "Poppins", sans-serif;
+    font-display: swap;
 }
 body {
     margin: 0;
